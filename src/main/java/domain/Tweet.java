@@ -6,6 +6,7 @@
 package domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Entity;
@@ -31,6 +32,7 @@ public class Tweet implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date published;
     private List<String> tags;
+    private List<Account> likedBy = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public String getMessage() {
@@ -65,6 +67,24 @@ public class Tweet implements Serializable {
         this.message = message;
         this.published = published;
         this.tags = tags;
+    }
+
+    /**
+     * Adds an Account to the list of accounts that liked this tweet
+     *
+     * @param a Account
+     */
+    public void LikeTweet(Account a) {
+        likedBy.add(a);
+    }
+
+    /**
+     * Returns a list of all accounts that liked this tweet
+     *
+     * @return List of Account objects
+     */
+    public List<Account> getLikedBy() {
+        return likedBy;
     }
 
 }

@@ -116,9 +116,11 @@ public class Account implements Serializable {
     public void followAccount(Account a) {
         followingAccounts.add(a);
     }
+
     /**
      * Returns a list of all accounts following this account
-     * @return List<Account>
+     *
+     * @return List of Account objects
      */
     public List<Account> getFollowingAccounts() {
         return followingAccounts;
