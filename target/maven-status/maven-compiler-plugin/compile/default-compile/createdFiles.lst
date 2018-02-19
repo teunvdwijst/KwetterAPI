@@ -1,0 +1,8 @@
+rest\UserResource.class
+service\CoffeeService.class
+dao\TweetDAO.class
+rest\JAXRSconfig.class
+dao\UserDAO.class
+domain\Tweet.class
+domain\User.class
+rest\TweetResource.class
