@@ -10,5 +10,5 @@
         <property name="URL" value="jdbc:mysql://localhost:3306/kwetter?zeroDateTimeBehavior=convertToNull"/>
         <property name="driverClass" value="com.mysql.jdbc.Driver"/>
     </jdbc-connection-pool>
-    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/Fontys" object-type="user" pool-name="mysql_fontys_fontysPool"/>
+    <jdbc-resource enabled="true" jndi-name="java:app/jdbc/kwetter" object-type="user" pool-name="mysql_fontys_fontysPool"/>
 </resources>

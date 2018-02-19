@@ -5,10 +5,23 @@
  */
 package dao;
 
+import domain.Tweet;
+import java.util.List;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 /**
  *
  * @author Teun
  */
+@Stateless
 public class TweetDAO {
 
+    @PersistenceContext
+    EntityManager em;
+    
+    public List<Tweet> allTweets(){
+        return em.createNamedQuery("Tweet.allTweets").getResultList();
+    }
 }

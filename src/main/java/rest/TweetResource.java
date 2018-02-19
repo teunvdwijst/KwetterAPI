@@ -6,7 +6,9 @@
 package rest;
 
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.ws.rs.Path;
+import service.TweetService;
 
 /**
  *
@@ -15,5 +17,7 @@ import javax.ws.rs.Path;
 @Path("tweet")
 @Stateless
 public class TweetResource {
-    
+ 
+    @Inject
+    TweetService tweetService;
 }
