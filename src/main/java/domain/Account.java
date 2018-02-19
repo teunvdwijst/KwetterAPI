@@ -8,6 +8,7 @@ package domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -26,6 +27,7 @@ public class Account implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String userName;
+    @Column(unique = true)
     private String email;
     private String encryptedPassword;
     private String location;
@@ -113,6 +115,13 @@ public class Account implements Serializable {
      */
     public void followAccount(Account a) {
         followingAccounts.add(a);
+    }
+    /**
+     * Returns a list of all accounts following this account
+     * @return List<Account>
+     */
+    public List<Account> getFollowingAccounts() {
+        return followingAccounts;
     }
 
 }
