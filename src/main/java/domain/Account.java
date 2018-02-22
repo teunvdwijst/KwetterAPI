@@ -146,5 +146,4 @@ public class Account implements Serializable {
     public List<Account> getFollowingAccounts() {
         return followingAccounts;
     }
-
 }

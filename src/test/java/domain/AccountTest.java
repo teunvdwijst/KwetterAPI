@@ -5,6 +5,7 @@
  */
 package domain;
 
+import domain.Role;
 import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -17,22 +18,22 @@ import static org.junit.Assert.*;
  * @author Teun
  */
 public class AccountTest {
-    
+
     public AccountTest() {
     }
-    
+
     @BeforeClass
     public static void setUpClass() {
     }
-    
+
     @AfterClass
     public static void tearDownClass() {
     }
-    
+
     @Before
     public void setUp() {
     }
-    
+
     @After
     public void tearDown() {
     }
@@ -43,12 +44,15 @@ public class AccountTest {
     @org.junit.Test
     public void testGetUserName() {
         System.out.println("getUserName");
-        Account instance = new Account();
+        Account instance = new Account("", "", "");
         String expResult = "";
         String result = instance.getUserName();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "Account";
+        instance = new Account(expResult, "", "");
+        result = instance.getUserName();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -57,11 +61,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetUserName() {
         System.out.println("setUserName");
-        String userName = "";
-        Account instance = new Account();
+        String userName = "setUserName";
+        Account instance = new Account("", "", "");
+        assertEquals(instance.getUserName(), "");
         instance.setUserName(userName);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getUserName(), userName);
+
+        instance.setUserName(null);
+        assertNull(instance.getUserName());
     }
 
     /**
@@ -70,12 +77,15 @@ public class AccountTest {
     @org.junit.Test
     public void testGetEmail() {
         System.out.println("getEmail");
-        Account instance = new Account();
+        Account instance = new Account("", "", "");
         String expResult = "";
         String result = instance.getEmail();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getEmail";
+        instance = new Account("", expResult, "");
+        result = instance.getEmail();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -84,11 +94,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetEmail() {
         System.out.println("setEmail");
-        String email = "";
-        Account instance = new Account();
+        String email = "setEmail";
+        Account instance = new Account("", "", "");
+        assertEquals(instance.getEmail(), "");
         instance.setEmail(email);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getEmail(), email);
+
+        instance.setEmail(null);
+        assertNull(instance.getEmail());
     }
 
     /**
@@ -97,12 +110,15 @@ public class AccountTest {
     @org.junit.Test
     public void testGetEncryptedPassword() {
         System.out.println("getEncryptedPassword");
-        Account instance = new Account();
+        Account instance = new Account("", "", "");
         String expResult = "";
         String result = instance.getEncryptedPassword();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getEncryptedPassword";
+        instance = new Account("", "", expResult);
+        result = instance.getEncryptedPassword();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -111,11 +127,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetEncryptedPassword() {
         System.out.println("setEncryptedPassword");
-        String encryptedPassword = "";
-        Account instance = new Account();
+        String encryptedPassword = "setEncryptedPassword";
+        Account instance = new Account("", "", "");
+        assertEquals(instance.getEncryptedPassword(), "");
         instance.setEncryptedPassword(encryptedPassword);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getEncryptedPassword(), encryptedPassword);
+
+        instance.setEncryptedPassword(null);
+        assertNull(instance.getEncryptedPassword());
     }
 
     /**
@@ -124,12 +143,15 @@ public class AccountTest {
     @org.junit.Test
     public void testGetLocation() {
         System.out.println("getLocation");
-        Account instance = new Account();
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
         String result = instance.getLocation();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getLocation";
+        instance = new Account("", "", "", expResult, "", "", "", Role.USER);
+        result = instance.getLocation();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -138,11 +160,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetLocation() {
         System.out.println("setLocation");
-        String location = "";
-        Account instance = new Account();
+        String location = "setLocation";
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        assertEquals(instance.getLocation(), "");
         instance.setLocation(location);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getLocation(), location);
+
+        instance.setLocation(null);
+        assertNull(instance.getLocation());
     }
 
     /**
@@ -151,12 +176,15 @@ public class AccountTest {
     @org.junit.Test
     public void testGetBio() {
         System.out.println("getBio");
-        Account instance = new Account();
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
         String result = instance.getBio();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getBio";
+        instance = new Account("", "", "", "", expResult, "", "", Role.USER);
+        result = instance.getBio();
+        assertEquals(expResult, result);
     }
 
     /**
@@ -165,11 +193,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetBio() {
         System.out.println("setBio");
-        String bio = "";
-        Account instance = new Account();
+        String bio = "setBio";
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        assertEquals(instance.getBio(), "");
         instance.setBio(bio);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getBio(), bio);
+
+        instance.setBio(null);
+        assertNull(instance.getBio());
     }
 
     /**
@@ -178,12 +209,14 @@ public class AccountTest {
     @org.junit.Test
     public void testGetWebsite() {
         System.out.println("getWebsite");
-        Account instance = new Account();
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
         String result = instance.getWebsite();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getWebsite";
+        instance = new Account("", "", "", "", "", expResult, "", Role.USER);
+        assertEquals(instance.getWebsite(), expResult);
     }
 
     /**
@@ -192,11 +225,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetWebsite() {
         System.out.println("setWebsite");
-        String website = "";
-        Account instance = new Account();
+        String website = "setWebsite";
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        assertEquals(instance.getWebsite(), "");
         instance.setWebsite(website);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getWebsite(), website);
+
+        instance.setWebsite(null);
+        assertNull(instance.getWebsite());
     }
 
     /**
@@ -205,12 +241,14 @@ public class AccountTest {
     @org.junit.Test
     public void testGetAvatarPath() {
         System.out.println("getAvatarPath");
-        Account instance = new Account();
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
         String result = instance.getAvatarPath();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = "getAvatarPath";
+        instance = new Account("", "", "", "", "", "", expResult, Role.USER);
+        assertEquals(instance.getAvatarPath(), expResult);
     }
 
     /**
@@ -219,11 +257,14 @@ public class AccountTest {
     @org.junit.Test
     public void testSetAvatarPath() {
         System.out.println("setAvatarPath");
-        String avatarPath = "";
-        Account instance = new Account();
+        String avatarPath = "setAvatarPath";
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        assertEquals(instance.getAvatarPath(), "");
         instance.setAvatarPath(avatarPath);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getAvatarPath(), avatarPath);
+
+        instance.setAvatarPath(null);
+        assertNull(instance.getAvatarPath());
     }
 
     /**
@@ -232,12 +273,18 @@ public class AccountTest {
     @org.junit.Test
     public void testGetUserRole() {
         System.out.println("getUserRole");
-        Account instance = new Account();
-        Role expResult = null;
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        Role expResult = Role.USER;
         Role result = instance.getUserRole();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        expResult = Role.MODERATOR;
+        instance = new Account("", "", "", "", "", "", "", Role.MODERATOR);
+        assertEquals(instance.getUserRole(), expResult);
+
+        expResult = Role.ADMIN;
+        instance = new Account("", "", "", "", "", "", "", Role.ADMIN);
+        assertEquals(instance.getUserRole(), expResult);
     }
 
     /**
@@ -246,24 +293,11 @@ public class AccountTest {
     @org.junit.Test
     public void testSetUserRole() {
         System.out.println("setUserRole");
-        Role userRole = null;
-        Account instance = new Account();
+        Role userRole = Role.MODERATOR;
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        assertEquals(instance.getUserRole(), Role.USER);
         instance.setUserRole(userRole);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of followAccount method, of class Account.
-     */
-    @org.junit.Test
-    public void testFollowAccount() {
-        System.out.println("followAccount");
-        Account a = null;
-        Account instance = new Account();
-        instance.followAccount(a);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(instance.getUserRole(), userRole);
     }
 
     /**
@@ -273,11 +307,23 @@ public class AccountTest {
     public void testGetFollowingAccounts() {
         System.out.println("getFollowingAccounts");
         Account instance = new Account();
-        List<Account> expResult = null;
-        List<Account> result = instance.getFollowingAccounts();
+        int expResult = 0;
+        int result = instance.getFollowingAccounts().size();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
-    
+
+    /**
+     * Test of followAccount method, of class Account.
+     */
+    @org.junit.Test
+    public void testFollowAccount() {
+        System.out.println("followAccount");
+        Account a = new Account();
+        Account instance = new Account();
+        int expResult = 0;
+        assertEquals(instance.getFollowingAccounts().size(), expResult);
+        instance.followAccount(a);
+        expResult = 1;
+        assertEquals(instance.getFollowingAccounts().size(), expResult);
+    }
 }

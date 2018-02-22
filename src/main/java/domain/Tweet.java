@@ -92,5 +92,4 @@ public class Tweet implements Serializable {
     public List<Account> getLikes() {
         return likedBy;
     }
-
 }
