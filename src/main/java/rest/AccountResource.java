@@ -20,10 +20,10 @@ import service.AccountService;
 @Path("account")
 @Stateless
 public class AccountResource {
-    
+
     @Inject
     AccountService accountService;
-    
+
     @GET
     @Produces("application/json")
     public Account getFirstAccount() {

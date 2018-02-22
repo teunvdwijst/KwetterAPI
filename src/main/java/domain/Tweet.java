@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 
 /**
@@ -32,6 +33,7 @@ public class Tweet implements Serializable {
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date published;
     private List<String> tags;
+    @OneToMany
     private List<Account> likedBy = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -69,12 +71,16 @@ public class Tweet implements Serializable {
         this.tags = tags;
     }
 
+    public Tweet(String message) {
+        this.message = message;
+    }
+
     /**
      * Adds an Account to the list of accounts that liked this tweet
      *
      * @param a Account
      */
-    public void LikeTweet(Account a) {
+    public void addLike(Account a) {
         likedBy.add(a);
     }
 
@@ -83,7 +89,7 @@ public class Tweet implements Serializable {
      *
      * @return List of Account objects
      */
-    public List<Account> getLikedBy() {
+    public List<Account> getLikes() {
         return likedBy;
     }
 

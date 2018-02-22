@@ -21,7 +21,7 @@ public class AccountDAO {
     @PersistenceContext
     EntityManager em;
 
-    public List<Account> allAccounts(){
+    public List<Account> allAccounts() {
         return em.createNamedQuery("Account.allAccounts").getResultList();
     }
 }

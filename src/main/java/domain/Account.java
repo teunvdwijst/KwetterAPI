@@ -14,6 +14,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -34,6 +35,7 @@ public class Account implements Serializable {
     private String bio;
     private String website;
     private String avatarPath;
+    @OneToMany
     private List<Account> followingAccounts = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -96,6 +98,12 @@ public class Account implements Serializable {
 
     public Account() {
 
+    }
+
+    public Account(String userName, String email, String encryptedPassword) {
+        this.userName = userName;
+        this.email = email;
+        this.encryptedPassword = encryptedPassword;
     }
 
     public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath) {
