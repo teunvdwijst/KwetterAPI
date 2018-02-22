@@ -308,12 +308,12 @@ public class AccountTest {
         System.out.println("getFollowingAccounts");
         Account instance = new Account();
         int expResult = 0;
-        int result = instance.getFollowingAccounts().size();
+        int result = instance.getFollowing().size();
         assertEquals(expResult, result);
     }
 
     /**
-     * Test of followAccount method, of class Account.
+     * Test of addFollowing method, of class Account.
      */
     @org.junit.Test
     public void testFollowAccount() {
@@ -321,9 +321,9 @@ public class AccountTest {
         Account a = new Account();
         Account instance = new Account();
         int expResult = 0;
-        assertEquals(instance.getFollowingAccounts().size(), expResult);
-        instance.followAccount(a);
+        assertEquals(instance.getFollowing().size(), expResult);
+        instance.addFollowing(a);
         expResult = 1;
-        assertEquals(instance.getFollowingAccounts().size(), expResult);
+        assertEquals(instance.getFollowing().size(), expResult);
     }
 }

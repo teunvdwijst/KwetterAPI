@@ -40,7 +40,11 @@ public class Account implements Serializable {
     private String website;
     private String avatarPath;
     @OneToMany
-    private List<Account> followingAccounts = new ArrayList<>();
+    private final List<Account> following = new ArrayList<>();
+    @OneToMany
+    private final List<Account> followers = new ArrayList<>();
+    @OneToMany
+    private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public String getUserName() {
@@ -119,9 +123,7 @@ public class Account implements Serializable {
     }
 
     public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath, Role userRole) {
-        this.userName = userName;
-        this.email = email;
-        this.encryptedPassword = encryptedPassword;
+        this(userName, email, encryptedPassword);
         this.location = location;
         this.bio = bio;
         this.website = website;
@@ -134,8 +136,26 @@ public class Account implements Serializable {
      *
      * @param a Account
      */
-    public void followAccount(Account a) {
-        followingAccounts.add(a);
+    public void addFollowing(Account a) {
+        following.add(a);
+    }
+
+    /**
+     * Returns a list of all following accounts
+     *
+     * @return List of Account objects
+     */
+    public List<Account> getFollowing() {
+        return following;
+    }
+
+    /**
+     * Adds an Account to the list of accounts following this account
+     *
+     * @param a Account
+     */
+    public void addFollower(Account a) {
+        followers.add(a);
     }
 
     /**
@@ -143,7 +163,25 @@ public class Account implements Serializable {
      *
      * @return List of Account objects
      */
-    public List<Account> getFollowingAccounts() {
-        return followingAccounts;
+    public List<Account> getFollowers() {
+        return followers;
+    }
+
+    /**
+     * Adds a Tweet to the list of Tweets owned by this account
+     *
+     * @param message String
+     */
+    public void addTweet(String message) {
+        Tweet t = new Tweet(message);
+        tweets.add(t);
+    }
+
+    /**
+     * Returns a list of Tweets owned by this account
+     * @return List of Tweet objects
+     */
+    public List<Tweet> getTweets() {
+        return tweets;
     }
 }

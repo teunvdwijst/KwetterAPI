@@ -65,14 +65,14 @@ public class Tweet implements Serializable {
     public Tweet() {
     }
 
-    public Tweet(String message, Date published, List<String> tags) {
-        this.message = message;
-        this.published = published;
-        this.tags = tags;
-    }
-
     public Tweet(String message) {
         this.message = message;
+    }
+
+    public Tweet(String message, Date published, List<String> tags) {
+        this(message);
+        this.published = published;
+        this.tags = tags;
     }
 
     /**
