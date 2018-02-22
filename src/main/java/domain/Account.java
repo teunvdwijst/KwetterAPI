@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +32,8 @@ public class Account implements Serializable {
     private String userName;
     @Column(unique = true)
     private String email;
+    @Enumerated(EnumType.ORDINAL)
+    private Role userRole;
     private String encryptedPassword;
     private String location;
     private String bio;
