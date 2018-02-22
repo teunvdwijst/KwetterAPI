@@ -98,6 +98,14 @@ public class Account implements Serializable {
     public void setAvatarPath(String avatarPath) {
         this.avatarPath = avatarPath;
     }
+
+    public Role getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(Role userRole) {
+        this.userRole = userRole;
+    }
     // </editor-fold>
 
     public Account() {
@@ -110,7 +118,7 @@ public class Account implements Serializable {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath) {
+    public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath, Role userRole) {
         this.userName = userName;
         this.email = email;
         this.encryptedPassword = encryptedPassword;
@@ -118,6 +126,7 @@ public class Account implements Serializable {
         this.bio = bio;
         this.website = website;
         this.avatarPath = avatarPath;
+        this.userRole = userRole;
     }
 
     /**
