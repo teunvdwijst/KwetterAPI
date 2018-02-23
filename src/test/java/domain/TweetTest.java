@@ -41,6 +41,16 @@ public class TweetTest {
     public void tearDown() {
     }
 
+    @Test
+    public void testHashcode() {
+        Account user = new Account();
+        Tweet tweet1 = new Tweet("1", user);
+        Tweet tweet2 = new Tweet("2", user);
+        Tweet tweet3 = new Tweet("1", user);
+        assertFalse(tweet1.hashCode() == tweet2.hashCode());
+        assertTrue(tweet1.hashCode() == tweet3.hashCode());
+    }
+
     /**
      * Test of equals method, of class Tweet.
      */
@@ -68,11 +78,11 @@ public class TweetTest {
         tweet2 = new Tweet("message2", user2, new Date(0));
         equals = tweet1.equals(tweet2);
         assertFalse(equals);
-        
+
         tweet2 = new Tweet("message1", user1, new Date(1));
         equals = tweet1.equals(tweet2);
         assertFalse(equals);
-        
+
         tweet2 = new Tweet("message1", user2, new Date(0));
         equals = tweet1.equals(tweet2);
         assertFalse(equals);

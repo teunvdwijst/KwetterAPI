@@ -38,7 +38,23 @@ public class AccountTest {
     @After
     public void tearDown() {
     }
-    
+
+    /**
+     * Test of hashCode method, of class Account.
+     */
+    @org.junit.Test
+    public void testHashCode() {
+        System.out.println("hashCode");
+        Account a1 = new Account("1", "", "", "", "", "", "", Role.USER);
+        Account a2 = new Account("2", "", "", "", "", "", "", Role.USER);
+        Account a3 = new Account("1", "", "", "", "", "", "", Role.USER);
+        assertFalse(a1.hashCode() == a2.hashCode());
+        assertTrue(a1.hashCode() == a3.hashCode());
+    }
+
+    /**
+     * Test of equals method, of class Account.
+     */
     @org.junit.Test
     public void testEquals() {
         System.out.println("equals");
@@ -46,16 +62,16 @@ public class AccountTest {
         Account instance = new Account("1", "", "", "", "", "", "", Role.USER);
         Account other = new Account("2", "", "", "", "", "", "", Role.USER);
         Account another = new Account();
-        
+
         boolean equals = instance.equals(ojb);
         assertFalse(equals);
-        
+
         equals = instance.equals(other);
         assertFalse(equals);
-        
+
         equals = instance.equals(another);
         assertFalse(equals);
-        
+
         equals = instance.equals(instance);
         assertTrue(equals);
     }
@@ -328,12 +344,17 @@ public class AccountTest {
     @Test
     public void testAddFollowing() {
         System.out.println("addFollowing");
-        Account a = new Account();
-        Account instance = new Account();
+        Account a = new Account("test1", "");
+        Account instance = new Account("test2", "");
         int expResult = 0;
         assertEquals(expResult, instance.getFollowing().size());
         instance.addFollowing(a);
         expResult = 1;
+        assertEquals(expResult, instance.getFollowing().size());
+        instance.addFollowing(a);
+        assertEquals(expResult, instance.getFollowing().size());
+        instance.addFollowing(instance);
+        expResult = 2;
         assertEquals(expResult, instance.getFollowing().size());
     }
 
@@ -402,7 +423,7 @@ public class AccountTest {
         assertEquals(instance.getTweets().size(), 1);
         assertEquals(instance.getTweets().get(0), t);
     }
-    
+
     /**
      * Test of promote method, of class Account.
      */
@@ -411,7 +432,7 @@ public class AccountTest {
         System.out.println("promote");
         Role expResult = Role.USER;
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        
+
         assertEquals(expResult, instance.getUserRole());
         instance.promote();
         expResult = Role.MODERATOR;
@@ -419,8 +440,10 @@ public class AccountTest {
         instance.promote();
         expResult = Role.ADMIN;
         assertEquals(expResult, instance.getUserRole());
+        instance.promote();
+        assertEquals(expResult, instance.getUserRole());
     }
-    
+
     /**
      * Test of demote method, of class Account.
      */
@@ -429,13 +452,15 @@ public class AccountTest {
         System.out.println("demote");
         Role expResult = Role.ADMIN;
         Account instance = new Account("", "", "", "", "", "", "", Role.ADMIN);
-        
+
         assertEquals(expResult, instance.getUserRole());
         instance.demote();
         expResult = Role.MODERATOR;
         assertEquals(expResult, instance.getUserRole());
         instance.demote();
         expResult = Role.USER;
+        assertEquals(expResult, instance.getUserRole());
+        instance.demote();
         assertEquals(expResult, instance.getUserRole());
     }
 }
