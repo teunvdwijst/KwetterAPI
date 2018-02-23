@@ -149,21 +149,13 @@ public class Tweet implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
-            return false;
-        } else if (this == obj) {
-            return true;
-        } else if (!(obj instanceof Tweet)) {
+        if ((obj == null) || (this == obj) || (!(obj instanceof Tweet))) {
             return false;
         }
 
         final Tweet other = (Tweet) obj;
 
-        if (!Objects.equals(this.content, other.content)) {
-            return false;
-        } else if (!Objects.equals(this.published, other.published)) {
-            return false;
-        } else if (!Objects.equals(this.tweetedBy, other.tweetedBy)) {
+        if ((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy))) {
             return false;
         }
         return true;
