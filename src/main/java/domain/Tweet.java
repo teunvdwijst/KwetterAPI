@@ -149,8 +149,10 @@ public class Tweet implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-        if ((obj == null) || (this == obj) || (!(obj instanceof Tweet))) {
+        if ((obj == null) || (!(obj instanceof Tweet))) {
             return false;
+        } else if (this == obj) {
+            return true;
         }
 
         final Tweet other = (Tweet) obj;
