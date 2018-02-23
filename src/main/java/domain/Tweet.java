@@ -90,8 +90,8 @@ public class Tweet implements Serializable {
         this.content = content;
         this.tags = findTags(content);
     }
-    
-        public Tweet(String content, Account tweetedBy, Date published) {
+
+    public Tweet(String content, Account tweetedBy, Date published) {
         this(content, tweetedBy);
         this.published = published;
         this.tags = findTags(content);
@@ -151,11 +151,9 @@ public class Tweet implements Serializable {
     public boolean equals(Object obj) {
         if (obj == null) {
             return false;
-        }
-        if (this == obj) {
+        } else if (this == obj) {
             return true;
-        }
-        if (!(obj instanceof Tweet)) {
+        } else if (!(obj instanceof Tweet)) {
             return false;
         }
 
@@ -163,11 +161,9 @@ public class Tweet implements Serializable {
 
         if (!Objects.equals(this.content, other.content)) {
             return false;
-        }
-        if (!Objects.equals(this.published, other.published)) {
+        } else if (!Objects.equals(this.published, other.published)) {
             return false;
-        }
-        if (!Objects.equals(this.tweetedBy, other.tweetedBy)) {
+        } else if (!Objects.equals(this.tweetedBy, other.tweetedBy)) {
             return false;
         }
         return true;

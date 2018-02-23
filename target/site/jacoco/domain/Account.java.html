@@ -145,7 +145,7 @@ public class Account implements Serializable {
      * @param a Account
      */
     public void addFollowing(Account a) {
-<span class="pc bpc" id="L148" title="1 of 2 branches missed.">        if (!following.contains(a)) {</span>
+<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (!following.contains(a)) {</span>
 <span class="fc" id="L149">            following.add(a);</span>
         }
 <span class="fc" id="L151">    }</span>
@@ -185,7 +185,7 @@ public class Account implements Serializable {
 <span class="nc" id="L185">    }</span>
 
     public Role promote() {
-<span class="pc bpc" id="L188" title="2 of 4 branches missed.">        switch (userRole) {</span>
+<span class="pc bpc" id="L188" title="1 of 4 branches missed.">        switch (userRole) {</span>
             case USER:
 <span class="fc" id="L190">                userRole = Role.MODERATOR;</span>
 <span class="fc" id="L191">                break;</span>
@@ -193,7 +193,7 @@ public class Account implements Serializable {
 <span class="fc" id="L193">                userRole = Role.ADMIN;</span>
 <span class="fc" id="L194">                break;</span>
             case ADMIN:
-<span class="nc" id="L196">                break;</span>
+<span class="fc" id="L196">                break;</span>
             default:
                 break;
         }
@@ -201,7 +201,7 @@ public class Account implements Serializable {
     }
 
     public Role demote() {
-<span class="pc bpc" id="L204" title="2 of 4 branches missed.">        switch (userRole) {</span>
+<span class="pc bpc" id="L204" title="1 of 4 branches missed.">        switch (userRole) {</span>
             case MODERATOR:
 <span class="fc" id="L206">                userRole = Role.USER;</span>
 <span class="fc" id="L207">                break;</span>
@@ -209,7 +209,7 @@ public class Account implements Serializable {
 <span class="fc" id="L209">                userRole = Role.MODERATOR;</span>
 <span class="fc" id="L210">                break;</span>
             case USER:
-<span class="nc" id="L212">                break;</span>
+<span class="fc" id="L212">                break;</span>
             default:
                 break;
         }
@@ -230,16 +230,16 @@ public class Account implements Serializable {
 
     @Override
     public int hashCode() {
-<span class="nc" id="L233">        int hash = 5;</span>
-<span class="nc" id="L234">        hash = 53 * hash + Objects.hashCode(this.userName);</span>
-<span class="nc" id="L235">        hash = 53 * hash + Objects.hashCode(this.email);</span>
-<span class="nc" id="L236">        hash = 53 * hash + Objects.hashCode(this.userRole);</span>
-<span class="nc" id="L237">        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);</span>
-<span class="nc" id="L238">        hash = 53 * hash + Objects.hashCode(this.location);</span>
-<span class="nc" id="L239">        hash = 53 * hash + Objects.hashCode(this.bio);</span>
-<span class="nc" id="L240">        hash = 53 * hash + Objects.hashCode(this.website);</span>
-<span class="nc" id="L241">        hash = 53 * hash + Objects.hashCode(this.avatarPath);</span>
-<span class="nc" id="L242">        return hash;</span>
+<span class="fc" id="L233">        int hash = 5;</span>
+<span class="fc" id="L234">        hash = 53 * hash + Objects.hashCode(this.userName);</span>
+<span class="fc" id="L235">        hash = 53 * hash + Objects.hashCode(this.email);</span>
+<span class="fc" id="L236">        hash = 53 * hash + Objects.hashCode(this.userRole);</span>
+<span class="fc" id="L237">        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);</span>
+<span class="fc" id="L238">        hash = 53 * hash + Objects.hashCode(this.location);</span>
+<span class="fc" id="L239">        hash = 53 * hash + Objects.hashCode(this.bio);</span>
+<span class="fc" id="L240">        hash = 53 * hash + Objects.hashCode(this.website);</span>
+<span class="fc" id="L241">        hash = 53 * hash + Objects.hashCode(this.avatarPath);</span>
+<span class="fc" id="L242">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

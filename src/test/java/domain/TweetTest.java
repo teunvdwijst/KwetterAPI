@@ -211,9 +211,9 @@ public class TweetTest {
         instance.removeLike(a);
 
         instance.addLike(a);
-        assertEquals(instance.getLikedBy().size(), 1);
+        assertEquals(1, instance.getLikedBy().size());
         instance.removeLike(a);
-        assertEquals(instance.getLikedBy().size(), 0);
+        assertEquals(0, instance.getLikedBy().size());
     }
 
     /**

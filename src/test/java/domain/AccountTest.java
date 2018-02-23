@@ -418,10 +418,10 @@ public class AccountTest {
         String message = "addTweet";
         Account instance = new Account("", "");
         Tweet t = new Tweet(message, instance);
-        assertEquals(instance.getTweets().size(), 0);
+        assertEquals(0, instance.getTweets().size());
         instance.addTweet(message);
-        assertEquals(instance.getTweets().size(), 1);
-        assertEquals(instance.getTweets().get(0), t);
+        assertEquals(1, instance.getTweets().size());
+        assertEquals(t, instance.getTweets().get(0));
     }
 
     /**
