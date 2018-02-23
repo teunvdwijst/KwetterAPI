@@ -7,7 +7,9 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -108,6 +110,14 @@ public class Account implements Serializable {
     public void setUserRole(Role userRole) {
         this.userRole = userRole;
     }
+
+    public List<Account> getFollowing() {
+        return Collections.unmodifiableList(following);
+    }
+
+    public List<Tweet> getTweets() {
+        return Collections.unmodifiableList(tweets);
+    }
     // </editor-fold>
 
     public Account() {
@@ -135,16 +145,9 @@ public class Account implements Serializable {
      * @param a Account
      */
     public void addFollowing(Account a) {
-        following.add(a);
-    }
-
-    /**
-     * Returns a list of all following accounts
-     *
-     * @return List of Account objects
-     */
-    public List<Account> getFollowing() {
-        return following;
+        if (!following.contains(a)) {
+            following.add(a);
+        }
     }
 
     /**
@@ -164,16 +167,78 @@ public class Account implements Serializable {
      * @param message String
      */
     public void addTweet(String message) {
-        Tweet t = new Tweet(message);
+        Tweet t = new Tweet(message, this);
         tweets.add(t);
     }
 
     /**
-     * Returns a list of Tweets owned by this account
+     * Removes a Tweet from the list of tweets owned by this account
      *
-     * @return List of Tweet objects
+     * @param id
      */
-    public List<Tweet> getTweets() {
-        return tweets;
+    public void removeTweet(int id) {
+        for (Tweet t : tweets) {
+            if (t.getId() == id) {
+                tweets.remove(t);
+            }
+        }
+    }
+
+    public Role promote() {
+        switch (userRole) {
+            case USER:
+                userRole = Role.MODERATOR;
+                break;
+            case MODERATOR:
+                userRole = Role.ADMIN;
+                break;
+            case ADMIN:
+                break;
+            default:
+                break;
+        }
+        return userRole;
+    }
+
+    public Role demote() {
+        switch (userRole) {
+            case MODERATOR:
+                userRole = Role.USER;
+                break;
+            case ADMIN:
+                userRole = Role.MODERATOR;
+                break;
+            case USER:
+                break;
+            default:
+                break;
+        }
+        return userRole;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Account)) {
+            return false;
+        }
+        Account otherUser = (Account) obj;
+        if (this.email == null || otherUser.email == null) {
+            return false;
+        }
+        return this.email.equals(otherUser.email);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.userName);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + Objects.hashCode(this.userRole);
+        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);
+        hash = 53 * hash + Objects.hashCode(this.location);
+        hash = 53 * hash + Objects.hashCode(this.bio);
+        hash = 53 * hash + Objects.hashCode(this.website);
+        hash = 53 * hash + Objects.hashCode(this.avatarPath);
+        return hash;
     }
 }

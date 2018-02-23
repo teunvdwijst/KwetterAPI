@@ -5,11 +5,14 @@
  */
 package domain;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
+import org.junit.Test;
 
 /**
  *
@@ -61,9 +64,9 @@ public class AccountTest {
         System.out.println("setUserName");
         String userName = "setUserName";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getUserName(), "");
+        assertEquals("", instance.getUserName());
         instance.setUserName(userName);
-        assertEquals(instance.getUserName(), userName);
+        assertEquals(userName, instance.getUserName());
 
         instance.setUserName(null);
         assertNull(instance.getUserName());
@@ -94,9 +97,9 @@ public class AccountTest {
         System.out.println("setEmail");
         String email = "setEmail";
         Account instance = new Account("", "");
-        assertEquals(instance.getEmail(), "");
+        assertEquals("", instance.getEmail());
         instance.setEmail(email);
-        assertEquals(instance.getEmail(), email);
+        assertEquals(email, instance.getEmail());
 
         instance.setEmail(null);
         assertNull(instance.getEmail());
@@ -127,9 +130,9 @@ public class AccountTest {
         System.out.println("setEncryptedPassword");
         String encryptedPassword = "setEncryptedPassword";
         Account instance = new Account("", "");
-        assertEquals(instance.getEncryptedPassword(), "");
+        assertEquals("", instance.getEncryptedPassword());
         instance.setEncryptedPassword(encryptedPassword);
-        assertEquals(instance.getEncryptedPassword(), encryptedPassword);
+        assertEquals(encryptedPassword, instance.getEncryptedPassword());
 
         instance.setEncryptedPassword(null);
         assertNull(instance.getEncryptedPassword());
@@ -160,9 +163,9 @@ public class AccountTest {
         System.out.println("setLocation");
         String location = "setLocation";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getLocation(), "");
+        assertEquals("", instance.getLocation());
         instance.setLocation(location);
-        assertEquals(instance.getLocation(), location);
+        assertEquals(location, instance.getLocation());
 
         instance.setLocation(null);
         assertNull(instance.getLocation());
@@ -193,9 +196,9 @@ public class AccountTest {
         System.out.println("setBio");
         String bio = "setBio";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getBio(), "");
+        assertEquals("", instance.getBio());
         instance.setBio(bio);
-        assertEquals(instance.getBio(), bio);
+        assertEquals(bio, instance.getBio());
 
         instance.setBio(null);
         assertNull(instance.getBio());
@@ -214,7 +217,7 @@ public class AccountTest {
 
         expResult = "getWebsite";
         instance = new Account("", "", "", "", "", expResult, "", Role.USER);
-        assertEquals(instance.getWebsite(), expResult);
+        assertEquals(expResult, instance.getWebsite());
     }
 
     /**
@@ -225,9 +228,9 @@ public class AccountTest {
         System.out.println("setWebsite");
         String website = "setWebsite";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getWebsite(), "");
+        assertEquals("", instance.getWebsite());
         instance.setWebsite(website);
-        assertEquals(instance.getWebsite(), website);
+        assertEquals(website, instance.getWebsite());
 
         instance.setWebsite(null);
         assertNull(instance.getWebsite());
@@ -246,7 +249,7 @@ public class AccountTest {
 
         expResult = "getAvatarPath";
         instance = new Account("", "", "", "", "", "", expResult, Role.USER);
-        assertEquals(instance.getAvatarPath(), expResult);
+        assertEquals(expResult, instance.getAvatarPath());
     }
 
     /**
@@ -257,9 +260,9 @@ public class AccountTest {
         System.out.println("setAvatarPath");
         String avatarPath = "setAvatarPath";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getAvatarPath(), "");
+        assertEquals("", instance.getAvatarPath());
         instance.setAvatarPath(avatarPath);
-        assertEquals(instance.getAvatarPath(), avatarPath);
+        assertEquals(avatarPath, instance.getAvatarPath());
 
         instance.setAvatarPath(null);
         assertNull(instance.getAvatarPath());
@@ -278,11 +281,11 @@ public class AccountTest {
 
         expResult = Role.MODERATOR;
         instance = new Account("", "", "", "", "", "", "", Role.MODERATOR);
-        assertEquals(instance.getUserRole(), expResult);
+        assertEquals(expResult, instance.getUserRole());
 
         expResult = Role.ADMIN;
         instance = new Account("", "", "", "", "", "", "", Role.ADMIN);
-        assertEquals(instance.getUserRole(), expResult);
+        assertEquals(expResult, instance.getUserRole());
     }
 
     /**
@@ -293,35 +296,89 @@ public class AccountTest {
         System.out.println("setUserRole");
         Role userRole = Role.MODERATOR;
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals(instance.getUserRole(), Role.USER);
+        assertEquals(Role.USER, instance.getUserRole());
         instance.setUserRole(userRole);
-        assertEquals(instance.getUserRole(), userRole);
-    }
-
-    /**
-     * Test of getFollowingAccounts method, of class Account.
-     */
-    @org.junit.Test
-    public void testGetFollowingAccounts() {
-        System.out.println("getFollowingAccounts");
-        Account instance = new Account();
-        int expResult = 0;
-        int result = instance.getFollowing().size();
-        assertEquals(expResult, result);
+        assertEquals(userRole, instance.getUserRole());
     }
 
     /**
      * Test of addFollowing method, of class Account.
      */
-    @org.junit.Test
-    public void testFollowAccount() {
-        System.out.println("followAccount");
+    @Test
+    public void testAddFollowing() {
+        System.out.println("addFollowing");
         Account a = new Account();
         Account instance = new Account();
         int expResult = 0;
-        assertEquals(instance.getFollowing().size(), expResult);
+        assertEquals(expResult, instance.getFollowing().size());
         instance.addFollowing(a);
         expResult = 1;
-        assertEquals(instance.getFollowing().size(), expResult);
+        assertEquals(expResult, instance.getFollowing().size());
+    }
+
+    /**
+     * Test of getFollowing method, of class Account.
+     */
+    @Test
+    public void testGetFollowing() {
+        System.out.println("getFollowing");
+        Account a = new Account();
+        Account instance = new Account();
+        List<Account> expResult = new ArrayList<>();
+        List<Account> result = instance.getFollowing();
+        assertEquals(expResult, result);
+
+        instance.addFollowing(a);
+        assertEquals(1, instance.getFollowing().size());
+    }
+
+    /**
+     * Test of removeFollowing method, of class Account.
+     */
+    @Test
+    public void testRemoveFollowing() {
+        System.out.println("removeFollowing");
+        Account a = new Account("test", "");
+        Account instance = new Account("", "");
+        System.out.println(instance.getFollowing().size());
+        instance.removeFollowing(a);
+        System.out.println(instance.getFollowing().size());
+
+        instance.addFollowing(a);
+        System.out.println(instance.getFollowing().size());
+        assertEquals(1, instance.getFollowing().size());
+        instance.removeFollowing(a);
+        assertEquals(0, instance.getFollowing().size());
+    }
+
+    /**
+     * Test of getTweets method, of class Account.
+     */
+    @Test
+    public void testGetTweets() {
+        System.out.println("getTweets");
+        Account instance = new Account();
+        List<Tweet> expResult = new ArrayList<>();
+        List<Tweet> result = instance.getTweets();
+        assertEquals(expResult, result);
+
+        instance.addTweet("tweet");
+        expResult.add(new Tweet("tweet", instance));
+        assertEquals(instance.getTweets(), expResult);
+    }
+
+    /**
+     * Test of addTweet method, of class Account.
+     */
+    @Test
+    public void testAddTweet() {
+        System.out.println("addTweet");
+        String message = "addTweet";
+        Account instance = new Account("", "");
+        Tweet t = new Tweet(message, instance);
+        assertEquals(instance.getTweets().size(), 0);
+        instance.addTweet(message);
+        assertEquals(instance.getTweets().size(), 1);
+        assertEquals(instance.getTweets().get(0), t);
     }
 }

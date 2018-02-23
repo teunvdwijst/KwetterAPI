@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="9" failures="0" name="domain.TweetTest" time="0.186" errors="0" skipped="0">
+<testsuite tests="11" failures="0" name="domain.TweetTest" time="0.25" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
@@ -63,13 +63,15 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="domain.TweetTest" name="testGetPublished" time="0"/>
+  <testcase classname="domain.TweetTest" name="testGetPublished" time="0.016"/>
   <testcase classname="domain.TweetTest" name="testGetLikes" time="0"/>
   <testcase classname="domain.TweetTest" name="testAddLike" time="0"/>
-  <testcase classname="domain.TweetTest" name="testSetContent" time="0"/>
+  <testcase classname="domain.TweetTest" name="testSetContent" time="0.015"/>
   <testcase classname="domain.TweetTest" name="testGetTags" time="0"/>
   <testcase classname="domain.TweetTest" name="testSetPublished" time="0"/>
   <testcase classname="domain.TweetTest" name="testRemoveLike" time="0"/>
+  <testcase classname="domain.TweetTest" name="testGetLikedBy" time="0"/>
+  <testcase classname="domain.TweetTest" name="testGetTweetedBy" time="0"/>
   <testcase classname="domain.TweetTest" name="testGetContent" time="0"/>
-  <testcase classname="domain.TweetTest" name="testSetTags" time="0"/>
+  <testcase classname="domain.TweetTest" name="testEquals" time="0"/>
 </testsuite>
