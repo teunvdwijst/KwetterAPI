@@ -49,8 +49,9 @@ public class TweetTest {
         System.out.println("equals");
 
         Account user1 = new Account("1", "");
-        Tweet tweet1 = new Tweet("message1", user1);
-        Tweet tweet2 = new Tweet("message2", user1);
+        Account user2 = new Account("2", "");
+        Tweet tweet1 = new Tweet("message1", user1, new Date(0));
+        Tweet tweet2 = new Tweet("message2", user1, new Date(0));
 
         boolean equals = tweet1.equals(tweet2);
         assertFalse(equals);
@@ -59,6 +60,21 @@ public class TweetTest {
         assertTrue(equals);
 
         equals = tweet1.equals(null);
+        assertFalse(equals);
+
+        equals = tweet1.equals(user1);
+        assertFalse(equals);
+
+        tweet2 = new Tweet("message2", user2, new Date(0));
+        equals = tweet1.equals(tweet2);
+        assertFalse(equals);
+        
+        tweet2 = new Tweet("message1", user1, new Date(1));
+        equals = tweet1.equals(tweet2);
+        assertFalse(equals);
+        
+        tweet2 = new Tweet("message1", user2, new Date(0));
+        equals = tweet1.equals(tweet2);
         assertFalse(equals);
     }
 
@@ -102,7 +118,7 @@ public class TweetTest {
     public void testGetPublished() {
         System.out.println("getPublished");
         Date d = new Date(946681200);
-        Tweet instance = new Tweet("", null, d, new ArrayList<String>());
+        Tweet instance = new Tweet("", null, d);
         Date expResult = new Date(946681200);
         Date result = instance.getPublished();
         assertEquals(expResult, result);
@@ -130,10 +146,7 @@ public class TweetTest {
     @Test
     public void testGetTags() {
         System.out.println("getTags");
-        List<String> t = new ArrayList<>();
-        t.add("1");
-        t.add("2");
-        Tweet instance = new Tweet("", null, new Date(0), t);
+        Tweet instance = new Tweet("#1 #2", null, new Date(0));
         List<String> expResult = new ArrayList<>();
         expResult.add("1");
         expResult.add("2");
@@ -147,7 +160,7 @@ public class TweetTest {
     @Test
     public void testGetLikes() {
         System.out.println("getLikes");
-        Tweet instance = new Tweet("", null, new Date(0), null);
+        Tweet instance = new Tweet("", null, new Date(0));
         List<Account> expResult = new ArrayList<>();
         List<Account> result = instance.getLikedBy();
         assertEquals(expResult, result);
@@ -166,7 +179,7 @@ public class TweetTest {
     public void testAddLike() {
         System.out.println("addLike");
         Account a = new Account("", "");
-        Tweet instance = new Tweet("", null, new Date(0), null);
+        Tweet instance = new Tweet("", null, new Date(0));
         List<Account> expResult = new ArrayList<>();
         assertEquals(instance.getLikedBy(), expResult);
         instance.addLike(a);

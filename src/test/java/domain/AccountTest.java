@@ -38,6 +38,27 @@ public class AccountTest {
     @After
     public void tearDown() {
     }
+    
+    @org.junit.Test
+    public void testEquals() {
+        System.out.println("equals");
+        Object ojb = null;
+        Account instance = new Account("1", "", "", "", "", "", "", Role.USER);
+        Account other = new Account("2", "", "", "", "", "", "", Role.USER);
+        Account another = new Account();
+        
+        boolean equals = instance.equals(ojb);
+        assertFalse(equals);
+        
+        equals = instance.equals(other);
+        assertFalse(equals);
+        
+        equals = instance.equals(another);
+        assertFalse(equals);
+        
+        equals = instance.equals(instance);
+        assertTrue(equals);
+    }
 
     /**
      * Test of getUserName method, of class Account.
@@ -51,7 +72,7 @@ public class AccountTest {
         assertEquals(expResult, result);
 
         expResult = "Account";
-        instance = new Account(expResult, "", "", "", "", "", "", Role.USER);
+        instance = new Account("", "", expResult, "", "", "", "", Role.USER);
         result = instance.getUserName();
         assertEquals(expResult, result);
     }
@@ -380,5 +401,41 @@ public class AccountTest {
         instance.addTweet(message);
         assertEquals(instance.getTweets().size(), 1);
         assertEquals(instance.getTweets().get(0), t);
+    }
+    
+    /**
+     * Test of promote method, of class Account.
+     */
+    @Test
+    public void testPromote() {
+        System.out.println("promote");
+        Role expResult = Role.USER;
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
+        
+        assertEquals(expResult, instance.getUserRole());
+        instance.promote();
+        expResult = Role.MODERATOR;
+        assertEquals(expResult, instance.getUserRole());
+        instance.promote();
+        expResult = Role.ADMIN;
+        assertEquals(expResult, instance.getUserRole());
+    }
+    
+    /**
+     * Test of demote method, of class Account.
+     */
+    @Test
+    public void testDemote() {
+        System.out.println("demote");
+        Role expResult = Role.ADMIN;
+        Account instance = new Account("", "", "", "", "", "", "", Role.ADMIN);
+        
+        assertEquals(expResult, instance.getUserRole());
+        instance.demote();
+        expResult = Role.MODERATOR;
+        assertEquals(expResult, instance.getUserRole());
+        instance.demote();
+        expResult = Role.USER;
+        assertEquals(expResult, instance.getUserRole());
     }
 }

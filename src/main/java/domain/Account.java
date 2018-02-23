@@ -129,7 +129,7 @@ public class Account implements Serializable {
         this.encryptedPassword = encryptedPassword;
     }
 
-    public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath, Role userRole) {
+    public Account(String email, String encryptedPassword, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
         this(email, encryptedPassword);
         this.userName = userName;
         this.location = location;

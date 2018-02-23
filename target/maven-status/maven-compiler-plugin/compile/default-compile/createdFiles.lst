@@ -1,4 +1,5 @@
 service\AccountService.class
+domain\Account$1.class
 domain\Role.class
 rest\JAXRSconfig.class
 domain\Tweet_.class

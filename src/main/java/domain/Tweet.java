@@ -97,12 +97,6 @@ public class Tweet implements Serializable {
         this.tags = findTags(content);
     }
 
-    public Tweet(String content, Account tweetedBy, Date published, List<String> tags) {
-        this(content, tweetedBy);
-        this.published = published;
-        this.tags = tags;
-    }
-
     /**
      * Finds tags preceded with a '#' and returns them as a List of Strings
      *
@@ -173,16 +167,7 @@ public class Tweet implements Serializable {
         if (!Objects.equals(this.published, other.published)) {
             return false;
         }
-        if (!Objects.equals(this.tags, other.tags)) {
-            return false;
-        }
         if (!Objects.equals(this.tweetedBy, other.tweetedBy)) {
-            return false;
-        }
-        if (!Objects.equals(this.likedBy, other.likedBy)) {
-            return false;
-        }
-        if (!Objects.equals(this.mentions, other.mentions)) {
             return false;
         }
         return true;
