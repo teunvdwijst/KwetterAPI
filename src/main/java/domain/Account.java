@@ -42,8 +42,6 @@ public class Account implements Serializable {
     @OneToMany
     private final List<Account> following = new ArrayList<>();
     @OneToMany
-    private final List<Account> followers = new ArrayList<>();
-    @OneToMany
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -116,14 +114,14 @@ public class Account implements Serializable {
 
     }
 
-    public Account(String userName, String email, String encryptedPassword) {
-        this.userName = userName;
+    public Account(String email, String encryptedPassword) {
         this.email = email;
         this.encryptedPassword = encryptedPassword;
     }
 
     public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath, Role userRole) {
-        this(userName, email, encryptedPassword);
+        this(email, encryptedPassword);
+        this.userName = userName;
         this.location = location;
         this.bio = bio;
         this.website = website;
@@ -150,24 +148,6 @@ public class Account implements Serializable {
     }
 
     /**
-     * Adds an Account to the list of accounts following this account
-     *
-     * @param a Account
-     */
-    public void addFollower(Account a) {
-        followers.add(a);
-    }
-
-    /**
-     * Returns a list of all accounts following this account
-     *
-     * @return List of Account objects
-     */
-    public List<Account> getFollowers() {
-        return followers;
-    }
-
-    /**
      * Adds a Tweet to the list of Tweets owned by this account
      *
      * @param message String
@@ -179,6 +159,7 @@ public class Account implements Serializable {
 
     /**
      * Returns a list of Tweets owned by this account
+     *
      * @return List of Tweet objects
      */
     public List<Tweet> getTweets() {

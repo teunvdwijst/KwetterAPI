@@ -5,8 +5,6 @@
  */
 package domain;
 
-import domain.Role;
-import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -44,13 +42,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetUserName() {
         System.out.println("getUserName");
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
         String result = instance.getUserName();
         assertEquals(expResult, result);
 
         expResult = "Account";
-        instance = new Account(expResult, "", "");
+        instance = new Account(expResult, "", "", "", "", "", "", Role.USER);
         result = instance.getUserName();
         assertEquals(expResult, result);
     }
@@ -62,7 +60,7 @@ public class AccountTest {
     public void testSetUserName() {
         System.out.println("setUserName");
         String userName = "setUserName";
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         assertEquals(instance.getUserName(), "");
         instance.setUserName(userName);
         assertEquals(instance.getUserName(), userName);
@@ -77,13 +75,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetEmail() {
         System.out.println("getEmail");
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "");
         String expResult = "";
         String result = instance.getEmail();
         assertEquals(expResult, result);
 
         expResult = "getEmail";
-        instance = new Account("", expResult, "");
+        instance = new Account(expResult, "");
         result = instance.getEmail();
         assertEquals(expResult, result);
     }
@@ -95,7 +93,7 @@ public class AccountTest {
     public void testSetEmail() {
         System.out.println("setEmail");
         String email = "setEmail";
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "");
         assertEquals(instance.getEmail(), "");
         instance.setEmail(email);
         assertEquals(instance.getEmail(), email);
@@ -110,13 +108,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetEncryptedPassword() {
         System.out.println("getEncryptedPassword");
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "");
         String expResult = "";
         String result = instance.getEncryptedPassword();
         assertEquals(expResult, result);
 
         expResult = "getEncryptedPassword";
-        instance = new Account("", "", expResult);
+        instance = new Account("", expResult);
         result = instance.getEncryptedPassword();
         assertEquals(expResult, result);
     }
@@ -128,7 +126,7 @@ public class AccountTest {
     public void testSetEncryptedPassword() {
         System.out.println("setEncryptedPassword");
         String encryptedPassword = "setEncryptedPassword";
-        Account instance = new Account("", "", "");
+        Account instance = new Account("", "");
         assertEquals(instance.getEncryptedPassword(), "");
         instance.setEncryptedPassword(encryptedPassword);
         assertEquals(instance.getEncryptedPassword(), encryptedPassword);

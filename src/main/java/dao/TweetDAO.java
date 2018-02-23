@@ -5,23 +5,23 @@
  */
 package dao;
 
+import domain.Account;
 import domain.Tweet;
 import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Teun
  */
-@Stateless
-public class TweetDAO {
+public interface TweetDAO {
 
-    @PersistenceContext
-    EntityManager em;
+    Tweet getTweet(int id);
 
-    public List<Tweet> allTweets() {
-        return em.createNamedQuery("Tweet.allTweets").getResultList();
-    }
+    List<Tweet> getRecentTweets(int limit, Account user);
+
+    Tweet create(String content, Account user);
+
+    Tweet create(String content, Account user, List<String> tags);
+
+    boolean remove(Tweet tweet);
 }

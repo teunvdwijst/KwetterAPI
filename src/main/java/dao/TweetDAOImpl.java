@@ -3,21 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest;
+package dao;
 
+import domain.Tweet;
+import java.util.List;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
-import javax.ws.rs.Path;
-import service.AccountService;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Teun
  */
-@Path("account")
 @Stateless
-public class AccountResource {
+public class TweetDAOImpl {
 
-    @Inject
-    AccountService accountService;
+    @PersistenceContext
+    EntityManager em;
+    
 }

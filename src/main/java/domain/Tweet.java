@@ -28,21 +28,20 @@ public class Tweet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    private String message;
+    private String content;
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date published;
     private List<String> tags;
     @OneToMany
-    private List<Account> likedBy = new ArrayList<>();
+    private final List<Account> likedBy = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getMessage() {
-        return message;
+    public String getContent() {
+        return content;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getPublished() {
@@ -65,12 +64,12 @@ public class Tweet implements Serializable {
     public Tweet() {
     }
 
-    public Tweet(String message) {
-        this.message = message;
+    public Tweet(String content) {
+        this.content = content;
     }
 
-    public Tweet(String message, Date published, List<String> tags) {
-        this(message);
+    public Tweet(String content, Date published, List<String> tags) {
+        this(content);
         this.published = published;
         this.tags = tags;
     }

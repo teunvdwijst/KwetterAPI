@@ -5,9 +5,7 @@
  */
 package service;
 
-import dao.AccountDAO;
-import domain.Account;
-import java.util.List;
+import dao.AccountDAOImpl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -19,9 +17,6 @@ import javax.inject.Inject;
 public class AccountService {
 
     @Inject
-    AccountDAO accountDao;
+    AccountDAOImpl accountDao;
 
-    public List<Account> allAccounts() {
-        return accountDao.allAccounts();
-    }
 }

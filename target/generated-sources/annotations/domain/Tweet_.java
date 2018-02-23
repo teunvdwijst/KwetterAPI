@@ -8,14 +8,14 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-02-22T12:16:36")
+@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2018-02-23T10:21:41")
 @StaticMetamodel(Tweet.class)
 public class Tweet_ { 
 
     public static volatile ListAttribute<Tweet, Account> likedBy;
     public static volatile SingularAttribute<Tweet, Long> id;
     public static volatile SingularAttribute<Tweet, Date> published;
-    public static volatile SingularAttribute<Tweet, String> message;
+    public static volatile SingularAttribute<Tweet, String> content;
     public static volatile SingularAttribute<Tweet, List> tags;
 
 }

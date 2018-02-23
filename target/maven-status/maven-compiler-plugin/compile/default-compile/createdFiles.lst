@@ -3,10 +3,12 @@ domain\Role.class
 rest\JAXRSconfig.class
 domain\Tweet_.class
 dao\AccountDAO.class
+dao\AccountDAOImpl.class
 domain\Account_.class
 rest\TweetResource.class
 service\TweetService.class
 rest\AccountResource.class
 dao\TweetDAO.class
+dao\TweetDAOImpl.class
 domain\Tweet.class
 domain\Account.class
