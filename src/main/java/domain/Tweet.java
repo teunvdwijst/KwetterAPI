@@ -29,7 +29,7 @@ public class Tweet implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
     @OneToMany
@@ -81,6 +81,17 @@ public class Tweet implements Serializable {
      */
     public void addLike(Account a) {
         likedBy.add(a);
+    }
+
+    /**
+     * Removes an Account from the list of accounts that liked this tweet
+     *
+     * @param a
+     */
+    public void removeLike(Account a) {
+        if (likedBy.contains(a)) {
+            likedBy.remove(a);
+        }
     }
 
     /**

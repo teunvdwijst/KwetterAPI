@@ -148,6 +148,17 @@ public class Account implements Serializable {
     }
 
     /**
+     * Removes an Account from the list of following accounts
+     *
+     * @param a
+     */
+    public void removeFollowing(Account a) {
+        if (following.contains(a)) {
+            following.remove(a);
+        }
+    }
+
+    /**
      * Adds a Tweet to the list of Tweets owned by this account
      *
      * @param message String
