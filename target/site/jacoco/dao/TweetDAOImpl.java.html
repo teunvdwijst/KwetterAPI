@@ -5,6 +5,9 @@
  */
 package dao;
 
+import domain.Account;
+import domain.Tweet;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,10 +17,41 @@ import javax.persistence.PersistenceContext;
  * @author Teun
  */
 @Stateless
-<span class="nc" id="L17">public class TweetDAOImpl {</span>
+public class TweetDAOImpl implements TweetDAO {
 
     @PersistenceContext
     EntityManager em;
-    
+
+<span class="nc" id="L25">    public TweetDAOImpl() {</span>
+<span class="nc" id="L26">    }</span>
+
+    @Override
+    public Tweet getTweet(int id) {
+<span class="nc" id="L30">        return em.find(Tweet.class, id);</span>
+    }
+
+    @Override
+    public List&lt;Tweet&gt; getRecentTweets(int limit, String userEmail) {
+<span class="nc" id="L35">        return em.createNamedQuery(&quot;Select t from Tweet t where id in (select id from account_tweet where account_id = (select id from account where email = :email)) limit :limit order by published desc&quot;, Tweet.class)</span>
+<span class="nc" id="L36">                .setParameter(&quot;email&quot;, userEmail)</span>
+<span class="nc" id="L37">                .setParameter(&quot;limit&quot;, limit)</span>
+<span class="nc" id="L38">                .getResultList();</span>
+    }
+
+    @Override
+    public void update(Tweet tweet) {
+<span class="nc" id="L43">        em.merge(tweet);</span>
+<span class="nc" id="L44">    }</span>
+
+    @Override
+    public void insert(Tweet tweet) {
+<span class="nc" id="L48">        em.persist(tweet);</span>
+<span class="nc" id="L49">    }</span>
+
+    @Override
+    public void remove(Tweet tweet) {
+<span class="nc" id="L53">        em.remove(tweet);</span>
+<span class="nc" id="L54">    }</span>
+
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

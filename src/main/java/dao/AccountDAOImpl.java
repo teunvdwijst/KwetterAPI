@@ -16,12 +16,36 @@ import javax.persistence.PersistenceContext;
  * @author Teun
  */
 @Stateless
-public class AccountDAOImpl {
+public class AccountDAOImpl implements AccountDAO {
 
     @PersistenceContext
     EntityManager em;
 
-    public List<Account> allAccounts() {
-        return em.createNamedQuery("Account.allAccounts").getResultList();
+    public AccountDAOImpl() {
+    }
+
+    @Override
+    public List<Account> getAllAccounts() {
+        return em.createQuery("Select a from Account a", Account.class).getResultList();
+    }
+
+    @Override
+    public Account getAccountByEmail(String email) {
+        return em.find(Account.class, email);
+    }
+
+    @Override
+    public void updateAccount(Account user) {
+        em.merge(user);
+    }
+
+    @Override
+    public void insertAccount(Account user) {
+        em.persist(user);
+    }
+
+    @Override
+    public List<Account> getFollowers(Account user) {
+        return em.find(Account.class, user.getEmail()).getFollowing();
     }
 }

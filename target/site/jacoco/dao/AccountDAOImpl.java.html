@@ -16,13 +16,38 @@ import javax.persistence.PersistenceContext;
  * @author Teun
  */
 @Stateless
-<span class="nc" id="L19">public class AccountDAOImpl {</span>
+public class AccountDAOImpl implements AccountDAO {
 
     @PersistenceContext
     EntityManager em;
 
-    public List&lt;Account&gt; allAccounts() {
-<span class="nc" id="L25">        return em.createNamedQuery(&quot;Account.allAccounts&quot;).getResultList();</span>
+<span class="nc" id="L24">    public AccountDAOImpl() {</span>
+<span class="nc" id="L25">    }</span>
+
+    @Override
+    public List&lt;Account&gt; getAllAccounts() {
+<span class="nc" id="L29">        return em.createQuery(&quot;Select a from Account a&quot;, Account.class).getResultList();</span>
+    }
+
+    @Override
+    public Account getAccountByEmail(String email) {
+<span class="nc" id="L34">        return em.find(Account.class, email);</span>
+    }
+
+    @Override
+    public Account updateAccount(Account user) {
+<span class="nc" id="L39">        em.merge(user);</span>
+<span class="nc" id="L40">        return em.find(Account.class, user.getEmail());</span>
+    }
+
+    @Override
+    public void insertAccount(Account user) {
+<span class="nc" id="L45">        em.persist(user);</span>
+<span class="nc" id="L46">    }</span>
+
+    @Override
+    public List&lt;Account&gt; getFollowers(Account user) {
+<span class="nc" id="L50">        return em.find(Account.class, user.getEmail()).getFollowing();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -90,8 +90,8 @@ public class Tweet implements Serializable {
 <span class="fc" id="L90">        this.content = content;</span>
 <span class="fc" id="L91">        this.tags = findTags(content);</span>
 <span class="fc" id="L92">    }</span>
-    
-        public Tweet(String content, Account tweetedBy, Date published) {
+
+    public Tweet(String content, Account tweetedBy, Date published) {
 <span class="fc" id="L95">        this(content, tweetedBy);</span>
 <span class="fc" id="L96">        this.published = published;</span>
 <span class="fc" id="L97">        this.tags = findTags(content);</span>
@@ -149,40 +149,30 @@ public class Tweet implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L152" title="All 2 branches covered.">        if (obj == null) {</span>
+<span class="fc bfc" id="L152" title="All 4 branches covered.">        if ((obj == null) || (!(obj instanceof Tweet))) {</span>
 <span class="fc" id="L153">            return false;</span>
-        }
-<span class="fc bfc" id="L155" title="All 2 branches covered.">        if (this == obj) {</span>
-<span class="fc" id="L156">            return true;</span>
-        }
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (!(obj instanceof Tweet)) {</span>
-<span class="fc" id="L159">            return false;</span>
+<span class="fc bfc" id="L154" title="All 2 branches covered.">        } else if (this == obj) {</span>
+<span class="fc" id="L155">            return true;</span>
         }
 
-<span class="fc" id="L162">        final Tweet other = (Tweet) obj;</span>
+<span class="fc" id="L158">        final Tweet other = (Tweet) obj;</span>
 
-<span class="fc bfc" id="L164" title="All 2 branches covered.">        if (!Objects.equals(this.content, other.content)) {</span>
-<span class="fc" id="L165">            return false;</span>
+<span class="fc bfc" id="L160" title="All 6 branches covered.">        if ((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy))) {</span>
+<span class="fc" id="L161">            return false;</span>
         }
-<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (!Objects.equals(this.published, other.published)) {</span>
-<span class="fc" id="L168">            return false;</span>
-        }
-<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (!Objects.equals(this.tweetedBy, other.tweetedBy)) {</span>
-<span class="fc" id="L171">            return false;</span>
-        }
-<span class="fc" id="L173">        return true;</span>
+<span class="fc" id="L163">        return true;</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L178">        int hash = 7;</span>
-<span class="fc" id="L179">        hash = 67 * hash + Objects.hashCode(this.content);</span>
-<span class="fc" id="L180">        hash = 67 * hash + Objects.hashCode(this.published);</span>
-<span class="fc" id="L181">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
-<span class="fc" id="L182">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
-<span class="fc" id="L183">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
-<span class="fc" id="L184">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
-<span class="fc" id="L185">        return hash;</span>
+<span class="fc" id="L168">        int hash = 7;</span>
+<span class="fc" id="L169">        hash = 67 * hash + Objects.hashCode(this.content);</span>
+<span class="fc" id="L170">        hash = 67 * hash + Objects.hashCode(this.published);</span>
+<span class="fc" id="L171">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
+<span class="fc" id="L172">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
+<span class="fc" id="L173">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
+<span class="fc" id="L174">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
+<span class="fc" id="L175">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
