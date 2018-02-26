@@ -188,7 +188,16 @@ public class TweetTest {
     @Test
     public void testAddLike() {
         System.out.println("addLike");
-        Account a = new Account("", "");
+        Account a = new Account("a", "");
+        Account b = new Account("b", "");
+        Account c = new Account("c", "");
+        Account d = new Account("d", "");
+        Account e = new Account("e", "");
+        Account f = new Account("f", "");
+        Account g = new Account("g", "");
+        Account h = new Account("h", "");
+        Account i = new Account("i", "");
+        Account j = new Account("j", "");
         Tweet instance = new Tweet("", null, new Date(0));
         List<Account> expResult = new ArrayList<>();
         assertEquals(instance.getLikedBy(), expResult);
@@ -197,6 +206,42 @@ public class TweetTest {
         assertEquals(instance.getLikedBy(), expResult);
 
         instance.addLike(a);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(b);
+        expResult.add(b);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(c);
+        expResult.add(c);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(d);
+        expResult.add(d);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(e);
+        expResult.add(e);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(f);
+        expResult.add(f);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(g);
+        expResult.add(g);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(h);
+        expResult.add(h);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(i);
+        expResult.add(i);
+        assertEquals(instance.getLikedBy(), expResult);
+        
+        instance.addLike(j);
+        expResult.add(j);
         assertEquals(instance.getLikedBy(), expResult);
     }
 

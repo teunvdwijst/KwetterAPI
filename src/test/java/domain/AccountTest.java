@@ -415,13 +415,32 @@ public class AccountTest {
     @Test
     public void testAddTweet() {
         System.out.println("addTweet");
-        String message = "addTweet";
+        String message = "Tweet1";
         Account instance = new Account("", "");
-        Tweet t = new Tweet(message, instance);
+        Tweet t1 = new Tweet(message, instance);
+        
         assertEquals(0, instance.getTweets().size());
         instance.addTweet(message);
         assertEquals(1, instance.getTweets().size());
-        assertEquals(t, instance.getTweets().get(0));
+        instance.addTweet("Tweet2");
+        assertEquals(2, instance.getTweets().size());
+        instance.addTweet("Tweet3");
+        assertEquals(3, instance.getTweets().size());
+        instance.addTweet("Tweet4");
+        assertEquals(4, instance.getTweets().size());
+        instance.addTweet("Tweet5");
+        assertEquals(5, instance.getTweets().size());
+        instance.addTweet("Tweet6");
+        assertEquals(6, instance.getTweets().size());
+        instance.addTweet("Tweet7");
+        assertEquals(7, instance.getTweets().size());
+        instance.addTweet("Tweet8");
+        assertEquals(8, instance.getTweets().size());
+        instance.addTweet("Tweet9");
+        assertEquals(9, instance.getTweets().size());
+        instance.addTweet("Tweet10");
+        assertEquals(10, instance.getTweets().size());
+        assertEquals(t1, instance.getTweets().get(0));
     }
 
     /**
