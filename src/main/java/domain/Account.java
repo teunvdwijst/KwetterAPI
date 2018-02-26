@@ -7,7 +7,9 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -40,7 +42,9 @@ public class Account implements Serializable {
     private String website;
     private String avatarPath;
     @OneToMany
-    private List<Account> followingAccounts = new ArrayList<>();
+    private final List<Account> following = new ArrayList<>();
+    @OneToMany
+    private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
     public String getUserName() {
@@ -106,22 +110,28 @@ public class Account implements Serializable {
     public void setUserRole(Role userRole) {
         this.userRole = userRole;
     }
+
+    public List<Account> getFollowing() {
+        return Collections.unmodifiableList(following);
+    }
+
+    public List<Tweet> getTweets() {
+        return Collections.unmodifiableList(tweets);
+    }
     // </editor-fold>
 
     public Account() {
 
     }
 
-    public Account(String userName, String email, String encryptedPassword) {
-        this.userName = userName;
+    public Account(String email, String encryptedPassword) {
         this.email = email;
         this.encryptedPassword = encryptedPassword;
     }
 
-    public Account(String userName, String email, String encryptedPassword, String location, String bio, String website, String avatarPath, Role userRole) {
+    public Account(String email, String encryptedPassword, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
+        this(email, encryptedPassword);
         this.userName = userName;
-        this.email = email;
-        this.encryptedPassword = encryptedPassword;
         this.location = location;
         this.bio = bio;
         this.website = website;
@@ -134,16 +144,101 @@ public class Account implements Serializable {
      *
      * @param a Account
      */
-    public void followAccount(Account a) {
-        followingAccounts.add(a);
+    public void addFollowing(Account a) {
+        if (!following.contains(a)) {
+            following.add(a);
+        }
     }
 
     /**
-     * Returns a list of all accounts following this account
+     * Removes an Account from the list of following accounts
      *
-     * @return List of Account objects
+     * @param a
      */
-    public List<Account> getFollowingAccounts() {
-        return followingAccounts;
+    public void removeFollowing(Account a) {
+        if (following.contains(a)) {
+            following.remove(a);
+        }
+    }
+
+    /**
+     * Adds a Tweet to the list of Tweets owned by this account
+     *
+     * @param message String
+     */
+    public void addTweet(String message) {
+        Tweet t = new Tweet(message, this);
+        tweets.add(t);
+    }
+
+    /**
+     * Removes a Tweet from the list of tweets owned by this account
+     *
+     * @param id
+     */
+    public void removeTweet(int id) {
+        for (Tweet t : tweets) {
+            if (t.getId() == id) {
+                tweets.remove(t);
+            }
+        }
+    }
+
+    public Role promote() {
+        switch (userRole) {
+            case USER:
+                userRole = Role.MODERATOR;
+                break;
+            case MODERATOR:
+                userRole = Role.ADMIN;
+                break;
+            case ADMIN:
+                break;
+            default:
+                break;
+        }
+        return userRole;
+    }
+
+    public Role demote() {
+        switch (userRole) {
+            case MODERATOR:
+                userRole = Role.USER;
+                break;
+            case ADMIN:
+                userRole = Role.MODERATOR;
+                break;
+            case USER:
+                break;
+            default:
+                break;
+        }
+        return userRole;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Account)) {
+            return false;
+        }
+        Account otherUser = (Account) obj;
+        if (this.email == null || otherUser.email == null) {
+            return false;
+        }
+        return this.email.equals(otherUser.email);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 53 * hash + Objects.hashCode(this.userName);
+        hash = 53 * hash + Objects.hashCode(this.email);
+        hash = 53 * hash + Objects.hashCode(this.userRole);
+        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);
+        hash = 53 * hash + Objects.hashCode(this.location);
+        hash = 53 * hash + Objects.hashCode(this.bio);
+        hash = 53 * hash + Objects.hashCode(this.website);
+        hash = 53 * hash + Objects.hashCode(this.avatarPath);
+        return hash;
     }
 }

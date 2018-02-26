@@ -7,12 +7,17 @@ package domain;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -28,21 +33,36 @@ public class Tweet implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-
-    private String message;
-    @Temporal(javax.persistence.TemporalType.DATE)
+    private String content;
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
+    @ManyToOne
+    private Account tweetedBy;
     @OneToMany
-    private List<Account> likedBy = new ArrayList<>();
+    private final List<Account> likedBy = new ArrayList<>();
+    @OneToMany
+    private final List<Account> mentions = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getMessage() {
-        return message;
+    public List<Account> getLikedBy() {
+        return Collections.unmodifiableList(likedBy);
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public List<Account> getMentions() {
+        return Collections.unmodifiableList(mentions);
+    }
+
+    public Account getTweetedBy() {
+        return tweetedBy;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     public Date getPublished() {
@@ -54,25 +74,55 @@ public class Tweet implements Serializable {
     }
 
     public List<String> getTags() {
-        return tags;
+        return Collections.unmodifiableList(tags);
     }
 
-    public void setTags(List<String> tags) {
-        this.tags = tags;
+    public Long getId() {
+        return id;
     }
     // </editor-fold>
 
     public Tweet() {
     }
 
-    public Tweet(String message, Date published, List<String> tags) {
-        this.message = message;
-        this.published = published;
-        this.tags = tags;
+    public Tweet(String content, Account tweetedBy) {
+        this.tweetedBy = tweetedBy;
+        this.content = content;
+        this.tags = findTags(content);
     }
 
-    public Tweet(String message) {
-        this.message = message;
+    public Tweet(String content, Account tweetedBy, Date published) {
+        this(content, tweetedBy);
+        this.published = published;
+        this.tags = findTags(content);
+    }
+
+    /**
+     * Finds tags preceded with a '#' and returns them as a List of Strings
+     *
+     * @param message String
+     * @return List of String objects
+     */
+    private List<String> findTags(String message) {
+        return findRegexMatches(message, "(?:\\s#)([A-Za-z0-9_]+)");
+    }
+
+    /**
+     * Searches for passed regex matches in the message and returns them as a
+     * list
+     *
+     * @param message String
+     * @param regex String
+     * @return List of String objects
+     */
+    private List<String> findRegexMatches(String message, String regex) {
+        List<String> matches = new ArrayList<>();
+        String prefixedString = " ".concat(message);
+        Matcher m = Pattern.compile(regex).matcher(prefixedString);
+        while (m.find()) {
+            matches.add(m.group(1));
+        }
+        return matches;
     }
 
     /**
@@ -81,15 +131,47 @@ public class Tweet implements Serializable {
      * @param a Account
      */
     public void addLike(Account a) {
-        likedBy.add(a);
+        if (!likedBy.contains(a)) {
+            likedBy.add(a);
+        }
     }
 
     /**
-     * Returns a list of all accounts that liked this tweet
+     * Removes an Account from the list of accounts that liked this tweet
      *
-     * @return List of Account objects
+     * @param a
      */
-    public List<Account> getLikes() {
-        return likedBy;
+    public void removeLike(Account a) {
+        if (likedBy.contains(a)) {
+            likedBy.remove(a);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if ((obj == null) || (!(obj instanceof Tweet))) {
+            return false;
+        } else if (this == obj) {
+            return true;
+        }
+
+        final Tweet other = (Tweet) obj;
+
+        if ((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 67 * hash + Objects.hashCode(this.content);
+        hash = 67 * hash + Objects.hashCode(this.published);
+        hash = 67 * hash + Objects.hashCode(this.tags);
+        hash = 67 * hash + Objects.hashCode(this.tweetedBy);
+        hash = 67 * hash + Objects.hashCode(this.likedBy);
+        hash = 67 * hash + Objects.hashCode(this.mentions);
+        return hash;
     }
 }

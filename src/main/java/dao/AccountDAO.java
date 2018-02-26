@@ -7,21 +7,12 @@ package dao;
 
 import domain.Account;
 import java.util.List;
-import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 /**
  *
  * @author Teun
  */
-@Stateless
-public class AccountDAO {
+public interface AccountDAO {
 
-    @PersistenceContext
-    EntityManager em;
-
-    public List<Account> allAccounts() {
-        return em.createNamedQuery("Account.allAccounts").getResultList();
-    }
+    public List<Account> allAccounts();
 }

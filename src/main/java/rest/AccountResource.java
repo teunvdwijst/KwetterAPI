@@ -5,12 +5,9 @@
  */
 package rest;
 
-import domain.Account;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import service.AccountService;
 
 /**
@@ -23,10 +20,4 @@ public class AccountResource {
 
     @Inject
     AccountService accountService;
-
-    @GET
-    @Produces("application/json")
-    public Account getFirstAccount() {
-        return accountService.allAccounts().get(0);
-    }
 }

@@ -5,9 +5,7 @@
  */
 package service;
 
-import dao.TweetDAO;
-import domain.Tweet;
-import java.util.List;
+import dao.TweetDAOImpl;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -19,9 +17,5 @@ import javax.inject.Inject;
 public class TweetService {
 
     @Inject
-    TweetDAO tweetDao;
-
-    public List<Tweet> allTweets() {
-        return tweetDao.allTweets();
-    }
+    TweetDAOImpl tweetDao;
 }
