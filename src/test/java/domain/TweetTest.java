@@ -113,7 +113,7 @@ public class TweetTest {
         System.out.println("setContent");
         String content = "setContent";
         Tweet instance = new Tweet("", null);
-        assertEquals(instance.getContent(), "");
+        assertEquals("", instance.getContent());
         instance.setContent(content);
         assertEquals(instance.getContent(), content);
 
