@@ -35,19 +35,18 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public Account updateAccount(Account user) {
+    public void updateAccount(Account user) {
 <span class="nc" id="L39">        em.merge(user);</span>
-<span class="nc" id="L40">        return em.find(Account.class, user.getEmail());</span>
-    }
+<span class="nc" id="L40">    }</span>
 
     @Override
     public void insertAccount(Account user) {
-<span class="nc" id="L45">        em.persist(user);</span>
-<span class="nc" id="L46">    }</span>
+<span class="nc" id="L44">        em.persist(user);</span>
+<span class="nc" id="L45">    }</span>
 
     @Override
     public List&lt;Account&gt; getFollowers(Account user) {
-<span class="nc" id="L50">        return em.find(Account.class, user.getEmail()).getFollowing();</span>
+<span class="nc" id="L49">        return em.find(Account.class, user.getEmail()).getFollowing();</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

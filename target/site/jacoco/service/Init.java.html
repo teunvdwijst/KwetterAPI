@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../.resources/report.css" type="text/css"/><link rel="shortcut icon" href="../.resources/report.gif" type="image/gif"/><title>Init.java</title><link rel="stylesheet" href="../.resources/prettify.css" type="text/css"/><script type="text/javascript" src="../.resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../.sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">KwetterS62</a> &gt; <a href="index.source.html" class="el_package">service</a> &gt; <span class="el_source">Init.java</span></div><h1>Init.java</h1><pre class="source lang-java linenums">package service;
+
+import dao.AccountDAO;
+import domain.Account;
+import javax.annotation.PostConstruct;
+import javax.ejb.Startup;
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+
+/**
+ *
+ * @author Teun
+ */
+@Startup
+@Singleton
+<span class="nc" id="L16">public class Init {</span>
+
+    @Inject
+    AccountDAO accountDao;
+
+    @PostConstruct
+    public void init() {
+<span class="nc" id="L23">        Account a1 = new Account(&quot;testings@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L24">        Account a2 = new Account(&quot;user2@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L25">        Account a3 = new Account(&quot;user3@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L26">        Account a4 = new Account(&quot;user4@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L27">        Account a5 = new Account(&quot;user5@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L28">        Account a6 = new Account(&quot;user6@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L29">        Account a7 = new Account(&quot;user7@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+<span class="nc" id="L30">        Account a8 = new Account(&quot;user8@gmail.com&quot;, &quot;lskdjf082034&quot;);</span>
+
+<span class="nc" id="L32">        a1.addTweet(&quot;Sup mah dudes.&quot;);</span>
+<span class="nc" id="L33">        a1.addTweet(&quot;yoyo&quot;);</span>
+<span class="nc" id="L34">        a2.addTweet(&quot;Allo Allo #tweeting&quot;);</span>
+<span class="nc" id="L35">        a2.addTweet(&quot;#sukadik yoyo&quot;);</span>
+<span class="nc" id="L36">        a1.addFollowing(a3);</span>
+
+<span class="nc" id="L38">        accountDao.insertAccount(a1);</span>
+<span class="nc" id="L39">        accountDao.insertAccount(a2);</span>
+<span class="nc" id="L40">        accountDao.insertAccount(a3);</span>
+<span class="nc" id="L41">        accountDao.insertAccount(a4);</span>
+<span class="nc" id="L42">        accountDao.insertAccount(a5);</span>
+<span class="nc" id="L43">        accountDao.insertAccount(a6);</span>
+<span class="nc" id="L44">        accountDao.insertAccount(a7);</span>
+<span class="nc" id="L45">        accountDao.insertAccount(a8);</span>
+<span class="nc" id="L46">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

@@ -382,12 +382,9 @@ public class AccountTest {
         System.out.println("removeFollowing");
         Account a = new Account("test", "");
         Account instance = new Account("", "");
-        System.out.println(instance.getFollowing().size());
         instance.removeFollowing(a);
-        System.out.println(instance.getFollowing().size());
 
         instance.addFollowing(a);
-        System.out.println(instance.getFollowing().size());
         assertEquals(1, instance.getFollowing().size());
         instance.removeFollowing(a);
         assertEquals(0, instance.getFollowing().size());

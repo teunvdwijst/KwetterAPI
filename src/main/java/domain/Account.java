@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.persistence.CascadeType;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,7 +19,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -25,7 +27,6 @@ import javax.persistence.OneToMany;
  * @author Teun
  */
 @Entity
-@NamedQuery(name = "Account.allAccounts", query = "SELECT a FROM Account a")
 public class Account implements Serializable {
 
     @Id
@@ -43,7 +44,7 @@ public class Account implements Serializable {
     private String avatarPath;
     @OneToMany
     private final List<Account> following = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">

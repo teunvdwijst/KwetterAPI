@@ -12,4 +12,5 @@ rest\AccountResource.class
 dao\TweetDAO.class
 dao\TweetDAOImpl.class
 domain\Tweet.class
+service\Init.class
 domain\Account.class

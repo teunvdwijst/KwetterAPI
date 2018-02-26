@@ -5,7 +5,6 @@
  */
 package dao;
 
-import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -55,7 +54,9 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public List<Tweet> getRecentTweets(int limit) {
-        return em.createNamedQuery("Select t from Tweet t order by published desc limit :limit").getResultList();
+        return em.createNamedQuery("Select t from Tweet t order by published desc limit :limit")
+                .setParameter("limit", limit)
+                .getResultList();
     }
 
 }

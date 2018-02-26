@@ -6,7 +6,6 @@
 package service;
 
 import dao.TweetDAO;
-import domain.Account;
 import domain.Tweet;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +22,12 @@ public class TweetService {
     @Inject
     TweetDAO tweetDao;
 
-<span class="nc" id="L26">    public TweetService() {</span>
-<span class="nc" id="L27">    }</span>
+<span class="nc" id="L25">    public TweetService() {</span>
+<span class="nc" id="L26">    }</span>
 
     /**
-     * Fetches a tweet which matches the id from the database
+     * Fetches a tweet which matches the id from the database. returns null if
+     * no tweet matching the id was found.
      *
      * @param id
      * @return Tweet
@@ -43,55 +43,78 @@ public class TweetService {
 
     /**
      * Fetches 'limit' amount of Tweets posted by the Account with 'userEmail'.
-     * Tweets are sorted by publish date descending. Returns &quot;null&quot; if no tweets were found
+     * Tweets are sorted by publish date descending. Returns an empty list if no
+     * Tweets were found
      *
      * @param limit
      * @param userEmail
      * @return List of Tweets
      */
-    public List&lt;Tweet&gt; getRecentTweets(int limit, String userEmail) {
+    public List&lt;Tweet&gt; getRecentTweetsByUser(int limit, String userEmail) {
         try {
-<span class="nc" id="L54">            return tweetDao.getRecentTweets(limit, userEmail);</span>
-<span class="nc" id="L55">        } catch (Exception ex) {</span>
+<span class="nc" id="L55">            return tweetDao.getRecentTweetsByUser(limit, userEmail);</span>
+<span class="nc" id="L56">        } catch (Exception ex) {</span>
             //handle exception
-<span class="nc" id="L57">            return new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L58">            return new ArrayList&lt;&gt;();</span>
         }
     }
 
     /**
-     * Updates a Tweet object in the database, if update fails this function does nothing
+     * Fetches 'limit' amount of Tweets. Tweets are sorted by publish date
+     * descending. Returns an empty list if no Tweets were found
+     *
+     * @param limit
+     * @return List of Tweets
+     */
+    public List&lt;Tweet&gt; getRecentTweets(int limit) {
+        try {
+<span class="nc" id="L71">            return tweetDao.getRecentTweets(limit);</span>
+<span class="nc" id="L72">        } catch (Exception ex) {</span>
+            //handle exception
+<span class="nc" id="L74">            return new ArrayList&lt;&gt;();</span>
+        }
+    }
+
+    /**
+     * Updates a Tweet object in the database, if update fails this function
+     * does nothing
+     *
      * @param tweet
      */
     public void updateTweet(Tweet tweet) {
         try {
-<span class="nc" id="L67">            tweetDao.update(tweet);</span>
-<span class="nc" id="L68">        } catch (Exception ex) {</span>
+<span class="nc" id="L86">            tweetDao.update(tweet);</span>
+<span class="nc" id="L87">        } catch (Exception ex) {</span>
             //handle exception
-<span class="nc" id="L70">        }</span>
-<span class="nc" id="L71">    }</span>
+<span class="nc" id="L89">        }</span>
+<span class="nc" id="L90">    }</span>
 
     /**
+     * Inserts a Tweet object in the database, if the insert fails this function
+     * does nothing
      *
      * @param tweet
      */
     public void insertTweet(Tweet tweet) {
         try {
-<span class="nc" id="L79">            tweetDao.insert(tweet);</span>
-<span class="nc" id="L80">        } catch (Exception ex) {</span>
+<span class="nc" id="L100">            tweetDao.insert(tweet);</span>
+<span class="nc" id="L101">        } catch (Exception ex) {</span>
             //handle exception
-<span class="nc" id="L82">        }</span>
-<span class="nc" id="L83">    }</span>
+<span class="nc" id="L103">        }</span>
+<span class="nc" id="L104">    }</span>
 
     /**
+     * Removes a Tweet object in the database, if the insert fails this function
+     * does nothing
      *
      * @param tweet
      */
     public void removeTweet(Tweet tweet) {
         try {
-<span class="nc" id="L91">            tweetDao.remove(tweet);</span>
-<span class="nc" id="L92">        } catch (Exception ex) {</span>
+<span class="nc" id="L114">            tweetDao.remove(tweet);</span>
+<span class="nc" id="L115">        } catch (Exception ex) {</span>
             //handle exception
-<span class="nc" id="L94">        }</span>
-<span class="nc" id="L95">    }</span>
+<span class="nc" id="L117">        }</span>
+<span class="nc" id="L118">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
