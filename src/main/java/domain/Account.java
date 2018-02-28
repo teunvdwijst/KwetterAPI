@@ -19,6 +19,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -124,13 +125,13 @@ public class Account implements Serializable {
 
     }
 
-    public Account(String email, String encryptedPassword) {
+    public Account(String email, String password) {
         this.email = email;
-        this.encryptedPassword = encryptedPassword;
+        this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
-    public Account(String email, String encryptedPassword, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
-        this(email, encryptedPassword);
+    public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
+        this(email, password);
         this.userName = userName;
         this.location = location;
         this.bio = bio;
@@ -234,7 +235,6 @@ public class Account implements Serializable {
         hash = 53 * hash + Objects.hashCode(this.userName);
         hash = 53 * hash + Objects.hashCode(this.email);
         hash = 53 * hash + Objects.hashCode(this.userRole);
-        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);
         hash = 53 * hash + Objects.hashCode(this.location);
         hash = 53 * hash + Objects.hashCode(this.bio);
         hash = 53 * hash + Objects.hashCode(this.website);

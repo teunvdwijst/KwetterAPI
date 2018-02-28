@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -140,39 +141,6 @@ public class AccountTest {
 
         instance.setEmail(null);
         assertNull(instance.getEmail());
-    }
-
-    /**
-     * Test of getEncryptedPassword method, of class Account.
-     */
-    @org.junit.Test
-    public void testGetEncryptedPassword() {
-        System.out.println("getEncryptedPassword");
-        Account instance = new Account("", "");
-        String expResult = "";
-        String result = instance.getEncryptedPassword();
-        assertEquals(expResult, result);
-
-        expResult = "getEncryptedPassword";
-        instance = new Account("", expResult);
-        result = instance.getEncryptedPassword();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setEncryptedPassword method, of class Account.
-     */
-    @org.junit.Test
-    public void testSetEncryptedPassword() {
-        System.out.println("setEncryptedPassword");
-        String encryptedPassword = "setEncryptedPassword";
-        Account instance = new Account("", "");
-        assertEquals("", instance.getEncryptedPassword());
-        instance.setEncryptedPassword(encryptedPassword);
-        assertEquals(encryptedPassword, instance.getEncryptedPassword());
-
-        instance.setEncryptedPassword(null);
-        assertNull(instance.getEncryptedPassword());
     }
 
     /**
