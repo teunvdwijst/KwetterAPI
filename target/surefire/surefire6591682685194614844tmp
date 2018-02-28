@@ -1,5 +1,5 @@
 #surefire
-#Wed Feb 28 16:10:43 CET 2018
+#Wed Feb 28 19:14:49 CET 2018
 testClassesDirectory=C\:\\Users\\Teun\\Documents\\S6\\JEA\\Kwetter\\KwetterS62\\target\\test-classes
 classPathUrl.4=C\:\\Users\\Teun\\.m2\\repository\\org\\eclipse\\persistence\\commonj.sdo\\2.1.1\\commonj.sdo-2.1.1.jar
 forkMode=once

@@ -59,9 +59,6 @@ public class TweetDAOImplTest {
     public void tearDown() {
     }
 
-    /**
-     * Test of getTweetById method, of class TweetDAOImpl.
-     */
     @Test
     public void testGetTweetById() throws Exception {
         Account a = new Account("login1", "pass");
@@ -71,15 +68,13 @@ public class TweetDAOImplTest {
         em.persist(a);
         et.commit();
 
-        Assert.assertTrue(em.createNamedQuery("Tweet.findById").setParameter("id", 1).getResultList().size() == 1);
+        long id = a.getTweets().get(0).getId();
+        Assert.assertTrue(em.createNamedQuery("Tweet.findById").setParameter("id", id).getResultList().size() == 1);
     }
 
-    /**
-     * Test of getRecentTweetsByEmail method, of class TweetDAOImpl.
-     */
     @Test
     public void testGetRecentTweetsByEmail() throws Exception {
-        /*Account a = new Account("login1", "pass");
+        Account a = new Account("login1", "pass");
         a.addTweet("content");
         a.addTweet("and");
         a.addTweet("more");
@@ -89,33 +84,28 @@ public class TweetDAOImplTest {
         em.persist(a);
         et.commit();
 
-        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByEmail").setParameter("email", a.getEmail()).getResultList().size() > 1);*/
+        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByEmail").setParameter("email", a.getEmail()).getResultList().size() > 1);
     }
 
-    /**
-     * Test of updateTweet method, of class TweetDAOImpl.
-     */
     @Test
     public void testUpdateTweet() throws Exception {
         Account a = new Account("login", "pass");
-        a.addTweet("Content");
+        a.addTweet("#Tag Content");
 
         et.begin();
         em.persist(a);
         et.commit();
-        
-        a.getTweets().get(1).setContent("new content");;
-        
+
+        Tweet t = a.getTweets().get(0);
+        t.setContent("#NewTag Content");
+
         et.begin();
-        em.merge(a);
+        em.merge(t);
         et.commit();
 
-        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "NewTag").getResultList().size() > 0);
+        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%NewTag%").getResultList().size() > 0);
     }
 
-    /**
-     * Test of insertTweet method, of class TweetDAOImpl.
-     */
     @Test
     public void testInsertTweet() throws Exception {
         Account a = new Account("login", "pass");
@@ -128,9 +118,6 @@ public class TweetDAOImplTest {
         Assert.assertTrue(em.createNamedQuery("Tweet.findRecent").getResultList().size() == 1);
     }
 
-    /**
-     * Test of removeTweet method, of class TweetDAOImpl.
-     */
     @Test
     public void testRemoveTweet() throws Exception {
         Account a = new Account("login", "pass");
@@ -142,18 +129,17 @@ public class TweetDAOImplTest {
 
         Assert.assertTrue(em.createNamedQuery("Tweet.findRecent").getResultList().size() == 1);
 
+        Tweet t = a.getTweets().get(0);
         a.removeTweet(1);
 
         et.begin();
         em.merge(a);
+        em.remove(t);
         et.commit();
 
         Assert.assertTrue(em.createNamedQuery("Tweet.findRecent").getResultList().isEmpty());
     }
 
-    /**
-     * Test of getRecentTweets method, of class TweetDAOImpl.
-     */
     @Test
     public void testGetRecentTweets() throws Exception {
         Account a = new Account("login", "pass");
@@ -166,19 +152,15 @@ public class TweetDAOImplTest {
         Assert.assertTrue(em.createNamedQuery("Tweet.findRecent").getResultList().size() == 1);
     }
 
-    /**
-     * Test of getRecentTweetsByTag method, of class TweetDAOImpl.
-     */
     @Test
     public void testGetRecentTweetsByTag() throws Exception {
         Account a = new Account("login", "pass");
-        a.addTweet("Content");
+        a.addTweet("#Tag Content");
 
         et.begin();
         em.persist(a);
         et.commit();
 
-        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "NewTag").getResultList().size() > 0);
+        Assert.assertTrue(em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%Tag%").getResultList().size() > 0);
     }
-
 }

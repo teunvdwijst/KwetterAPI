@@ -5,6 +5,7 @@
  */
 package dao;
 
+import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -46,6 +47,9 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public void removeTweet(Tweet tweet) {
+        Account a = tweet.getTweetedBy();
+        a.removeTweet(tweet.getId());
+        em.merge(a);
         em.remove(tweet);
     }
 
@@ -56,7 +60,7 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
-        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", tag).setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setMaxResults(limit).getResultList();
     }
 
 }

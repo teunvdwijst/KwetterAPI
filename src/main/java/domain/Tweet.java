@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -38,7 +39,7 @@ import javax.persistence.Temporal;
     ,
     @NamedQuery(name = "Tweet.findRecentByEmail", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a where a.email = :email) order by t.published desc")
     ,
-    @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE '% :tag %' order by t.published desc")
+    @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc")
 })
 public class Tweet implements Serializable {
 
@@ -51,10 +52,10 @@ public class Tweet implements Serializable {
     private List<String> tags;
     @ManyToOne
     private Account tweetedBy;
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     @JoinTable(name = "tweet_likes")
     private final List<Account> likedBy = new ArrayList<>();
-    @OneToMany(cascade = CascadeType.PERSIST)
+    @OneToMany
     @JoinTable(name = "tweet_mentions")
     private final List<Account> mentions = new ArrayList<>();
 

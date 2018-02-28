@@ -53,7 +53,7 @@ public class Account implements Serializable {
     private String avatarPath;
     @OneToMany
     private final List<Account> following = new ArrayList<>();
-    @OneToMany(mappedBy = "tweetedBy", cascade = ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -177,8 +177,7 @@ public class Account implements Serializable {
      * @param message String
      */
     public void addTweet(String message) {
-        Tweet t = new Tweet(message, this);
-        tweets.add(t);
+        tweets.add(new Tweet(message, this));
     }
 
     /**
@@ -186,10 +185,11 @@ public class Account implements Serializable {
      *
      * @param id
      */
-    public void removeTweet(int id) {
+    public void removeTweet(long id) {
         for (Tweet t : tweets) {
             if (t.getId() == id) {
                 tweets.remove(t);
+                break;
             }
         }
     }
