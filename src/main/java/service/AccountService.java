@@ -5,7 +5,9 @@
  */
 package service;
 
-import dao.AccountDAOImpl;
+import dao.AccountDAO;
+import domain.Account;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
@@ -17,6 +19,51 @@ import javax.inject.Inject;
 public class AccountService {
 
     @Inject
-    AccountDAOImpl accountDao;
+    AccountDAO accountDao;
+
+    public AccountService() {
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public List<Account> getAllAccounts() {
+        return null;
+    }
+
+    /**
+     * 
+     * @param email
+     * @return 
+     */
+    public Account getAccountByEmail(String email) {
+        return null;
+    }
+
+    /**
+     * 
+     * @param user
+     * @return 
+     */
+    public Account updateAccount(Account user) {
+        return null;
+    }
+
+    /**
+     * 
+     * @param user 
+     */
+    public void insertAccount(Account user) {
+    }
+
+    /**
+     * 
+     * @param user
+     * @return 
+     */
+    public List<Account> getFollowers(Account user) {
+        return null;
+    }
 
 }

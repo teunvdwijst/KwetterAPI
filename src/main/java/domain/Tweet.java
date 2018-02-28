@@ -13,35 +13,38 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
  * @author Teun
  */
 @Entity
-@NamedQuery(name = "Tweet.allTweets", query = "SELECT t FROM Tweet t")
 public class Tweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
     @ManyToOne
     private Account tweetedBy;
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "tweet_likes")
     private final List<Account> likedBy = new ArrayList<>();
-    @OneToMany
+    @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "tweet_mentions")
     private final List<Account> mentions = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -126,6 +129,29 @@ public class Tweet implements Serializable {
     }
 
     /**
+     * Adds an Account to the list of accounts that were mentioned in this tweet
+     *
+     * @param a Account
+     */
+    public void addMention(Account a) {
+        if (!mentions.contains(a)) {
+            mentions.add(a);
+        }
+    }
+
+    /**
+     * Removes an Account to the list of accounts that were mentioned in this
+     * tweet
+     *
+     * @param a Account
+     */
+    public void removeMention(Account a) {
+        if (mentions.contains(a)) {
+            mentions.remove(a);
+        }
+    }
+
+    /**
      * Adds an Account to the list of accounts that liked this tweet
      *
      * @param a Account
@@ -157,10 +183,7 @@ public class Tweet implements Serializable {
 
         final Tweet other = (Tweet) obj;
 
-        if ((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy))) {
-            return false;
-        }
-        return true;
+        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));
     }
 
     @Override

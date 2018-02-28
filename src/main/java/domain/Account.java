@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,20 +18,20 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
  * @author Teun
  */
 @Entity
-@NamedQuery(name = "Account.allAccounts", query = "SELECT a FROM Account a")
 public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
+    @Column(unique = true)
     private String userName;
     @Column(unique = true)
     private String email;
@@ -43,7 +44,7 @@ public class Account implements Serializable {
     private String avatarPath;
     @OneToMany
     private final List<Account> following = new ArrayList<>();
-    @OneToMany
+    @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -124,13 +125,13 @@ public class Account implements Serializable {
 
     }
 
-    public Account(String email, String encryptedPassword) {
+    public Account(String email, String password) {
         this.email = email;
-        this.encryptedPassword = encryptedPassword;
+        this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
-    public Account(String email, String encryptedPassword, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
-        this(email, encryptedPassword);
+    public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
+        this(email, password);
         this.userName = userName;
         this.location = location;
         this.bio = bio;
@@ -234,7 +235,6 @@ public class Account implements Serializable {
         hash = 53 * hash + Objects.hashCode(this.userName);
         hash = 53 * hash + Objects.hashCode(this.email);
         hash = 53 * hash + Objects.hashCode(this.userRole);
-        hash = 53 * hash + Objects.hashCode(this.encryptedPassword);
         hash = 53 * hash + Objects.hashCode(this.location);
         hash = 53 * hash + Objects.hashCode(this.bio);
         hash = 53 * hash + Objects.hashCode(this.website);

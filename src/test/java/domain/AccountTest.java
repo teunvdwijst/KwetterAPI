@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -140,39 +141,6 @@ public class AccountTest {
 
         instance.setEmail(null);
         assertNull(instance.getEmail());
-    }
-
-    /**
-     * Test of getEncryptedPassword method, of class Account.
-     */
-    @org.junit.Test
-    public void testGetEncryptedPassword() {
-        System.out.println("getEncryptedPassword");
-        Account instance = new Account("", "");
-        String expResult = "";
-        String result = instance.getEncryptedPassword();
-        assertEquals(expResult, result);
-
-        expResult = "getEncryptedPassword";
-        instance = new Account("", expResult);
-        result = instance.getEncryptedPassword();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of setEncryptedPassword method, of class Account.
-     */
-    @org.junit.Test
-    public void testSetEncryptedPassword() {
-        System.out.println("setEncryptedPassword");
-        String encryptedPassword = "setEncryptedPassword";
-        Account instance = new Account("", "");
-        assertEquals("", instance.getEncryptedPassword());
-        instance.setEncryptedPassword(encryptedPassword);
-        assertEquals(encryptedPassword, instance.getEncryptedPassword());
-
-        instance.setEncryptedPassword(null);
-        assertNull(instance.getEncryptedPassword());
     }
 
     /**
@@ -382,12 +350,9 @@ public class AccountTest {
         System.out.println("removeFollowing");
         Account a = new Account("test", "");
         Account instance = new Account("", "");
-        System.out.println(instance.getFollowing().size());
         instance.removeFollowing(a);
-        System.out.println(instance.getFollowing().size());
 
         instance.addFollowing(a);
-        System.out.println(instance.getFollowing().size());
         assertEquals(1, instance.getFollowing().size());
         instance.removeFollowing(a);
         assertEquals(0, instance.getFollowing().size());
@@ -415,13 +380,32 @@ public class AccountTest {
     @Test
     public void testAddTweet() {
         System.out.println("addTweet");
-        String message = "addTweet";
+        String message = "Tweet1";
         Account instance = new Account("", "");
-        Tweet t = new Tweet(message, instance);
+        Tweet t1 = new Tweet(message, instance);
+        
         assertEquals(0, instance.getTweets().size());
         instance.addTweet(message);
         assertEquals(1, instance.getTweets().size());
-        assertEquals(t, instance.getTweets().get(0));
+        instance.addTweet("Tweet2");
+        assertEquals(2, instance.getTweets().size());
+        instance.addTweet("Tweet3");
+        assertEquals(3, instance.getTweets().size());
+        instance.addTweet("Tweet4");
+        assertEquals(4, instance.getTweets().size());
+        instance.addTweet("Tweet5");
+        assertEquals(5, instance.getTweets().size());
+        instance.addTweet("Tweet6");
+        assertEquals(6, instance.getTweets().size());
+        instance.addTweet("Tweet7");
+        assertEquals(7, instance.getTweets().size());
+        instance.addTweet("Tweet8");
+        assertEquals(8, instance.getTweets().size());
+        instance.addTweet("Tweet9");
+        assertEquals(9, instance.getTweets().size());
+        instance.addTweet("Tweet10");
+        assertEquals(10, instance.getTweets().size());
+        assertEquals(t1, instance.getTweets().get(0));
     }
 
     /**

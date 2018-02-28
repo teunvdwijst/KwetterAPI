@@ -1,0 +1,48 @@
+package service;
+
+import dao.AccountDAO;
+import domain.Account;
+import javax.annotation.PostConstruct;
+import javax.ejb.Startup;
+import javax.ejb.Singleton;
+import javax.inject.Inject;
+
+/**
+ *
+ * @author Teun
+ */
+@Startup
+@Singleton
+public class Init {
+
+    @Inject
+    AccountDAO accountDao;
+
+    @PostConstruct
+    public void init() {
+        Account a1 = new Account("testings@gmail.com", "passw1");
+        Account a2 = new Account("user2@gmail.com", "herrow");
+        Account a3 = new Account("user3@gmail.com", "wacist");
+        Account a4 = new Account("user4@gmail.com", "rorrypop");
+        Account a5 = new Account("user5@gmail.com", "asdf");
+        Account a6 = new Account("user6@gmail.com", "zxcv");
+        Account a7 = new Account("user7@gmail.com", "rtyu");
+        Account a8 = new Account("user8@gmail.com", "fdhgfkk");
+
+        a1.addTweet("Sup mah dudes.");
+        a1.addTweet("yoyo");
+        a2.addTweet("Allo Allo #tweeting");
+        a2.addTweet("#testing yoyo");
+        a1.getTweets().get(0).addLike(a3);
+        a1.addFollowing(a3);
+        
+        accountDao.insertAccount(a1);
+        accountDao.insertAccount(a2);
+        accountDao.insertAccount(a3);
+        accountDao.insertAccount(a4);
+        accountDao.insertAccount(a5);
+        accountDao.insertAccount(a6);
+        accountDao.insertAccount(a7);
+        accountDao.insertAccount(a8);
+    }
+}

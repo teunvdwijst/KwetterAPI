@@ -5,7 +5,6 @@
  */
 package dao;
 
-import domain.Account;
 import domain.Tweet;
 import java.util.List;
 
@@ -17,11 +16,13 @@ public interface TweetDAO {
 
     Tweet getTweet(int id);
 
-    List<Tweet> getRecentTweets(int limit, Account user);
+    List<Tweet> getRecentTweetsByUser(int limit, String userEmail);
 
-    Tweet create(String content, Account user);
+    List<Tweet> getRecentTweets(int limit);
 
-    Tweet create(String content, Account user, List<String> tags);
+    void update(Tweet tweet);
 
-    boolean remove(Tweet tweet);
+    void insert(Tweet tweet);
+
+    void remove(Tweet tweet);
 }
