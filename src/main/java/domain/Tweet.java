@@ -18,9 +18,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
@@ -43,9 +41,10 @@ public class Tweet implements Serializable {
     @ManyToOne
     private Account tweetedBy;
     @OneToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(name = "tweet_likes")
     private final List<Account> likedBy = new ArrayList<>();
     @OneToMany(cascade = CascadeType.PERSIST)
-    @JoinColumn(nullable = true)
+    @JoinTable(name = "tweet_mentions")
     private final List<Account> mentions = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
@@ -161,10 +160,7 @@ public class Tweet implements Serializable {
 
         final Tweet other = (Tweet) obj;
 
-        if ((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy))) {
-            return false;
-        }
-        return true;
+        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));
     }
 
     @Override

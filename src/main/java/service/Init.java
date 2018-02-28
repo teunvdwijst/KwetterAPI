@@ -2,7 +2,6 @@ package service;
 
 import dao.AccountDAO;
 import domain.Account;
-import domain.Tweet;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
@@ -33,8 +32,8 @@ public class Init {
         a1.addTweet("Sup mah dudes.");
         a1.addTweet("yoyo");
         a2.addTweet("Allo Allo #tweeting");
-        a2.addTweet("#sukadik yoyo");
-        a1.getTweets().get(0).addLike(a2);
+        a2.addTweet("#testing yoyo");
+        a1.getTweets().get(0).addLike(a3);
         a1.addFollowing(a3);
 
         accountDao.insertAccount(a1);
