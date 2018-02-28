@@ -14,15 +14,17 @@ import java.util.List;
  */
 public interface TweetDAO {
 
-    Tweet getTweet(int id);
+    List<Tweet> getTweetById(int id);
 
-    List<Tweet> getRecentTweetsByUser(int limit, String userEmail);
+    List<Tweet> getRecentTweetsByEmail(int limit, String userEmail);
 
     List<Tweet> getRecentTweets(int limit);
+    
+    List<Tweet> getRecentTweetsByTag(int limit, String tag);
 
-    void update(Tweet tweet);
+    void updateTweet(Tweet tweet);
 
-    void insert(Tweet tweet);
+    void insertTweet(Tweet tweet);
 
-    void remove(Tweet tweet);
+    void removeTweet(Tweet tweet);
 }

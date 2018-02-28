@@ -25,45 +25,45 @@ public class AccountService {
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
-    public List<Account> getAllAccounts() {
-        return null;
+    public List<Account> getAllAccounts(int limit) {
+        return accountDao.getAllAccounts(limit);
     }
 
     /**
-     * 
+     *
      * @param email
-     * @return 
+     * @return
      */
-    public Account getAccountByEmail(String email) {
-        return null;
+    public List<Account> getAccountByEmail(String email) {
+        return accountDao.getAccountByEmail(email);
     }
 
     /**
-     * 
+     *
      * @param user
-     * @return 
      */
-    public Account updateAccount(Account user) {
-        return null;
+    public void updateAccount(Account user) {
+        accountDao.updateAccount(user);
     }
 
     /**
-     * 
-     * @param user 
+     *
+     * @param user
      */
     public void insertAccount(Account user) {
+        accountDao.insertAccount(user);
     }
 
     /**
-     * 
+     *
      * @param user
-     * @return 
+     * @return
      */
-    public List<Account> getFollowers(Account user) {
-        return null;
+    public List<Account> getAccountByUsername(String username) {
+        return accountDao.getAccountByUsername(username);
     }
 
 }

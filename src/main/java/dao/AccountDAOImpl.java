@@ -18,20 +18,20 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AccountDAOImpl implements AccountDAO {
 
-    @PersistenceContext
+    @PersistenceContext(name = "KwetterS62PU")
     EntityManager em;
 
     public AccountDAOImpl() {
     }
 
     @Override
-    public List<Account> getAllAccounts() {
-        return em.createQuery("Select a from Account a", Account.class).getResultList();
+    public List<Account> getAllAccounts(int limit) {
+        return em.createNamedQuery("Account.findAll").setMaxResults(limit).getResultList();
     }
 
     @Override
-    public Account getAccountByEmail(String email) {
-        return em.find(Account.class, email);
+    public List<Account> getAccountByEmail(String email) {
+        return em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
     }
 
     @Override
@@ -45,7 +45,12 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<Account> getFollowers(Account user) {
-        return em.find(Account.class, user.getEmail()).getFollowing();
+    public List<Account> getAccountByUsername(String username) {
+        return em.createNamedQuery("Account.findByUsername").setParameter("username", username).getResultList();
+    }
+
+    @Override
+    public void deleteAccount(Account user) {
+        em.remove(user);
     }
 }

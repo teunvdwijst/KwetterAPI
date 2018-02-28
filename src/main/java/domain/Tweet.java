@@ -14,28 +14,39 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Tweet.findById", query = "SELECT t FROM Tweet t WHERE t.id = :id")
+    ,
+    @NamedQuery(name = "Tweet.findRecent", query = "SELECT t FROM Tweet t order by t.published desc")
+    ,
+    @NamedQuery(name = "Tweet.findRecentByEmail", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a where a.email = :email) order by t.published desc")
+    ,
+    @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE '% :tag %' order by t.published desc")
+})
 public class Tweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
     @ManyToOne

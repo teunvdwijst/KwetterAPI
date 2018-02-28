@@ -34,7 +34,7 @@ public class TweetService {
      */
     public Tweet getTweet(int id) {
         try {
-            return tweetDao.getTweet(id);
+            return tweetDao.getTweetById(id).get(0);
         } catch (Exception ex) {
             //handle exception
             return null;
@@ -52,7 +52,7 @@ public class TweetService {
      */
     public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) {
         try {
-            return tweetDao.getRecentTweetsByUser(limit, userEmail);
+            return tweetDao.getRecentTweetsByEmail(limit, userEmail);
         } catch (Exception ex) {
             //handle exception
             return new ArrayList<>();
@@ -83,7 +83,7 @@ public class TweetService {
      */
     public void updateTweet(Tweet tweet) {
         try {
-            tweetDao.update(tweet);
+            tweetDao.updateTweet(tweet);
         } catch (Exception ex) {
             //handle exception
         }
@@ -97,7 +97,7 @@ public class TweetService {
      */
     public void insertTweet(Tweet tweet) {
         try {
-            tweetDao.insert(tweet);
+            tweetDao.insertTweet(tweet);
         } catch (Exception ex) {
             //handle exception
         }
@@ -111,7 +111,7 @@ public class TweetService {
      */
     public void removeTweet(Tweet tweet) {
         try {
-            tweetDao.remove(tweet);
+            tweetDao.removeTweet(tweet);
         } catch (Exception ex) {
             //handle exception
         }

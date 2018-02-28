@@ -18,45 +18,45 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TweetDAOImpl implements TweetDAO {
 
-    @PersistenceContext
+    @PersistenceContext(name = "KwetterS62PU")
     EntityManager em;
 
     public TweetDAOImpl() {
     }
 
     @Override
-    public Tweet getTweet(int id) {
-        return em.find(Tweet.class, id);
+    public List<Tweet> getTweetById(int id) {
+        return em.createNamedQuery("Tweet.findById").setParameter("id", id).getResultList();
     }
 
     @Override
-    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) {
-        return em.createNamedQuery("Select t from Tweet t where where tweetedby_id = (select id from account where email = :email)) order by published desc limit :limit", Tweet.class)
-                .setParameter("email", userEmail)
-                .setParameter("limit", limit)
-                .getResultList();
+    public List<Tweet> getRecentTweetsByEmail(int limit, String userEmail) {
+        return em.createNamedQuery("Tweet.findRecentByEmail").setParameter("email", userEmail).setMaxResults(limit).getResultList();
     }
 
     @Override
-    public void update(Tweet tweet) {
+    public void updateTweet(Tweet tweet) {
         em.merge(tweet);
     }
 
     @Override
-    public void insert(Tweet tweet) {
+    public void insertTweet(Tweet tweet) {
         em.persist(tweet);
     }
 
     @Override
-    public void remove(Tweet tweet) {
+    public void removeTweet(Tweet tweet) {
         em.remove(tweet);
     }
 
     @Override
     public List<Tweet> getRecentTweets(int limit) {
-        return em.createNamedQuery("Select t from Tweet t order by published desc limit :limit")
-                .setParameter("limit", limit)
-                .getResultList();
+        return em.createNamedQuery("Tweet.findRecent").setMaxResults(limit).getResultList();
+    }
+
+    @Override
+    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
+        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", tag).setMaxResults(limit).getResultList();
     }
 
 }

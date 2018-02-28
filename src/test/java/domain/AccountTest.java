@@ -85,12 +85,12 @@ public class AccountTest {
         System.out.println("getUserName");
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
         String expResult = "";
-        String result = instance.getUserName();
+        String result = instance.getUsername();
         assertEquals(expResult, result);
 
         expResult = "Account";
         instance = new Account("", "", expResult, "", "", "", "", Role.USER);
-        result = instance.getUserName();
+        result = instance.getUsername();
         assertEquals(expResult, result);
     }
 
@@ -102,12 +102,12 @@ public class AccountTest {
         System.out.println("setUserName");
         String userName = "setUserName";
         Account instance = new Account("", "", "", "", "", "", "", Role.USER);
-        assertEquals("", instance.getUserName());
-        instance.setUserName(userName);
-        assertEquals(userName, instance.getUserName());
+        assertEquals("", instance.getUsername());
+        instance.setUsername(userName);
+        assertEquals(userName, instance.getUsername());
 
-        instance.setUserName(null);
-        assertNull(instance.getUserName());
+        instance.setUsername(null);
+        assertNull(instance.getUsername());
     }
 
     /**

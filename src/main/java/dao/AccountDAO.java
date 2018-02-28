@@ -14,13 +14,15 @@ import java.util.List;
  */
 public interface AccountDAO {
 
-    List<Account> getAllAccounts();
+    List<Account> getAllAccounts(int limit);
 
-    Account getAccountByEmail(String email);
+    List<Account> getAccountByEmail(String email);
 
     void updateAccount(Account user);
 
     void insertAccount(Account user);
 
-    List<Account> getFollowers(Account user);
+    List<Account> getAccountByUsername(String username);
+    
+    void deleteAccount(Account user);
 }

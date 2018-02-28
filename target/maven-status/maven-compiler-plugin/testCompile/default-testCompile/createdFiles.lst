@@ -1,2 +1,5 @@
-domain\AccountTest.class
+dao\AccountDAOImplTest.class
 domain\TweetTest.class
+dao\TweetDAOImplTest.class
+domain\AccountTest.class
+util\DatabaseCleaner.class
