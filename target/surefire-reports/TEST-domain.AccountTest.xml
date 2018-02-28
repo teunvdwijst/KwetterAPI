@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<testsuite tests="25" failures="0" name="domain.AccountTest" time="0.86" errors="0" skipped="0">
+<testsuite tests="25" failures="0" name="domain.AccountTest" time="1.109" errors="0" skipped="0">
   <properties>
     <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_144\jre\bin"/>
@@ -64,9 +64,9 @@
   </properties>
   <testcase classname="domain.AccountTest" name="testGetEmail" time="0.047"/>
   <testcase classname="domain.AccountTest" name="testRemoveFollowing" time="0"/>
-  <testcase classname="domain.AccountTest" name="testSetLocation" time="0.016"/>
+  <testcase classname="domain.AccountTest" name="testSetLocation" time="0"/>
   <testcase classname="domain.AccountTest" name="testGetLocation" time="0"/>
-  <testcase classname="domain.AccountTest" name="testSetWebsite" time="0.015"/>
+  <testcase classname="domain.AccountTest" name="testSetWebsite" time="0"/>
   <testcase classname="domain.AccountTest" name="testPromote" time="0"/>
   <testcase classname="domain.AccountTest" name="testAddTweet" time="0.016"/>
   <testcase classname="domain.AccountTest" name="testSetEncryptedPassword" time="0"/>
@@ -75,16 +75,16 @@
   <testcase classname="domain.AccountTest" name="testSetUserName" time="0"/>
   <testcase classname="domain.AccountTest" name="testSetUserRole" time="0"/>
   <testcase classname="domain.AccountTest" name="testGetUserName" time="0"/>
-  <testcase classname="domain.AccountTest" name="testGetUserRole" time="0.016"/>
-  <testcase classname="domain.AccountTest" name="testGetAvatarPath" time="0"/>
-  <testcase classname="domain.AccountTest" name="testDemote" time="0.016"/>
+  <testcase classname="domain.AccountTest" name="testGetUserRole" time="0"/>
+  <testcase classname="domain.AccountTest" name="testGetAvatarPath" time="0.015"/>
+  <testcase classname="domain.AccountTest" name="testDemote" time="0"/>
   <testcase classname="domain.AccountTest" name="testEquals" time="0"/>
   <testcase classname="domain.AccountTest" name="testGetBio" time="0"/>
-  <testcase classname="domain.AccountTest" name="testGetTweets" time="0.015"/>
+  <testcase classname="domain.AccountTest" name="testGetTweets" time="0.016"/>
   <testcase classname="domain.AccountTest" name="testGetWebsite" time="0"/>
   <testcase classname="domain.AccountTest" name="testAddFollowing" time="0"/>
-  <testcase classname="domain.AccountTest" name="testSetBio" time="0.016"/>
+  <testcase classname="domain.AccountTest" name="testSetBio" time="0"/>
   <testcase classname="domain.AccountTest" name="testGetFollowing" time="0"/>
   <testcase classname="domain.AccountTest" name="testSetAvatarPath" time="0"/>
-  <testcase classname="domain.AccountTest" name="testSetEmail" time="0"/>
+  <testcase classname="domain.AccountTest" name="testSetEmail" time="0.015"/>
 </testsuite>

@@ -53,7 +53,7 @@ public class Tweet implements Serializable {
     }
 
     public List&lt;Account&gt; getMentions() {
-<span class="nc" id="L56">        return Collections.unmodifiableList(mentions);</span>
+<span class="fc" id="L56">        return Collections.unmodifiableList(mentions);</span>
     }
 
     public Account getTweetedBy() {
@@ -129,15 +129,38 @@ public class Tweet implements Serializable {
     }
 
     /**
+     * Adds an Account to the list of accounts that were mentioned in this tweet
+     *
+     * @param a Account
+     */
+    public void addMention(Account a) {
+<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (!mentions.contains(a)) {</span>
+<span class="fc" id="L138">            mentions.add(a);</span>
+        }
+<span class="fc" id="L140">    }</span>
+
+    /**
+     * Removes an Account to the list of accounts that were mentioned in this
+     * tweet
+     *
+     * @param a Account
+     */
+    public void removeMention(Account a) {
+<span class="fc bfc" id="L149" title="All 2 branches covered.">        if (mentions.contains(a)) {</span>
+<span class="fc" id="L150">            mentions.remove(a);</span>
+        }
+<span class="fc" id="L152">    }</span>
+
+    /**
      * Adds an Account to the list of accounts that liked this tweet
      *
      * @param a Account
      */
     public void addLike(Account a) {
-<span class="fc bfc" id="L137" title="All 2 branches covered.">        if (!likedBy.contains(a)) {</span>
-<span class="fc" id="L138">            likedBy.add(a);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (!likedBy.contains(a)) {</span>
+<span class="fc" id="L161">            likedBy.add(a);</span>
         }
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L163">    }</span>
 
     /**
      * Removes an Account from the list of accounts that liked this tweet
@@ -145,34 +168,34 @@ public class Tweet implements Serializable {
      * @param a
      */
     public void removeLike(Account a) {
-<span class="fc bfc" id="L148" title="All 2 branches covered.">        if (likedBy.contains(a)) {</span>
-<span class="fc" id="L149">            likedBy.remove(a);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (likedBy.contains(a)) {</span>
+<span class="fc" id="L172">            likedBy.remove(a);</span>
         }
-<span class="fc" id="L151">    }</span>
+<span class="fc" id="L174">    }</span>
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L155" title="All 4 branches covered.">        if ((obj == null) || (!(obj instanceof Tweet))) {</span>
-<span class="fc" id="L156">            return false;</span>
-<span class="fc bfc" id="L157" title="All 2 branches covered.">        } else if (this == obj) {</span>
-<span class="fc" id="L158">            return true;</span>
+<span class="fc bfc" id="L178" title="All 4 branches covered.">        if ((obj == null) || (!(obj instanceof Tweet))) {</span>
+<span class="fc" id="L179">            return false;</span>
+<span class="fc bfc" id="L180" title="All 2 branches covered.">        } else if (this == obj) {</span>
+<span class="fc" id="L181">            return true;</span>
         }
 
-<span class="fc" id="L161">        final Tweet other = (Tweet) obj;</span>
+<span class="fc" id="L184">        final Tweet other = (Tweet) obj;</span>
 
-<span class="fc bfc" id="L163" title="All 6 branches covered.">        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));</span>
+<span class="fc bfc" id="L186" title="All 6 branches covered.">        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L168">        int hash = 7;</span>
-<span class="fc" id="L169">        hash = 67 * hash + Objects.hashCode(this.content);</span>
-<span class="fc" id="L170">        hash = 67 * hash + Objects.hashCode(this.published);</span>
-<span class="fc" id="L171">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
-<span class="fc" id="L172">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
-<span class="fc" id="L173">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
-<span class="fc" id="L174">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
-<span class="fc" id="L175">        return hash;</span>
+<span class="fc" id="L191">        int hash = 7;</span>
+<span class="fc" id="L192">        hash = 67 * hash + Objects.hashCode(this.content);</span>
+<span class="fc" id="L193">        hash = 67 * hash + Objects.hashCode(this.published);</span>
+<span class="fc" id="L194">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
+<span class="fc" id="L195">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
+<span class="fc" id="L196">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
+<span class="fc" id="L197">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
+<span class="fc" id="L198">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

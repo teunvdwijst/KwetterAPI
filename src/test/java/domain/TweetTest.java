@@ -6,7 +6,6 @@
 package domain;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import org.junit.After;
@@ -42,7 +41,7 @@ public class TweetTest {
     }
 
     @Test
-    public void testHashcode() {
+    public void testHashCode() {
         Account user = new Account();
         Tweet tweet1 = new Tweet("1", user);
         Tweet tweet2 = new Tweet("2", user);
@@ -207,39 +206,39 @@ public class TweetTest {
 
         instance.addLike(a);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(b);
         expResult.add(b);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(c);
         expResult.add(c);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(d);
         expResult.add(d);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(e);
         expResult.add(e);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(f);
         expResult.add(f);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(g);
         expResult.add(g);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(h);
         expResult.add(h);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(i);
         expResult.add(i);
         assertEquals(instance.getLikedBy(), expResult);
-        
+
         instance.addLike(j);
         expResult.add(j);
         assertEquals(instance.getLikedBy(), expResult);
@@ -293,5 +292,49 @@ public class TweetTest {
         Account a = new Account("test", "");
         a.addTweet("test");
         assertEquals(a, a.getTweets().get(0).getTweetedBy());
+    }
+
+    /**
+     * Test of getMentions method, of class Tweet.
+     */
+    @Test
+    public void testGetMentions() {
+        System.out.println("getMentions");
+        Tweet instance = new Tweet();
+        List<Account> expResult = new ArrayList<>();
+        List<Account> result = instance.getMentions();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of addMention method, of class Tweet.
+     */
+    @Test
+    public void testAddMention() {
+        System.out.println("addMention");
+        Account a = new Account("test", "");
+        Tweet instance = new Tweet("", null);
+        assertEquals(instance.getMentions().size(), 0);
+        instance.addMention(a);
+        assertEquals(instance.getMentions().size(), 1);
+        instance.addMention(a);
+        assertEquals(instance.getMentions().size(), 1);
+    }
+
+    /**
+     * Test of removeMention method, of class Tweet.
+     */
+    @Test
+    public void testRemoveMention() {
+        System.out.println("removeMention");
+        Account a = new Account("test", "");;
+        Tweet instance = new Tweet("", null);
+        assertEquals(instance.getMentions().size(), 0);
+        instance.removeMention(a);
+        assertEquals(instance.getMentions().size(), 0);
+        instance.addMention(a);
+        assertEquals(instance.getMentions().size(), 1);
+        instance.removeMention(a);
+        assertEquals(instance.getMentions().size(), 0);
     }
 }

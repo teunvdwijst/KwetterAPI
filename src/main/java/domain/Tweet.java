@@ -129,6 +129,29 @@ public class Tweet implements Serializable {
     }
 
     /**
+     * Adds an Account to the list of accounts that were mentioned in this tweet
+     *
+     * @param a Account
+     */
+    public void addMention(Account a) {
+        if (!mentions.contains(a)) {
+            mentions.add(a);
+        }
+    }
+
+    /**
+     * Removes an Account to the list of accounts that were mentioned in this
+     * tweet
+     *
+     * @param a Account
+     */
+    public void removeMention(Account a) {
+        if (mentions.contains(a)) {
+            mentions.remove(a);
+        }
+    }
+
+    /**
      * Adds an Account to the list of accounts that liked this tweet
      *
      * @param a Account
