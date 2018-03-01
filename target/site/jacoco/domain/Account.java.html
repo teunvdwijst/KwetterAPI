@@ -186,13 +186,13 @@ public class Account implements Serializable {
      * @param id
      */
     public void removeTweet(long id) {
-<span class="fc bfc" id="L189" title="All 2 branches covered.">        for (Tweet t : tweets) {</span>
-<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (t.getId() == id) {</span>
+<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (Tweet t : tweets) {</span>
+<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (t.getId() == id) {</span>
 <span class="nc" id="L191">                tweets.remove(t);</span>
 <span class="nc" id="L192">                break;</span>
             }
-<span class="fc" id="L194">        }</span>
-<span class="fc" id="L195">    }</span>
+<span class="nc" id="L194">        }</span>
+<span class="nc" id="L195">    }</span>
 
     public Role promote() {
 <span class="pc bpc" id="L198" title="1 of 4 branches missed.">        switch (userRole) {</span>
