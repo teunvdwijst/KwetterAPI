@@ -5,9 +5,14 @@
  */
 package rest;
 
+import domain.Tweet;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import service.TweetService;
 
 /**
@@ -16,9 +21,42 @@ import service.TweetService;
  */
 @Path(&quot;tweet&quot;)
 @Stateless
-<span class="nc" id="L19">public class TweetResource {</span>
- 
+<span class="nc" id="L24">public class TweetResource {</span>
+
     @Inject
     TweetService tweetService;
+
+    @GET
+    @Path(&quot;gettweet/{id}&quot;)
+    public Tweet getTweet(@PathParam(&quot;id&quot;) int id) {
+<span class="nc" id="L32">        return tweetService.getTweet(id);</span>
+    }
+
+    @GET
+    @Path(&quot;gettweetsbyuser/{limit}/{email}&quot;)
+    public List&lt;Tweet&gt; getRecentTweetsByUser(@PathParam(&quot;limit&quot;) int limit, @PathParam(&quot;email&quot;) String userEmail) {
+<span class="nc" id="L38">        return tweetService.getRecentTweetsByUser(limit, userEmail);</span>
+    }
+
+    @GET
+    @Path(&quot;getrecenttweets/{limit}&quot;)
+    public List&lt;Tweet&gt; getRecentTweets(@PathParam(&quot;limit&quot;) int limit) {
+<span class="nc" id="L44">        return tweetService.getRecentTweets(limit);</span>
+    }
+
+    @POST
+    public void updateTweet(Tweet tweet) {
+<span class="nc" id="L49">        tweetService.updateTweet(tweet);</span>
+<span class="nc" id="L50">    }</span>
+
+    @POST
+    public void insertTweet(Tweet tweet) {
+<span class="nc" id="L54">        tweetService.insertTweet(tweet);</span>
+<span class="nc" id="L55">    }</span>
+
+    @POST
+    public void removeTweet(Tweet tweet) {
+<span class="nc" id="L59">        tweetService.removeTweet(tweet);</span>
+<span class="nc" id="L60">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

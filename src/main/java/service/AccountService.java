@@ -59,6 +59,20 @@ public class AccountService {
 
     /**
      *
+     * @param username
+     * @return
+     */
+    public List<Account> getAccountByUsername(String username) {
+        try {
+            return accountDao.getAccountByUsername(username);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountByUsername operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     *
      * @param user
      */
     public void updateAccount(Account user) {
@@ -80,18 +94,16 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
         }
     }
-
+    
     /**
-     *
-     * @param username
-     * @return
+     * 
+     * @param user
      */
-    public List<Account> getAccountByUsername(String username) {
+    public void deleteAccount(Account user) {
         try {
-            return accountDao.getAccountByUsername(username);
+            accountDao.deleteAccount(user);
         } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getAccountByUsername operation; {0}", pe.getMessage());
-            return null;
+            LOGGER.log(Level.FINE, "ERROR while performing deleteAccount operation; {0}", pe.getMessage());
         }
     }
 }

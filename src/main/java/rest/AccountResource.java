@@ -10,7 +10,9 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import service.AccountService;
@@ -26,10 +28,40 @@ public class AccountResource {
 
     @Inject
     AccountService accountService;
-    
-    
+
     @GET
-    public List<Account> getAllAccounts(int limit){
+    @Path("getlimit/{limit}")
+    public List<Account> getAllAccounts(@PathParam("limit") int limit) {
         return accountService.getAllAccounts(limit);
+    }
+
+    @GET
+    @Path("getbyemail/{email}")
+    public List<Account> getAccountByEmail(@PathParam("email") String email) {
+        return accountService.getAccountByEmail(email);
+    }
+
+    @GET
+    @Path("getbyusername/{username}")
+    public List<Account> getAccountByUsername(@PathParam("username") String username) {
+        return accountService.getAccountByUsername(username);
+    }
+
+    @POST
+    @Path("create/{email}/{pass}")
+    public void insertAccount(Account user) {
+        accountService.insertAccount(user);
+    }
+
+    @POST
+    @Path("update/{email}")
+    public void updateAccount(Account user) {
+        accountService.updateAccount(user);
+    }
+    
+    @POST
+    @Path("delete/{email}")
+    public void deleteAccount(Account user) {
+        accountService.deleteAccount(user);
     }
 }

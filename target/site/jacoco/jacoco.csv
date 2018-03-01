@@ -1,12 +1,12 @@
 GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
-KwetterS62,rest,TweetResource,3,0,0,0,1,0,1,0,1,0
+KwetterS62,rest,TweetResource,34,0,0,0,10,0,7,0,7,0
 KwetterS62,rest,JAXRSconfig,3,0,0,0,1,0,1,0,1,0
-KwetterS62,rest,AccountResource,3,0,0,0,1,0,1,0,1,0
+KwetterS62,rest,AccountResource,33,0,0,0,10,0,7,0,7,0
 KwetterS62,dao,AccountDAOImpl,45,0,0,0,11,0,7,0,7,0
 KwetterS62,dao,TweetDAOImpl,81,0,0,0,15,0,8,0,8,0
 KwetterS62,service,Init,106,0,0,0,24,0,2,0,2,0
-KwetterS62,service,AccountService,28,0,0,0,9,0,6,0,6,0
-KwetterS62,service,TweetService,56,0,0,0,23,0,7,0,7,0
+KwetterS62,service,AccountService,89,0,0,0,30,0,8,0,8,0
+KwetterS62,service,TweetService,93,0,0,0,30,0,8,0,8,0
 KwetterS62,domain,Role,5,43,0,0,0,2,1,3,1,3
 KwetterS62,domain,Tweet,0,245,0,22,0,57,0,31,0,20
 KwetterS62,domain,Account.new Object() {...},3,23,0,0,0,1,0,1,0,1

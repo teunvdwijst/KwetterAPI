@@ -5,20 +5,64 @@
  */
 package rest;
 
+import domain.Account;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import service.AccountService;
 
 /**
  *
  * @author Teun
  */
-@Path(&quot;account&quot;)
 @Stateless
-<span class="nc" id="L19">public class AccountResource {</span>
+@Path(&quot;account&quot;)
+@Produces(MediaType.APPLICATION_JSON)
+<span class="nc" id="L27">public class AccountResource {</span>
 
     @Inject
     AccountService accountService;
+
+    @GET
+    @Path(&quot;getlimit/{limit}&quot;)
+    public List&lt;Account&gt; getAllAccounts(@PathParam(&quot;limit&quot;) int limit) {
+<span class="nc" id="L35">        return accountService.getAllAccounts(limit);</span>
+    }
+
+    @GET
+    @Path(&quot;getbyemail/{email}&quot;)
+    public List&lt;Account&gt; getAccountByEmail(@PathParam(&quot;email&quot;) String email) {
+<span class="nc" id="L41">        return accountService.getAccountByEmail(email);</span>
+    }
+
+    @GET
+    @Path(&quot;getbyusername/{username}&quot;)
+    public List&lt;Account&gt; getAccountByUsername(@PathParam(&quot;username&quot;) String username) {
+<span class="nc" id="L47">        return accountService.getAccountByUsername(username);</span>
+    }
+
+    @POST
+    @Path(&quot;create/{email}/{pass}&quot;)
+    public void insertAccount(Account user) {
+<span class="nc" id="L53">        accountService.insertAccount(user);</span>
+<span class="nc" id="L54">    }</span>
+
+    @POST
+    @Path(&quot;update/{email}&quot;)
+    public void updateAccount(Account user) {
+<span class="nc" id="L59">        accountService.updateAccount(user);</span>
+<span class="nc" id="L60">    }</span>
+    
+    @POST
+    @Path(&quot;delete/{email}&quot;)
+    public void deleteAccount(Account user) {
+<span class="nc" id="L65">        accountService.deleteAccount(user);</span>
+<span class="nc" id="L66">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
