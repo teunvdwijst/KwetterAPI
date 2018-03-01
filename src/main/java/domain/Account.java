@@ -18,6 +18,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -26,13 +28,20 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author Teun
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
+    ,
+    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email")
+    ,
+    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")
+})
 public class Account implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column(unique = true)
-    private String userName;
+    private String username;
     @Column(unique = true)
     private String email;
     @Enumerated(EnumType.ORDINAL)
@@ -48,12 +57,12 @@ public class Account implements Serializable {
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -132,7 +141,7 @@ public class Account implements Serializable {
 
     public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
         this(email, password);
-        this.userName = userName;
+        this.username = userName;
         this.location = location;
         this.bio = bio;
         this.website = website;
@@ -168,8 +177,7 @@ public class Account implements Serializable {
      * @param message String
      */
     public void addTweet(String message) {
-        Tweet t = new Tweet(message, this);
-        tweets.add(t);
+        tweets.add(new Tweet(message, this));
     }
 
     /**
@@ -177,10 +185,11 @@ public class Account implements Serializable {
      *
      * @param id
      */
-    public void removeTweet(int id) {
+    public void removeTweet(long id) {
         for (Tweet t : tweets) {
             if (t.getId() == id) {
                 tweets.remove(t);
+                break;
             }
         }
     }
@@ -232,7 +241,7 @@ public class Account implements Serializable {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 53 * hash + Objects.hashCode(this.userName);
+        hash = 53 * hash + Objects.hashCode(this.username);
         hash = 53 * hash + Objects.hashCode(this.email);
         hash = 53 * hash + Objects.hashCode(this.userRole);
         hash = 53 * hash + Objects.hashCode(this.location);

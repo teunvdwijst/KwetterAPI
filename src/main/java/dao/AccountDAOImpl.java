@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -18,34 +19,39 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class AccountDAOImpl implements AccountDAO {
 
-    @PersistenceContext
+    @PersistenceContext(name = "KwetterS62PU")
     EntityManager em;
 
     public AccountDAOImpl() {
     }
 
     @Override
-    public List<Account> getAllAccounts() {
-        return em.createQuery("Select a from Account a", Account.class).getResultList();
+    public List<Account> getAllAccounts(int limit) throws PersistenceException {
+        return em.createNamedQuery("Account.findAll").setMaxResults(limit).getResultList();
     }
 
     @Override
-    public Account getAccountByEmail(String email) {
-        return em.find(Account.class, email);
+    public List<Account> getAccountByEmail(String email) throws PersistenceException {
+        return em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
     }
 
     @Override
-    public void updateAccount(Account user) {
+    public void updateAccount(Account user) throws PersistenceException {
         em.merge(user);
     }
 
     @Override
-    public void insertAccount(Account user) {
+    public void insertAccount(Account user) throws PersistenceException {
         em.persist(user);
     }
 
     @Override
-    public List<Account> getFollowers(Account user) {
-        return em.find(Account.class, user.getEmail()).getFollowing();
+    public List<Account> getAccountByUsername(String username) throws PersistenceException {
+        return em.createNamedQuery("Account.findByUsername").setParameter("username", username).getResultList();
+    }
+
+    @Override
+    public void deleteAccount(Account user) throws PersistenceException {
+        em.remove(user);
     }
 }

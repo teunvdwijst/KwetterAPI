@@ -5,6 +5,7 @@
  */
 package dao;
 
+import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -18,45 +19,48 @@ import javax.persistence.PersistenceContext;
 @Stateless
 public class TweetDAOImpl implements TweetDAO {
 
-    @PersistenceContext
+    @PersistenceContext(name = &quot;KwetterS62PU&quot;)
     EntityManager em;
 
-<span class="nc" id="L24">    public TweetDAOImpl() {</span>
-<span class="nc" id="L25">    }</span>
+<span class="nc" id="L25">    public TweetDAOImpl() {</span>
+<span class="nc" id="L26">    }</span>
 
     @Override
-    public Tweet getTweet(int id) {
-<span class="nc" id="L29">        return em.find(Tweet.class, id);</span>
+    public List&lt;Tweet&gt; getTweetById(int id) {
+<span class="nc" id="L30">        return em.createNamedQuery(&quot;Tweet.findById&quot;).setParameter(&quot;id&quot;, id).getResultList();</span>
     }
 
     @Override
-    public List&lt;Tweet&gt; getRecentTweetsByUser(int limit, String userEmail) {
-<span class="nc" id="L34">        return em.createNamedQuery(&quot;Select t from Tweet t where where tweetedby_id = (select id from account where email = :email)) order by published desc limit :limit&quot;, Tweet.class)</span>
-<span class="nc" id="L35">                .setParameter(&quot;email&quot;, userEmail)</span>
-<span class="nc" id="L36">                .setParameter(&quot;limit&quot;, limit)</span>
-<span class="nc" id="L37">                .getResultList();</span>
+    public List&lt;Tweet&gt; getRecentTweetsByEmail(int limit, String userEmail) {
+<span class="nc" id="L35">        return em.createNamedQuery(&quot;Tweet.findRecentByEmail&quot;).setParameter(&quot;email&quot;, userEmail).setMaxResults(limit).getResultList();</span>
     }
 
     @Override
-    public void update(Tweet tweet) {
-<span class="nc" id="L42">        em.merge(tweet);</span>
-<span class="nc" id="L43">    }</span>
+    public void updateTweet(Tweet tweet) {
+<span class="nc" id="L40">        em.merge(tweet);</span>
+<span class="nc" id="L41">    }</span>
 
     @Override
-    public void insert(Tweet tweet) {
-<span class="nc" id="L47">        em.persist(tweet);</span>
-<span class="nc" id="L48">    }</span>
+    public void insertTweet(Tweet tweet) {
+<span class="nc" id="L45">        em.persist(tweet);</span>
+<span class="nc" id="L46">    }</span>
 
     @Override
-    public void remove(Tweet tweet) {
-<span class="nc" id="L52">        em.remove(tweet);</span>
-<span class="nc" id="L53">    }</span>
+    public void deleteTweet(Tweet tweet) {
+<span class="nc" id="L50">        Account a = tweet.getTweetedBy();</span>
+<span class="nc" id="L51">        a.removeTweet(tweet.getId());</span>
+<span class="nc" id="L52">        em.merge(a);</span>
+<span class="nc" id="L53">        em.remove(tweet);</span>
+<span class="nc" id="L54">    }</span>
 
     @Override
     public List&lt;Tweet&gt; getRecentTweets(int limit) {
-<span class="nc" id="L57">        return em.createNamedQuery(&quot;Select t from Tweet t order by published desc limit :limit&quot;)</span>
-<span class="nc" id="L58">                .setParameter(&quot;limit&quot;, limit)</span>
-<span class="nc" id="L59">                .getResultList();</span>
+<span class="nc" id="L58">        return em.createNamedQuery(&quot;Tweet.findRecent&quot;).setMaxResults(limit).getResultList();</span>
+    }
+
+    @Override
+    public List&lt;Tweet&gt; getRecentTweetsByTag(int limit, String tag) {
+<span class="nc" id="L63">        return em.createNamedQuery(&quot;Tweet.findRecentByTag&quot;).setParameter(&quot;tag&quot;, &quot;%&quot; + tag + &quot;%&quot;).setMaxResults(limit).getResultList();</span>
     }
 
 }
