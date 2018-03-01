@@ -9,6 +9,7 @@ import domain.Account;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -23,7 +24,6 @@ import service.AccountService;
  */
 @Stateless
 @Path("account")
-@Produces(MediaType.APPLICATION_JSON)
 public class AccountResource {
 
     @Inject
@@ -31,36 +31,42 @@ public class AccountResource {
 
     @GET
     @Path("getlimit/{limit}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAllAccounts(@PathParam("limit") int limit) {
         return accountService.getAllAccounts(limit);
     }
 
     @GET
     @Path("getbyemail/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountByEmail(@PathParam("email") String email) {
         return accountService.getAccountByEmail(email);
     }
 
     @GET
     @Path("getbyusername/{username}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountByUsername(@PathParam("username") String username) {
         return accountService.getAccountByUsername(username);
     }
 
     @POST
-    @Path("create/{email}/{pass}")
+    @Path("create")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void insertAccount(Account user) {
         accountService.insertAccount(user);
     }
 
     @POST
-    @Path("update/{email}")
+    @Path("update")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void updateAccount(Account user) {
         accountService.updateAccount(user);
     }
-    
+
     @POST
-    @Path("delete/{email}")
+    @Path("delete")
+    @Consumes(MediaType.APPLICATION_JSON)
     public void deleteAccount(Account user) {
         accountService.deleteAccount(user);
     }

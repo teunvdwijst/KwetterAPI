@@ -46,7 +46,7 @@ public class TweetDAOImpl implements TweetDAO {
 <span class="nc" id="L46">    }</span>
 
     @Override
-    public void removeTweet(Tweet tweet) {
+    public void deleteTweet(Tweet tweet) {
 <span class="nc" id="L50">        Account a = tweet.getTweetedBy();</span>
 <span class="nc" id="L51">        a.removeTweet(tweet.getId());</span>
 <span class="nc" id="L52">        em.merge(a);</span>

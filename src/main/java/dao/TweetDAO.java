@@ -27,5 +27,5 @@ public interface TweetDAO {
 
     void insertTweet(Tweet tweet) throws PersistenceException;
 
-    void removeTweet(Tweet tweet) throws PersistenceException;
+    void deleteTweet(Tweet tweet) throws PersistenceException;
 }

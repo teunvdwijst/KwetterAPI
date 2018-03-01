@@ -9,10 +9,13 @@ import domain.Tweet;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.MediaType;
 import service.TweetService;
 
 /**
@@ -21,42 +24,51 @@ import service.TweetService;
  */
 @Path(&quot;tweet&quot;)
 @Stateless
-<span class="nc" id="L24">public class TweetResource {</span>
+<span class="nc" id="L27">public class TweetResource {</span>
 
     @Inject
     TweetService tweetService;
 
     @GET
     @Path(&quot;gettweet/{id}&quot;)
+    @Produces(MediaType.APPLICATION_JSON)
     public Tweet getTweet(@PathParam(&quot;id&quot;) int id) {
-<span class="nc" id="L32">        return tweetService.getTweet(id);</span>
+<span class="nc" id="L36">        return tweetService.getTweet(id);</span>
     }
 
     @GET
     @Path(&quot;gettweetsbyuser/{limit}/{email}&quot;)
+    @Produces(MediaType.APPLICATION_JSON)
     public List&lt;Tweet&gt; getRecentTweetsByUser(@PathParam(&quot;limit&quot;) int limit, @PathParam(&quot;email&quot;) String userEmail) {
-<span class="nc" id="L38">        return tweetService.getRecentTweetsByUser(limit, userEmail);</span>
+<span class="nc" id="L43">        return tweetService.getRecentTweetsByUser(limit, userEmail);</span>
     }
 
     @GET
     @Path(&quot;getrecenttweets/{limit}&quot;)
+    @Produces(MediaType.APPLICATION_JSON)
     public List&lt;Tweet&gt; getRecentTweets(@PathParam(&quot;limit&quot;) int limit) {
-<span class="nc" id="L44">        return tweetService.getRecentTweets(limit);</span>
+<span class="nc" id="L50">        return tweetService.getRecentTweets(limit);</span>
     }
 
     @POST
+    @Path(&quot;update&quot;)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void updateTweet(Tweet tweet) {
-<span class="nc" id="L49">        tweetService.updateTweet(tweet);</span>
-<span class="nc" id="L50">    }</span>
+<span class="nc" id="L57">        tweetService.updateTweet(tweet);</span>
+<span class="nc" id="L58">    }</span>
 
     @POST
+    @Path(&quot;insert&quot;)
+    @Consumes(MediaType.APPLICATION_JSON)
     public void insertTweet(Tweet tweet) {
-<span class="nc" id="L54">        tweetService.insertTweet(tweet);</span>
-<span class="nc" id="L55">    }</span>
+<span class="nc" id="L64">        tweetService.insertTweet(tweet);</span>
+<span class="nc" id="L65">    }</span>
 
     @POST
-    public void removeTweet(Tweet tweet) {
-<span class="nc" id="L59">        tweetService.removeTweet(tweet);</span>
-<span class="nc" id="L60">    }</span>
+    @Path(&quot;delete&quot;)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void deleteTweet(Tweet tweet) {
+<span class="nc" id="L71">        tweetService.deleteTweet(tweet);</span>
+<span class="nc" id="L72">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>

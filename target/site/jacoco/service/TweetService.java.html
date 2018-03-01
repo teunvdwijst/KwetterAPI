@@ -113,9 +113,9 @@ public class TweetService {
      *
      * @param tweet
      */
-    public void removeTweet(Tweet tweet)  {
+    public void deleteTweet(Tweet tweet)  {
         try {
-<span class="nc" id="L118">            tweetDao.removeTweet(tweet);</span>
+<span class="nc" id="L118">            tweetDao.deleteTweet(tweet);</span>
 <span class="nc" id="L119">        } catch (PersistenceException pe) {</span>
 <span class="nc" id="L120">            LOGGER.log(Level.FINE, &quot;ERROR while performing removeTweet operation; {0}&quot;, pe.getMessage());</span>
 <span class="nc" id="L121">        }</span>
