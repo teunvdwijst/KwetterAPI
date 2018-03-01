@@ -7,8 +7,9 @@ package service;
 
 import dao.TweetDAO;
 import domain.Tweet;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
@@ -22,6 +23,8 @@ public class TweetService {
 
     @Inject
     TweetDAO tweetDao;
+    
+    private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
     public TweetService() {
     }
@@ -32,13 +35,13 @@ public class TweetService {
      *
      * @param id
      * @return Tweet
-     * @throws java.lang.Exception
      */
-    public Tweet getTweet(int id) throws Exception {
+    public Tweet getTweet(int id) {
         try {
             return tweetDao.getTweetById(id).get(0);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getTweet operation; {0}", pe.getMessage());
+            return null;
         }
     }
 
@@ -50,13 +53,13 @@ public class TweetService {
      * @param limit
      * @param userEmail
      * @return List of Tweets
-     * @throws java.lang.Exception
      */
-    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) throws Exception {
+    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail)  {
         try {
             return tweetDao.getRecentTweetsByEmail(limit, userEmail);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getRecentTweetsByUser operation; {0}", pe.getMessage());
+            return null;
         }
     }
 
@@ -66,13 +69,13 @@ public class TweetService {
      *
      * @param limit
      * @return List of Tweets
-     * @throws java.lang.Exception
      */
-    public List<Tweet> getRecentTweets(int limit) throws Exception {
+    public List<Tweet> getRecentTweets(int limit) {
         try {
             return tweetDao.getRecentTweets(limit);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getRecentTweets operation; {0}", pe.getMessage());
+            return null;
         }
     }
 
@@ -81,13 +84,12 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
-     * @throws java.lang.Exception
      */
-    public void updateTweet(Tweet tweet) throws Exception {
+    public void updateTweet(Tweet tweet) {
         try {
             tweetDao.updateTweet(tweet);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
         }
     }
 
@@ -96,13 +98,12 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
-     * @throws java.lang.Exception
      */
-    public void insertTweet(Tweet tweet) throws Exception {
+    public void insertTweet(Tweet tweet) {
         try {
             tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());
         }
     }
 
@@ -111,13 +112,12 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
-     * @throws java.lang.Exception
      */
-    public void removeTweet(Tweet tweet) throws Exception {
+    public void removeTweet(Tweet tweet)  {
         try {
             tweetDao.removeTweet(tweet);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing removeTweet operation; {0}", pe.getMessage());
         }
     }
 }

@@ -8,6 +8,8 @@ package service;
 import dao.AccountDAO;
 import domain.Account;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
@@ -22,6 +24,8 @@ public class AccountService {
     @Inject
     AccountDAO accountDao;
 
+    private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
+
     public AccountService() {
     }
 
@@ -29,13 +33,13 @@ public class AccountService {
      *
      * @param limit
      * @return
-     * @throws java.lang.Exception
      */
-    public List<Account> getAllAccounts(int limit) throws Exception {
+    public List<Account> getAllAccounts(int limit) {
         try {
             return accountDao.getAllAccounts(limit);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getAllAccounts operation; {0}", pe.getMessage());
+            return null;
         }
     }
 
@@ -43,39 +47,37 @@ public class AccountService {
      *
      * @param email
      * @return
-     * @throws java.lang.Exception
      */
-    public List<Account> getAccountByEmail(String email) throws Exception {
+    public List<Account> getAccountByEmail(String email) {
         try {
             return accountDao.getAccountByEmail(email);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountByEmail operation; {0}", pe.getMessage());
+            return null;
         }
     }
 
     /**
      *
      * @param user
-     * @throws java.lang.Exception
      */
-    public void updateAccount(Account user) throws Exception {
+    public void updateAccount(Account user) {
         try {
             accountDao.updateAccount(user);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing updateAccount operation; {0}", pe.getMessage());
         }
     }
 
     /**
      *
      * @param user
-     * @throws java.lang.Exception
      */
-    public void insertAccount(Account user) throws Exception {
+    public void insertAccount(Account user) {
         try {
             accountDao.insertAccount(user);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
         }
     }
 
@@ -83,13 +85,13 @@ public class AccountService {
      *
      * @param username
      * @return
-     * @throws java.lang.Exception
      */
-    public List<Account> getAccountByUsername(String username) throws Exception {
+    public List<Account> getAccountByUsername(String username) {
         try {
             return accountDao.getAccountByUsername(username);
         } catch (PersistenceException pe) {
-            throw new Exception(pe);
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountByUsername operation; {0}", pe.getMessage());
+            return null;
         }
     }
 }
