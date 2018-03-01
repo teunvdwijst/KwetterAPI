@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: domain.AccountTest
 -------------------------------------------------------------------------------
-Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.047 sec
+Tests run: 23, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 20.19 sec

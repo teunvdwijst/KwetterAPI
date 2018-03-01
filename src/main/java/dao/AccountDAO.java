@@ -7,6 +7,7 @@ package dao;
 
 import domain.Account;
 import java.util.List;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -14,15 +15,15 @@ import java.util.List;
  */
 public interface AccountDAO {
 
-    List<Account> getAllAccounts(int limit);
+    List<Account> getAllAccounts(int limit) throws PersistenceException;
 
-    List<Account> getAccountByEmail(String email);
+    List<Account> getAccountByEmail(String email) throws PersistenceException;
 
-    void updateAccount(Account user);
+    void updateAccount(Account user) throws PersistenceException;
 
-    void insertAccount(Account user);
+    void insertAccount(Account user) throws PersistenceException;
 
-    List<Account> getAccountByUsername(String username);
-    
-    void deleteAccount(Account user);
+    List<Account> getAccountByUsername(String username) throws PersistenceException;
+
+    void deleteAccount(Account user) throws PersistenceException;
 }

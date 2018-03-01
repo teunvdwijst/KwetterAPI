@@ -10,6 +10,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -25,32 +26,32 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<Account> getAllAccounts(int limit) {
+    public List<Account> getAllAccounts(int limit) throws PersistenceException {
         return em.createNamedQuery("Account.findAll").setMaxResults(limit).getResultList();
     }
 
     @Override
-    public List<Account> getAccountByEmail(String email) {
+    public List<Account> getAccountByEmail(String email) throws PersistenceException {
         return em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
     }
 
     @Override
-    public void updateAccount(Account user) {
+    public void updateAccount(Account user) throws PersistenceException {
         em.merge(user);
     }
 
     @Override
-    public void insertAccount(Account user) {
+    public void insertAccount(Account user) throws PersistenceException {
         em.persist(user);
     }
 
     @Override
-    public List<Account> getAccountByUsername(String username) {
+    public List<Account> getAccountByUsername(String username) throws PersistenceException {
         return em.createNamedQuery("Account.findByUsername").setParameter("username", username).getResultList();
     }
 
     @Override
-    public void deleteAccount(Account user) {
+    public void deleteAccount(Account user) throws PersistenceException {
         em.remove(user);
     }
 }

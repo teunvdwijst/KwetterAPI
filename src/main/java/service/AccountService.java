@@ -10,6 +10,7 @@ import domain.Account;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -26,44 +27,69 @@ public class AccountService {
 
     /**
      *
+     * @param limit
      * @return
+     * @throws java.lang.Exception
      */
-    public List<Account> getAllAccounts(int limit) {
-        return accountDao.getAllAccounts(limit);
+    public List<Account> getAllAccounts(int limit) throws Exception {
+        try {
+            return accountDao.getAllAccounts(limit);
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
+        }
     }
 
     /**
      *
      * @param email
      * @return
+     * @throws java.lang.Exception
      */
-    public List<Account> getAccountByEmail(String email) {
-        return accountDao.getAccountByEmail(email);
+    public List<Account> getAccountByEmail(String email) throws Exception {
+        try {
+            return accountDao.getAccountByEmail(email);
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
+        }
     }
 
     /**
      *
      * @param user
+     * @throws java.lang.Exception
      */
-    public void updateAccount(Account user) {
-        accountDao.updateAccount(user);
+    public void updateAccount(Account user) throws Exception {
+        try {
+            accountDao.updateAccount(user);
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
+        }
     }
 
     /**
      *
      * @param user
+     * @throws java.lang.Exception
      */
-    public void insertAccount(Account user) {
-        accountDao.insertAccount(user);
+    public void insertAccount(Account user) throws Exception {
+        try {
+            accountDao.insertAccount(user);
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
+        }
     }
 
     /**
      *
-     * @param user
+     * @param username
      * @return
+     * @throws java.lang.Exception
      */
-    public List<Account> getAccountByUsername(String username) {
-        return accountDao.getAccountByUsername(username);
+    public List<Account> getAccountByUsername(String username) throws Exception {
+        try {
+            return accountDao.getAccountByUsername(username);
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
+        }
     }
-
 }

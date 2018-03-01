@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -31,13 +32,13 @@ public class TweetService {
      *
      * @param id
      * @return Tweet
+     * @throws java.lang.Exception
      */
-    public Tweet getTweet(int id) {
+    public Tweet getTweet(int id) throws Exception {
         try {
             return tweetDao.getTweetById(id).get(0);
-        } catch (Exception ex) {
-            //handle exception
-            return null;
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 
@@ -49,13 +50,13 @@ public class TweetService {
      * @param limit
      * @param userEmail
      * @return List of Tweets
+     * @throws java.lang.Exception
      */
-    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) {
+    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) throws Exception {
         try {
             return tweetDao.getRecentTweetsByEmail(limit, userEmail);
-        } catch (Exception ex) {
-            //handle exception
-            return new ArrayList<>();
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 
@@ -65,13 +66,13 @@ public class TweetService {
      *
      * @param limit
      * @return List of Tweets
+     * @throws java.lang.Exception
      */
-    public List<Tweet> getRecentTweets(int limit) {
+    public List<Tweet> getRecentTweets(int limit) throws Exception {
         try {
             return tweetDao.getRecentTweets(limit);
-        } catch (Exception ex) {
-            //handle exception
-            return new ArrayList<>();
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 
@@ -80,12 +81,13 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
+     * @throws java.lang.Exception
      */
-    public void updateTweet(Tweet tweet) {
+    public void updateTweet(Tweet tweet) throws Exception {
         try {
             tweetDao.updateTweet(tweet);
-        } catch (Exception ex) {
-            //handle exception
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 
@@ -94,12 +96,13 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
+     * @throws java.lang.Exception
      */
-    public void insertTweet(Tweet tweet) {
+    public void insertTweet(Tweet tweet) throws Exception {
         try {
             tweetDao.insertTweet(tweet);
-        } catch (Exception ex) {
-            //handle exception
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 
@@ -108,12 +111,13 @@ public class TweetService {
      * does nothing
      *
      * @param tweet
+     * @throws java.lang.Exception
      */
-    public void removeTweet(Tweet tweet) {
+    public void removeTweet(Tweet tweet) throws Exception {
         try {
             tweetDao.removeTweet(tweet);
-        } catch (Exception ex) {
-            //handle exception
+        } catch (PersistenceException pe) {
+            throw new Exception(pe);
         }
     }
 }
