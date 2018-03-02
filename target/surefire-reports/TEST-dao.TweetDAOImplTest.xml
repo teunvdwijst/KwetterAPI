@@ -62,7 +62,7 @@
     <property name="sun.desktop" value="windows"/>
     <property name="sun.cpu.isalist" value="amd64"/>
   </properties>
-  <testcase classname="dao.TweetDAOImplTest" name="dao.TweetDAOImplTest" time="0.032">
+  <testcase classname="dao.TweetDAOImplTest" name="dao.TweetDAOImplTest" time="0.047">
     <skipped/>
   </testcase>
 </testsuite>

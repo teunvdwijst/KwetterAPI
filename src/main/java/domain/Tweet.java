@@ -6,6 +6,8 @@
 package domain;
 
 import java.io.Serializable;
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -24,7 +26,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 
 /**
@@ -70,8 +71,16 @@ public class Tweet implements Serializable {
         return Collections.unmodifiableList(mentions);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Account getTweetedBy() {
         return tweetedBy;
+    }
+
+    public void setTweetedBy(Account a) {
+        this.tweetedBy = a;
     }
 
     public String getContent() {
@@ -114,14 +123,16 @@ public class Tweet implements Serializable {
         this.tags = findTags(content);
     }
 
-    /**
-     * This function generates a new Date object based on the current date/time
-     * (of the application server). this function is protected and will be
-     * executed before an object is persisted, hence the @PrePersist annotation
-     */
-    @PrePersist
-    protected void onCreate() {
-        published = new Date();
+    @Override
+    public String toString() {
+        Format formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        return "Tweet{" + "id=" + this.id
+                + ", content=" + this.content
+                + ", published=" + formatter.format(this.published)
+                + ", tweetedBy=" + this.tweetedBy.getUsername()
+                + ", tags=" + this.tags.toString()
+                + ", likedBy=" + this.likedBy.toString()
+                + ", mentions=" + this.mentions.toString() + '}';
     }
 
     /**
