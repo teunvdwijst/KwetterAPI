@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.enterprise.inject.Model;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author Teun
  */
 @Entity
+@Model
 @NamedQueries({
     @NamedQuery(name = &quot;Account.findAll&quot;, query = &quot;SELECT a FROM Account a&quot;)
     ,
@@ -51,103 +53,103 @@ public class Account implements Serializable {
     private String bio;
     private String website;
     private String avatarPath;
-<span class="fc" id="L54">    @OneToMany</span>
+<span class="fc" id="L56">    @OneToMany</span>
     private final List&lt;Account&gt; following = new ArrayList&lt;&gt;();
-<span class="fc" id="L56">    @OneToMany(mappedBy = &quot;tweetedBy&quot;, cascade = ALL)</span>
+<span class="fc" id="L58">    @OneToMany(mappedBy = &quot;tweetedBy&quot;, cascade = ALL)</span>
     private final List&lt;Tweet&gt; tweets = new ArrayList&lt;&gt;();
 
     // &lt;editor-fold desc=&quot;Getters and Setters&quot; defaultstate=&quot;collapsed&quot;&gt;
     public String getUsername() {
-<span class="fc" id="L61">        return username;</span>
+<span class="fc" id="L63">        return username;</span>
     }
 
     public void setUsername(String username) {
-<span class="fc" id="L65">        this.username = username;</span>
-<span class="fc" id="L66">    }</span>
+<span class="fc" id="L67">        this.username = username;</span>
+<span class="fc" id="L68">    }</span>
 
     public String getEmail() {
-<span class="fc" id="L69">        return email;</span>
+<span class="fc" id="L71">        return email;</span>
     }
 
     public void setEmail(String email) {
-<span class="fc" id="L73">        this.email = email;</span>
-<span class="fc" id="L74">    }</span>
+<span class="fc" id="L75">        this.email = email;</span>
+<span class="fc" id="L76">    }</span>
 
     public String getEncryptedPassword() {
-<span class="nc" id="L77">        return encryptedPassword;</span>
+<span class="nc" id="L79">        return encryptedPassword;</span>
     }
 
     public void setEncryptedPassword(String encryptedPassword) {
-<span class="nc" id="L81">        this.encryptedPassword = encryptedPassword;</span>
-<span class="nc" id="L82">    }</span>
+<span class="nc" id="L83">        this.encryptedPassword = encryptedPassword;</span>
+<span class="nc" id="L84">    }</span>
 
     public String getLocation() {
-<span class="fc" id="L85">        return location;</span>
+<span class="fc" id="L87">        return location;</span>
     }
 
     public void setLocation(String location) {
-<span class="fc" id="L89">        this.location = location;</span>
-<span class="fc" id="L90">    }</span>
+<span class="fc" id="L91">        this.location = location;</span>
+<span class="fc" id="L92">    }</span>
 
     public String getBio() {
-<span class="fc" id="L93">        return bio;</span>
+<span class="fc" id="L95">        return bio;</span>
     }
 
     public void setBio(String bio) {
-<span class="fc" id="L97">        this.bio = bio;</span>
-<span class="fc" id="L98">    }</span>
+<span class="fc" id="L99">        this.bio = bio;</span>
+<span class="fc" id="L100">    }</span>
 
     public String getWebsite() {
-<span class="fc" id="L101">        return website;</span>
+<span class="fc" id="L103">        return website;</span>
     }
 
     public void setWebsite(String website) {
-<span class="fc" id="L105">        this.website = website;</span>
-<span class="fc" id="L106">    }</span>
+<span class="fc" id="L107">        this.website = website;</span>
+<span class="fc" id="L108">    }</span>
 
     public String getAvatarPath() {
-<span class="fc" id="L109">        return avatarPath;</span>
+<span class="fc" id="L111">        return avatarPath;</span>
     }
 
     public void setAvatarPath(String avatarPath) {
-<span class="fc" id="L113">        this.avatarPath = avatarPath;</span>
-<span class="fc" id="L114">    }</span>
+<span class="fc" id="L115">        this.avatarPath = avatarPath;</span>
+<span class="fc" id="L116">    }</span>
 
     public Role getUserRole() {
-<span class="fc" id="L117">        return userRole;</span>
+<span class="fc" id="L119">        return userRole;</span>
     }
 
     public void setUserRole(Role userRole) {
-<span class="fc" id="L121">        this.userRole = userRole;</span>
-<span class="fc" id="L122">    }</span>
+<span class="fc" id="L123">        this.userRole = userRole;</span>
+<span class="fc" id="L124">    }</span>
 
     public List&lt;Account&gt; getFollowing() {
-<span class="fc" id="L125">        return Collections.unmodifiableList(following);</span>
+<span class="fc" id="L127">        return Collections.unmodifiableList(following);</span>
     }
 
     public List&lt;Tweet&gt; getTweets() {
-<span class="fc" id="L129">        return Collections.unmodifiableList(tweets);</span>
+<span class="fc" id="L131">        return Collections.unmodifiableList(tweets);</span>
     }
     // &lt;/editor-fold&gt;
 
-<span class="fc" id="L133">    public Account() {</span>
+<span class="fc" id="L135">    public Account() {</span>
 
-<span class="fc" id="L135">    }</span>
+<span class="fc" id="L137">    }</span>
 
-<span class="fc" id="L137">    public Account(String email, String password) {</span>
-<span class="fc" id="L138">        this.email = email;</span>
-<span class="fc" id="L139">        this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));</span>
-<span class="fc" id="L140">    }</span>
+<span class="fc" id="L139">    public Account(String email, String password) {</span>
+<span class="fc" id="L140">        this.email = email;</span>
+<span class="fc" id="L141">        this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));</span>
+<span class="fc" id="L142">    }</span>
 
     public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
-<span class="fc" id="L143">        this(email, password);</span>
-<span class="fc" id="L144">        this.username = userName;</span>
-<span class="fc" id="L145">        this.location = location;</span>
-<span class="fc" id="L146">        this.bio = bio;</span>
-<span class="fc" id="L147">        this.website = website;</span>
-<span class="fc" id="L148">        this.avatarPath = avatarPath;</span>
-<span class="fc" id="L149">        this.userRole = userRole;</span>
-<span class="fc" id="L150">    }</span>
+<span class="fc" id="L145">        this(email, password);</span>
+<span class="fc" id="L146">        this.username = userName;</span>
+<span class="fc" id="L147">        this.location = location;</span>
+<span class="fc" id="L148">        this.bio = bio;</span>
+<span class="fc" id="L149">        this.website = website;</span>
+<span class="fc" id="L150">        this.avatarPath = avatarPath;</span>
+<span class="fc" id="L151">        this.userRole = userRole;</span>
+<span class="fc" id="L152">    }</span>
 
     /**
      * Adds an Account to the list of following accounts
@@ -155,10 +157,10 @@ public class Account implements Serializable {
      * @param a Account
      */
     public void addFollowing(Account a) {
-<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (!following.contains(a)) {</span>
-<span class="fc" id="L159">            following.add(a);</span>
+<span class="fc bfc" id="L160" title="All 2 branches covered.">        if (!following.contains(a)) {</span>
+<span class="fc" id="L161">            following.add(a);</span>
         }
-<span class="fc" id="L161">    }</span>
+<span class="fc" id="L163">    }</span>
 
     /**
      * Removes an Account from the list of following accounts
@@ -166,10 +168,10 @@ public class Account implements Serializable {
      * @param a
      */
     public void removeFollowing(Account a) {
-<span class="fc bfc" id="L169" title="All 2 branches covered.">        if (following.contains(a)) {</span>
-<span class="fc" id="L170">            following.remove(a);</span>
+<span class="fc bfc" id="L171" title="All 2 branches covered.">        if (following.contains(a)) {</span>
+<span class="fc" id="L172">            following.remove(a);</span>
         }
-<span class="fc" id="L172">    }</span>
+<span class="fc" id="L174">    }</span>
 
     /**
      * Adds a Tweet to the list of Tweets owned by this account
@@ -177,8 +179,8 @@ public class Account implements Serializable {
      * @param message String
      */
     public void addTweet(String message) {
-<span class="fc" id="L180">        tweets.add(new Tweet(message, this));</span>
-<span class="fc" id="L181">    }</span>
+<span class="fc" id="L182">        tweets.add(new Tweet(message, this));</span>
+<span class="fc" id="L183">    }</span>
 
     /**
      * Removes a Tweet from the list of tweets owned by this account
@@ -186,69 +188,69 @@ public class Account implements Serializable {
      * @param id
      */
     public void removeTweet(long id) {
-<span class="nc bnc" id="L189" title="All 2 branches missed.">        for (Tweet t : tweets) {</span>
-<span class="nc bnc" id="L190" title="All 2 branches missed.">            if (t.getId() == id) {</span>
-<span class="nc" id="L191">                tweets.remove(t);</span>
-<span class="nc" id="L192">                break;</span>
+<span class="nc bnc" id="L191" title="All 2 branches missed.">        for (Tweet t : tweets) {</span>
+<span class="nc bnc" id="L192" title="All 2 branches missed.">            if (t.getId() == id) {</span>
+<span class="nc" id="L193">                tweets.remove(t);</span>
+<span class="nc" id="L194">                break;</span>
             }
-<span class="nc" id="L194">        }</span>
-<span class="nc" id="L195">    }</span>
+<span class="nc" id="L196">        }</span>
+<span class="nc" id="L197">    }</span>
 
     public Role promote() {
-<span class="pc bpc" id="L198" title="1 of 4 branches missed.">        switch (userRole) {</span>
+<span class="pc bpc" id="L200" title="1 of 4 branches missed.">        switch (userRole) {</span>
             case USER:
-<span class="fc" id="L200">                userRole = Role.MODERATOR;</span>
-<span class="fc" id="L201">                break;</span>
+<span class="fc" id="L202">                userRole = Role.MODERATOR;</span>
+<span class="fc" id="L203">                break;</span>
             case MODERATOR:
-<span class="fc" id="L203">                userRole = Role.ADMIN;</span>
-<span class="fc" id="L204">                break;</span>
-            case ADMIN:
+<span class="fc" id="L205">                userRole = Role.ADMIN;</span>
 <span class="fc" id="L206">                break;</span>
+            case ADMIN:
+<span class="fc" id="L208">                break;</span>
             default:
                 break;
         }
-<span class="fc" id="L210">        return userRole;</span>
+<span class="fc" id="L212">        return userRole;</span>
     }
 
     public Role demote() {
-<span class="pc bpc" id="L214" title="1 of 4 branches missed.">        switch (userRole) {</span>
+<span class="pc bpc" id="L216" title="1 of 4 branches missed.">        switch (userRole) {</span>
             case MODERATOR:
-<span class="fc" id="L216">                userRole = Role.USER;</span>
-<span class="fc" id="L217">                break;</span>
+<span class="fc" id="L218">                userRole = Role.USER;</span>
+<span class="fc" id="L219">                break;</span>
             case ADMIN:
-<span class="fc" id="L219">                userRole = Role.MODERATOR;</span>
-<span class="fc" id="L220">                break;</span>
-            case USER:
+<span class="fc" id="L221">                userRole = Role.MODERATOR;</span>
 <span class="fc" id="L222">                break;</span>
+            case USER:
+<span class="fc" id="L224">                break;</span>
             default:
                 break;
         }
-<span class="fc" id="L226">        return userRole;</span>
+<span class="fc" id="L228">        return userRole;</span>
     }
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L231" title="All 2 branches covered.">        if (!(obj instanceof Account)) {</span>
-<span class="fc" id="L232">            return false;</span>
+<span class="fc bfc" id="L233" title="All 2 branches covered.">        if (!(obj instanceof Account)) {</span>
+<span class="fc" id="L234">            return false;</span>
         }
-<span class="fc" id="L234">        Account otherUser = (Account) obj;</span>
-<span class="pc bpc" id="L235" title="1 of 4 branches missed.">        if (this.email == null || otherUser.email == null) {</span>
-<span class="fc" id="L236">            return false;</span>
+<span class="fc" id="L236">        Account otherUser = (Account) obj;</span>
+<span class="pc bpc" id="L237" title="1 of 4 branches missed.">        if (this.email == null || otherUser.email == null) {</span>
+<span class="fc" id="L238">            return false;</span>
         }
-<span class="fc" id="L238">        return this.email.equals(otherUser.email);</span>
+<span class="fc" id="L240">        return this.email.equals(otherUser.email);</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L243">        int hash = 5;</span>
-<span class="fc" id="L244">        hash = 53 * hash + Objects.hashCode(this.username);</span>
-<span class="fc" id="L245">        hash = 53 * hash + Objects.hashCode(this.email);</span>
-<span class="fc" id="L246">        hash = 53 * hash + Objects.hashCode(this.userRole);</span>
-<span class="fc" id="L247">        hash = 53 * hash + Objects.hashCode(this.location);</span>
-<span class="fc" id="L248">        hash = 53 * hash + Objects.hashCode(this.bio);</span>
-<span class="fc" id="L249">        hash = 53 * hash + Objects.hashCode(this.website);</span>
-<span class="fc" id="L250">        hash = 53 * hash + Objects.hashCode(this.avatarPath);</span>
-<span class="fc" id="L251">        return hash;</span>
+<span class="fc" id="L245">        int hash = 5;</span>
+<span class="fc" id="L246">        hash = 53 * hash + Objects.hashCode(this.username);</span>
+<span class="fc" id="L247">        hash = 53 * hash + Objects.hashCode(this.email);</span>
+<span class="fc" id="L248">        hash = 53 * hash + Objects.hashCode(this.userRole);</span>
+<span class="fc" id="L249">        hash = 53 * hash + Objects.hashCode(this.location);</span>
+<span class="fc" id="L250">        hash = 53 * hash + Objects.hashCode(this.bio);</span>
+<span class="fc" id="L251">        hash = 53 * hash + Objects.hashCode(this.website);</span>
+<span class="fc" id="L252">        hash = 53 * hash + Objects.hashCode(this.avatarPath);</span>
+<span class="fc" id="L253">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
