@@ -23,14 +23,14 @@ import service.AccountService;
  * @author Teun
  */
 @Stateless
-@Path("account")
+@Path("accounts")
 public class AccountResource {
 
     @Inject
     AccountService accountService;
 
     @GET
-    @Path("getlimit/{limit}")
+    @Path("{limit}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAllAccounts(@PathParam("limit") int limit) {
         return accountService.getAllAccounts(limit);

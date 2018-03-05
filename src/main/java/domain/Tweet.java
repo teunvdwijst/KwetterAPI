@@ -6,8 +6,6 @@
 package domain;
 
 import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -16,7 +14,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.enterprise.inject.Model;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,7 +46,7 @@ public class Tweet implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    @Column(name = "PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
+    //@Column(name = "PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
@@ -114,6 +111,7 @@ public class Tweet implements Serializable {
     public Tweet(String content, Account tweetedBy) {
         this.tweetedBy = tweetedBy;
         this.content = content;
+        this.published = new Date(System.currentTimeMillis());
         this.tags = findTags(content);
     }
 
@@ -121,18 +119,6 @@ public class Tweet implements Serializable {
         this(content, tweetedBy);
         this.published = published;
         this.tags = findTags(content);
-    }
-
-    @Override
-    public String toString() {
-        Format formatter = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-        return "Tweet{" + "id=" + this.id
-                + ", content=" + this.content
-                + ", published=" + formatter.format(this.published)
-                + ", tweetedBy=" + this.tweetedBy.getUsername()
-                + ", tags=" + this.tags.toString()
-                + ", likedBy=" + this.likedBy.toString()
-                + ", mentions=" + this.mentions.toString() + '}';
     }
 
     /**

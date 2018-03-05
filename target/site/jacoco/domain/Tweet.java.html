@@ -6,8 +6,6 @@
 package domain;
 
 import java.io.Serializable;
-import java.text.Format;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
@@ -16,7 +14,6 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.enterprise.inject.Model;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -49,91 +46,80 @@ public class Tweet implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    @Column(name = &quot;PUBLISH_DATE&quot;, nullable = false, columnDefinition = &quot;TIMESTAMP default CURRENT_TIMESTAMP&quot;)
+    //@Column(name = &quot;PUBLISH_DATE&quot;, nullable = false, columnDefinition = &quot;TIMESTAMP default CURRENT_TIMESTAMP&quot;)
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List&lt;String&gt; tags;
     @ManyToOne
     private Account tweetedBy;
-<span class="fc" id="L58">    @OneToMany</span>
+<span class="fc" id="L55">    @OneToMany</span>
     @JoinTable(name = &quot;tweet_likes&quot;)
     private final List&lt;Account&gt; likedBy = new ArrayList&lt;&gt;();
-<span class="fc" id="L61">    @OneToMany</span>
+<span class="fc" id="L58">    @OneToMany</span>
     @JoinTable(name = &quot;tweet_mentions&quot;)
     private final List&lt;Account&gt; mentions = new ArrayList&lt;&gt;();
 
     // &lt;editor-fold desc=&quot;Getters and Setters&quot; defaultstate=&quot;collapsed&quot;&gt;
     public List&lt;Account&gt; getLikedBy() {
-<span class="fc" id="L67">        return Collections.unmodifiableList(likedBy);</span>
+<span class="fc" id="L64">        return Collections.unmodifiableList(likedBy);</span>
     }
 
     public List&lt;Account&gt; getMentions() {
-<span class="fc" id="L71">        return Collections.unmodifiableList(mentions);</span>
+<span class="fc" id="L68">        return Collections.unmodifiableList(mentions);</span>
     }
 
     public void setId(Long id) {
-<span class="nc" id="L75">        this.id = id;</span>
-<span class="nc" id="L76">    }</span>
+<span class="nc" id="L72">        this.id = id;</span>
+<span class="nc" id="L73">    }</span>
 
     public Account getTweetedBy() {
-<span class="fc" id="L79">        return tweetedBy;</span>
+<span class="fc" id="L76">        return tweetedBy;</span>
     }
 
     public void setTweetedBy(Account a) {
-<span class="nc" id="L83">        this.tweetedBy = a;</span>
-<span class="nc" id="L84">    }</span>
+<span class="nc" id="L80">        this.tweetedBy = a;</span>
+<span class="nc" id="L81">    }</span>
 
     public String getContent() {
-<span class="fc" id="L87">        return content;</span>
+<span class="fc" id="L84">        return content;</span>
     }
 
     public void setContent(String content) {
-<span class="fc" id="L91">        this.content = content;</span>
-<span class="fc" id="L92">    }</span>
+<span class="fc" id="L88">        this.content = content;</span>
+<span class="fc" id="L89">    }</span>
 
     public Date getPublished() {
-<span class="fc" id="L95">        return published;</span>
+<span class="fc" id="L92">        return published;</span>
     }
 
     public void setPublished(Date published) {
-<span class="fc" id="L99">        this.published = published;</span>
-<span class="fc" id="L100">    }</span>
+<span class="fc" id="L96">        this.published = published;</span>
+<span class="fc" id="L97">    }</span>
 
     public List&lt;String&gt; getTags() {
-<span class="fc" id="L103">        return Collections.unmodifiableList(tags);</span>
+<span class="fc" id="L100">        return Collections.unmodifiableList(tags);</span>
     }
 
     public Long getId() {
-<span class="nc" id="L107">        return id;</span>
+<span class="nc" id="L104">        return id;</span>
     }
     // &lt;/editor-fold&gt;
 
-<span class="fc" id="L111">    public Tweet() {</span>
-<span class="fc" id="L112">    }</span>
+<span class="fc" id="L108">    public Tweet() {</span>
+<span class="fc" id="L109">    }</span>
 
-<span class="fc" id="L114">    public Tweet(String content, Account tweetedBy) {</span>
-<span class="fc" id="L115">        this.tweetedBy = tweetedBy;</span>
-<span class="fc" id="L116">        this.content = content;</span>
-<span class="fc" id="L117">        this.tags = findTags(content);</span>
-<span class="fc" id="L118">    }</span>
+<span class="fc" id="L111">    public Tweet(String content, Account tweetedBy) {</span>
+<span class="fc" id="L112">        this.tweetedBy = tweetedBy;</span>
+<span class="fc" id="L113">        this.content = content;</span>
+<span class="fc" id="L114">        this.published = new Date(System.currentTimeMillis());</span>
+<span class="fc" id="L115">        this.tags = findTags(content);</span>
+<span class="fc" id="L116">    }</span>
 
     public Tweet(String content, Account tweetedBy, Date published) {
-<span class="fc" id="L121">        this(content, tweetedBy);</span>
-<span class="fc" id="L122">        this.published = published;</span>
-<span class="fc" id="L123">        this.tags = findTags(content);</span>
-<span class="fc" id="L124">    }</span>
-
-    @Override
-    public String toString() {
-<span class="nc" id="L128">        Format formatter = new SimpleDateFormat(&quot;dd-MM-yyyy HH:mm:ss&quot;);</span>
-<span class="nc" id="L129">        return &quot;Tweet{&quot; + &quot;id=&quot; + this.id</span>
-                + &quot;, content=&quot; + this.content
-<span class="nc" id="L131">                + &quot;, published=&quot; + formatter.format(this.published)</span>
-<span class="nc" id="L132">                + &quot;, tweetedBy=&quot; + this.tweetedBy.getUsername()</span>
-<span class="nc" id="L133">                + &quot;, tags=&quot; + this.tags.toString()</span>
-<span class="nc" id="L134">                + &quot;, likedBy=&quot; + this.likedBy.toString()</span>
-<span class="nc" id="L135">                + &quot;, mentions=&quot; + this.mentions.toString() + '}';</span>
-    }
+<span class="fc" id="L119">        this(content, tweetedBy);</span>
+<span class="fc" id="L120">        this.published = published;</span>
+<span class="fc" id="L121">        this.tags = findTags(content);</span>
+<span class="fc" id="L122">    }</span>
 
     /**
      * Finds tags preceded with a '#' and returns them as a List of Strings
@@ -142,7 +128,7 @@ public class Tweet implements Serializable {
      * @return List of String objects
      */
     private List&lt;String&gt; findTags(String message) {
-<span class="fc" id="L145">        return findRegexMatches(message, &quot;(?:\\s#)([A-Za-z0-9_]+)&quot;);</span>
+<span class="fc" id="L131">        return findRegexMatches(message, &quot;(?:\\s#)([A-Za-z0-9_]+)&quot;);</span>
     }
 
     /**
@@ -154,13 +140,13 @@ public class Tweet implements Serializable {
      * @return List of String objects
      */
     private List&lt;String&gt; findRegexMatches(String message, String regex) {
-<span class="fc" id="L157">        List&lt;String&gt; matches = new ArrayList&lt;&gt;();</span>
-<span class="fc" id="L158">        String prefixedString = &quot; &quot;.concat(message);</span>
-<span class="fc" id="L159">        Matcher m = Pattern.compile(regex).matcher(prefixedString);</span>
-<span class="fc bfc" id="L160" title="All 2 branches covered.">        while (m.find()) {</span>
-<span class="fc" id="L161">            matches.add(m.group(1));</span>
+<span class="fc" id="L143">        List&lt;String&gt; matches = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L144">        String prefixedString = &quot; &quot;.concat(message);</span>
+<span class="fc" id="L145">        Matcher m = Pattern.compile(regex).matcher(prefixedString);</span>
+<span class="fc bfc" id="L146" title="All 2 branches covered.">        while (m.find()) {</span>
+<span class="fc" id="L147">            matches.add(m.group(1));</span>
         }
-<span class="fc" id="L163">        return matches;</span>
+<span class="fc" id="L149">        return matches;</span>
     }
 
     /**
@@ -169,10 +155,10 @@ public class Tweet implements Serializable {
      * @param a Account
      */
     public void addMention(Account a) {
-<span class="fc bfc" id="L172" title="All 2 branches covered.">        if (!mentions.contains(a)) {</span>
-<span class="fc" id="L173">            mentions.add(a);</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">        if (!mentions.contains(a)) {</span>
+<span class="fc" id="L159">            mentions.add(a);</span>
         }
-<span class="fc" id="L175">    }</span>
+<span class="fc" id="L161">    }</span>
 
     /**
      * Removes an Account to the list of accounts that were mentioned in this
@@ -181,10 +167,10 @@ public class Tweet implements Serializable {
      * @param a Account
      */
     public void removeMention(Account a) {
-<span class="fc bfc" id="L184" title="All 2 branches covered.">        if (mentions.contains(a)) {</span>
-<span class="fc" id="L185">            mentions.remove(a);</span>
+<span class="fc bfc" id="L170" title="All 2 branches covered.">        if (mentions.contains(a)) {</span>
+<span class="fc" id="L171">            mentions.remove(a);</span>
         }
-<span class="fc" id="L187">    }</span>
+<span class="fc" id="L173">    }</span>
 
     /**
      * Adds an Account to the list of accounts that liked this tweet
@@ -192,10 +178,10 @@ public class Tweet implements Serializable {
      * @param a Account
      */
     public void addLike(Account a) {
-<span class="fc bfc" id="L195" title="All 2 branches covered.">        if (!likedBy.contains(a)) {</span>
-<span class="fc" id="L196">            likedBy.add(a);</span>
+<span class="fc bfc" id="L181" title="All 2 branches covered.">        if (!likedBy.contains(a)) {</span>
+<span class="fc" id="L182">            likedBy.add(a);</span>
         }
-<span class="fc" id="L198">    }</span>
+<span class="fc" id="L184">    }</span>
 
     /**
      * Removes an Account from the list of accounts that liked this tweet
@@ -203,34 +189,34 @@ public class Tweet implements Serializable {
      * @param a
      */
     public void removeLike(Account a) {
-<span class="fc bfc" id="L206" title="All 2 branches covered.">        if (likedBy.contains(a)) {</span>
-<span class="fc" id="L207">            likedBy.remove(a);</span>
+<span class="fc bfc" id="L192" title="All 2 branches covered.">        if (likedBy.contains(a)) {</span>
+<span class="fc" id="L193">            likedBy.remove(a);</span>
         }
-<span class="fc" id="L209">    }</span>
+<span class="fc" id="L195">    }</span>
 
     @Override
     public boolean equals(Object obj) {
-<span class="fc bfc" id="L213" title="All 4 branches covered.">        if ((obj == null) || (!(obj instanceof Tweet))) {</span>
-<span class="fc" id="L214">            return false;</span>
-<span class="fc bfc" id="L215" title="All 2 branches covered.">        } else if (this == obj) {</span>
-<span class="fc" id="L216">            return true;</span>
+<span class="fc bfc" id="L199" title="All 4 branches covered.">        if ((obj == null) || (!(obj instanceof Tweet))) {</span>
+<span class="fc" id="L200">            return false;</span>
+<span class="fc bfc" id="L201" title="All 2 branches covered.">        } else if (this == obj) {</span>
+<span class="fc" id="L202">            return true;</span>
         }
 
-<span class="fc" id="L219">        final Tweet other = (Tweet) obj;</span>
+<span class="fc" id="L205">        final Tweet other = (Tweet) obj;</span>
 
-<span class="fc bfc" id="L221" title="All 6 branches covered.">        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));</span>
+<span class="fc bfc" id="L207" title="All 6 branches covered.">        return !((!Objects.equals(this.content, other.content)) || (!Objects.equals(this.published, other.published)) || (!Objects.equals(this.tweetedBy, other.tweetedBy)));</span>
     }
 
     @Override
     public int hashCode() {
-<span class="fc" id="L226">        int hash = 7;</span>
-<span class="fc" id="L227">        hash = 67 * hash + Objects.hashCode(this.content);</span>
-<span class="fc" id="L228">        hash = 67 * hash + Objects.hashCode(this.published);</span>
-<span class="fc" id="L229">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
-<span class="fc" id="L230">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
-<span class="fc" id="L231">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
-<span class="fc" id="L232">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
-<span class="fc" id="L233">        return hash;</span>
+<span class="fc" id="L212">        int hash = 7;</span>
+<span class="fc" id="L213">        hash = 67 * hash + Objects.hashCode(this.content);</span>
+<span class="fc" id="L214">        hash = 67 * hash + Objects.hashCode(this.published);</span>
+<span class="fc" id="L215">        hash = 67 * hash + Objects.hashCode(this.tags);</span>
+<span class="fc" id="L216">        hash = 67 * hash + Objects.hashCode(this.tweetedBy);</span>
+<span class="fc" id="L217">        hash = 67 * hash + Objects.hashCode(this.likedBy);</span>
+<span class="fc" id="L218">        hash = 67 * hash + Objects.hashCode(this.mentions);</span>
+<span class="fc" id="L219">        return hash;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.eclemma.org/jacoco">JaCoCo</a> 0.7.1.201405082137</span></div></body></html>
