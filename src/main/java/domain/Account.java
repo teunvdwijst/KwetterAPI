@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import javax.enterprise.inject.Model;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,7 @@ import org.mindrot.jbcrypt.BCrypt;
  * @author Teun
  */
 @Entity
+@Model
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
     ,
@@ -57,6 +59,14 @@ public class Account implements Serializable {
     private final List<Tweet> tweets = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getUsername() {
         return username;
     }
@@ -139,14 +149,27 @@ public class Account implements Serializable {
         this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
-    public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, Role userRole) {
+    public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath) {
         this(email, password);
         this.username = userName;
         this.location = location;
         this.bio = bio;
         this.website = website;
         this.avatarPath = avatarPath;
-        this.userRole = userRole;
+        this.userRole = Role.USER;
+    }
+
+    @Override
+    public String toString() {
+        return "Account{" + "id=" + this.id
+                + ", email=" + this.email
+                + ", username=" + this.username
+                + ", encryptedPassword=" + this.encryptedPassword
+                + ", userRole=" + this.userRole
+                + ", location=" + this.location
+                + ", bio=" + this.bio
+                + ", website=" + this.website
+                + ", avatarPath=" + this.avatarPath + '}';
     }
 
     /**

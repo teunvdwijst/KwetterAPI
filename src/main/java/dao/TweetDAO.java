@@ -15,7 +15,7 @@ import javax.persistence.PersistenceException;
  */
 public interface TweetDAO {
 
-    List<Tweet> getTweetById(int id) throws PersistenceException;
+    Tweet getTweetById(int id) throws PersistenceException;
 
     List<Tweet> getRecentTweetsByEmail(int limit, String userEmail) throws PersistenceException;
 

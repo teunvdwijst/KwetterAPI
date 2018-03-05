@@ -19,11 +19,11 @@ public interface AccountDAO {
 
     List<Account> getAccountByEmail(String email) throws PersistenceException;
 
+    List<Account> getAccountByUsername(String username) throws PersistenceException;
+
     void updateAccount(Account user) throws PersistenceException;
 
     void insertAccount(Account user) throws PersistenceException;
-
-    List<Account> getAccountByUsername(String username) throws PersistenceException;
 
     void deleteAccount(Account user) throws PersistenceException;
 }

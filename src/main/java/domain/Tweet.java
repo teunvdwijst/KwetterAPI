@@ -13,13 +13,11 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
+import javax.enterprise.inject.Model;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -32,6 +30,7 @@ import javax.persistence.Temporal;
  * @author Teun
  */
 @Entity
+@Model
 @NamedQueries({
     @NamedQuery(name = "Tweet.findById", query = "SELECT t FROM Tweet t WHERE t.id = :id")
     ,
@@ -47,6 +46,7 @@ public class Tweet implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
+    //@Column(name = "PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
     private List<String> tags;
@@ -68,8 +68,16 @@ public class Tweet implements Serializable {
         return Collections.unmodifiableList(mentions);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Account getTweetedBy() {
         return tweetedBy;
+    }
+
+    public void setTweetedBy(Account a) {
+        this.tweetedBy = a;
     }
 
     public String getContent() {
@@ -103,6 +111,7 @@ public class Tweet implements Serializable {
     public Tweet(String content, Account tweetedBy) {
         this.tweetedBy = tweetedBy;
         this.content = content;
+        this.published = new Date(System.currentTimeMillis());
         this.tags = findTags(content);
     }
 

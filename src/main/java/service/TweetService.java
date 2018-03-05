@@ -38,7 +38,7 @@ public class TweetService {
      */
     public Tweet getTweet(int id) {
         try {
-            return tweetDao.getTweetById(id).get(0);
+            return tweetDao.getTweetById(id);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getTweet operation; {0}", pe.getMessage());
             return null;

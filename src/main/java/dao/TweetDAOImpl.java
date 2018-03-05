@@ -26,8 +26,8 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public List<Tweet> getTweetById(int id) {
-        return em.createNamedQuery("Tweet.findById").setParameter("id", id).getResultList();
+    public Tweet getTweetById(int id) {
+        return (Tweet) em.createNamedQuery("Tweet.findById").setParameter("id", id).getSingleResult();
     }
 
     @Override

@@ -22,7 +22,7 @@ import service.TweetService;
  *
  * @author Teun
  */
-@Path("tweet")
+@Path("tweets")
 @Stateless
 public class TweetResource {
 
@@ -30,21 +30,21 @@ public class TweetResource {
     TweetService tweetService;
 
     @GET
-    @Path("gettweet/{id}")
+    @Path("{id}")
     @Produces(MediaType.APPLICATION_JSON)
     public Tweet getTweet(@PathParam("id") int id) {
         return tweetService.getTweet(id);
     }
 
     @GET
-    @Path("gettweetsbyuser/{limit}/{email}")
+    @Path("getbyuser/{limit}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getRecentTweetsByUser(limit, userEmail);
     }
 
     @GET
-    @Path("getrecenttweets/{limit}")
+    @Path("getrecent/{limit}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweets(@PathParam("limit") int limit) {
         return tweetService.getRecentTweets(limit);

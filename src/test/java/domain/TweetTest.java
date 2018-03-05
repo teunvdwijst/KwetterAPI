@@ -327,7 +327,7 @@ public class TweetTest {
     @Test
     public void testRemoveMention() {
         System.out.println("removeMention");
-        Account a = new Account("test", "");;
+        Account a = new Account("test", "");
         Tweet instance = new Tweet("", null);
         assertEquals(instance.getMentions().size(), 0);
         instance.removeMention(a);
