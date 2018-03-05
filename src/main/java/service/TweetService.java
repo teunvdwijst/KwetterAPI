@@ -26,9 +26,6 @@ public class TweetService {
     
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
-    public TweetService() {
-    }
-
     /**
      * Fetches a tweet which matches the id from the database. returns null if
      * no tweet matching the id was found.

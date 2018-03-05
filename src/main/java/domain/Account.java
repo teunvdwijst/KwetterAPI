@@ -216,6 +216,10 @@ public class Account implements Serializable {
             }
         }
     }
+    
+    public boolean verifyPassword(String password){
+        return BCrypt.checkpw(password, encryptedPassword);
+    }
 
     public Role promote() {
         switch (userRole) {

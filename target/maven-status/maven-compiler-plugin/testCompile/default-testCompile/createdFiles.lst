@@ -4,5 +4,4 @@ domain\AccountTest.class
 domain\TweetTest.class
 service\AccountServiceTest.class
 dao\TweetDAOImplTest.class
-rest\TweetResourceTest.class
 util\DatabaseCleaner.class

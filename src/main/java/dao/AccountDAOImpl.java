@@ -36,6 +36,13 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
+    public List<Account> getAccountFollowers(String email) throws PersistenceException {
+        System.out.println("TESTING DAO");
+        List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
+        return temp.get(0).getFollowing();
+    }
+
+    @Override
     public void updateAccount(Account user) throws PersistenceException {
         em.merge(user);
     }
