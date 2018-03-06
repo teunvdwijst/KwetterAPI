@@ -52,7 +52,6 @@ public class AccountResource {
     @GET
     @Path("getfollowers/{email}")
     public List<Account> getAccountFollowers(@PathParam("email") String email) {
-        System.out.println("TESTING RESOURCE");
         return accountService.getAccountFollowers(email);
     }
 
