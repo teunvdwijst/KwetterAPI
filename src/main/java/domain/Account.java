@@ -138,6 +138,16 @@ public class Account implements Serializable {
     public List<Tweet> getTweets() {
         return Collections.unmodifiableList(tweets);
     }
+
+    public void setFollowing(List<Account> following) {
+        this.following.clear();
+        this.following.addAll(following);
+    }
+
+    public void setTweets(List<Tweet> tweets) {
+        this.tweets.clear();
+        this.tweets.addAll(tweets);
+    }
     // </editor-fold>
 
     public Account() {
@@ -215,6 +225,10 @@ public class Account implements Serializable {
                 break;
             }
         }
+    }
+
+    public boolean verifyPassword(String password) {
+        return BCrypt.checkpw(password, encryptedPassword);
     }
 
     public Role promote() {

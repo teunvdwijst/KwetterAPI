@@ -6,6 +6,7 @@
 package dao;
 
 import domain.Account;
+import domain.Tweet;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -36,8 +37,22 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
+    public List<Account> getAccountFollowers(String email) throws PersistenceException {
+        List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
+        return temp.get(0).getFollowing();
+    }
+
+    @Override
     public void updateAccount(Account user) throws PersistenceException {
-        em.merge(user);
+        Account managedAccount = em.find(Account.class, user.getId());
+        managedAccount.setAvatarPath(user.getAvatarPath());
+        managedAccount.setBio(user.getBio());
+        managedAccount.setEncryptedPassword(user.getEncryptedPassword());
+        managedAccount.setLocation(user.getLocation());
+        managedAccount.setUserRole(user.getUserRole());
+        managedAccount.setWebsite(user.getWebsite());
+        managedAccount.setFollowing(user.getFollowing());
+        managedAccount.setTweets(user.getTweets());
     }
 
     @Override
@@ -52,6 +67,12 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deleteAccount(Account user) throws PersistenceException {
-        em.remove(user);
+        Account managedAccount = em.find(Account.class, user.getId());
+        
+        for (Tweet t : managedAccount.getTweets()) {
+            em.find(Tweet.class, t.getId());
+            em.remove(t);
+        }
+        em.remove(managedAccount);
     }
 }

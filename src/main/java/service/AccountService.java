@@ -26,9 +26,6 @@ public class AccountService {
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
-    public AccountService() {
-    }
-
     /**
      *
      * @param limit
@@ -39,6 +36,15 @@ public class AccountService {
             return accountDao.getAllAccounts(limit);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getAllAccounts operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    public List<Account> getAccountFollowers(String email) {
+        try {
+            return accountDao.getAccountFollowers(email);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowers operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -94,9 +100,9 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
         }
     }
-    
+
     /**
-     * 
+     *
      * @param user
      */
     public void deleteAccount(Account user) {

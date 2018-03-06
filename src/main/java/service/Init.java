@@ -35,6 +35,8 @@ public class Init {
         a2.addTweet("#testing yoyo");
         a1.getTweets().get(0).addLike(a3);
         a1.addFollowing(a3);
+        a1.addFollowing(a4);
+        a1.addFollowing(a5);
 
         accountDao.insertAccount(a1);
         accountDao.insertAccount(a2);
