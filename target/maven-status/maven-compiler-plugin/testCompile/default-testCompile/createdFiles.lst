@@ -1,7 +1,0 @@
-dao\AccountDAOImplTest.class
-service\TweetServiceTest.class
-domain\AccountTest.class
-domain\TweetTest.class
-service\AccountServiceTest.class
-dao\TweetDAOImplTest.class
-util\DatabaseCleaner.class
