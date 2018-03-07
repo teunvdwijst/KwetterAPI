@@ -40,6 +40,15 @@ public class AccountService {
         }
     }
 
+    public List<Account> getAccountFollowing(String email) {
+        try {
+            return accountDao.getAccountFollowing(email);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowing operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
     public List<Account> getAccountFollowers(String email) {
         try {
             return accountDao.getAccountFollowers(email);

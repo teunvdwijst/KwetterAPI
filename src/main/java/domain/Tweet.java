@@ -54,12 +54,20 @@ public class Tweet implements Serializable {
     private Account tweetedBy;
     @OneToMany
     @JoinTable(name = "tweet_likes")
-    private final List<Account> likedBy = new ArrayList<>();
+    private List<Account> likedBy = new ArrayList<>();
     @OneToMany
     @JoinTable(name = "tweet_mentions")
-    private final List<Account> mentions = new ArrayList<>();
+    private List<Account> mentions = new ArrayList<>();
 
     // <editor-fold desc="Getters and Setters" defaultstate="collapsed">
+    public void setLikedBy(List<Account> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public void setMentions(List<Account> mentions) {
+        this.mentions = mentions;
+    }
+
     public List<Account> getLikedBy() {
         return Collections.unmodifiableList(likedBy);
     }

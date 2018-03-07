@@ -33,6 +33,7 @@ public class AccountResource {
 
     @GET
     @Path("{limit}")
+    @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAllAccounts(@PathParam("limit") int limit) {
         return accountService.getAllAccounts(limit);
     }
@@ -53,6 +54,12 @@ public class AccountResource {
     @Path("getfollowers/{email}")
     public List<Account> getAccountFollowers(@PathParam("email") String email) {
         return accountService.getAccountFollowers(email);
+    }
+    
+    @GET
+    @Path("getfollowing/{email}")
+    public List<Account> getAccountFollowing(@PathParam("email") String email) {
+        return accountService.getAccountFollowing(email);
     }
 
     @POST

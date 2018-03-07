@@ -44,8 +44,14 @@ public class TweetTest {
     public void testHashCode() {
         Account user = new Account();
         Tweet tweet1 = new Tweet("1", user);
+        tweet1.setId(1L);
+        tweet1.setPublished(new Date(0));
         Tweet tweet2 = new Tweet("2", user);
+        tweet2.setId(2L);
+        tweet2.setPublished(new Date(1));
         Tweet tweet3 = new Tweet("1", user);
+        tweet3.setId(1L);
+        tweet3.setPublished(new Date(0));
         assertFalse(tweet1.hashCode() == tweet2.hashCode());
         assertTrue(tweet1.hashCode() == tweet3.hashCode());
     }
@@ -336,5 +342,67 @@ public class TweetTest {
         assertEquals(instance.getMentions().size(), 1);
         instance.removeMention(a);
         assertEquals(instance.getMentions().size(), 0);
+    }
+
+    /**
+     * Test of setLikedBy method, of class Tweet.
+     */
+    @Test
+    public void testSetLikedBy() {
+        System.out.println("setLikedBy");
+        List<Account> likedBy = new ArrayList<>();
+        Tweet instance = new Tweet();
+        instance.setLikedBy(likedBy);
+        assertEquals(likedBy, instance.getLikedBy());
+    }
+
+    /**
+     * Test of setMentions method, of class Tweet.
+     */
+    @Test
+    public void testSetMentions() {
+        System.out.println("setMentions");
+        List<Account> mentions = new ArrayList<>();
+        Tweet instance = new Tweet();
+        instance.setMentions(mentions);
+        assertEquals(mentions, instance.getMentions());
+    }
+
+    /**
+     * Test of setId method, of class Tweet.
+     */
+    @Test
+    public void testSetId() {
+        System.out.println("setId");
+        Long id = 2L;
+        Tweet instance = new Tweet();
+        instance.setId(id);
+        assertEquals(id, instance.getId());
+    }
+
+    /**
+     * Test of setTweetedBy method, of class Tweet.
+     */
+    @Test
+    public void testSetTweetedBy() {
+        System.out.println("setTweetedBy");
+        Account a = new Account("email", "pass");
+        Account b = new Account("email2", "pass2");
+        Tweet instance = new Tweet("tweet", a);
+        instance.setTweetedBy(b);
+        assertEquals(b, instance.getTweetedBy());
+    }
+
+    /**
+     * Test of getId method, of class Tweet.
+     */
+    @Test
+    public void testGetId() {
+        System.out.println("getId");
+        Tweet instance = new Tweet();
+        instance.setId(1L);
+        Long expResult = 1L;
+        Long result = instance.getId();
+        assertEquals(expResult, result);
     }
 }
