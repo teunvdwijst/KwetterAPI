@@ -37,10 +37,7 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public void updateTweet(Tweet tweet) {
-        Tweet managedTweet = em.find(Tweet.class, tweet.getId());
-        managedTweet.setContent(tweet.getContent());
-        managedTweet.setLikedBy(tweet.getLikedBy());
-        managedTweet.setMentions(tweet.getMentions());
+        em.merge(tweet);
     }
 
     @Override
@@ -50,8 +47,7 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public void deleteTweet(Tweet tweet) {
-        Account managedAccount = em.find(Account.class, tweet.getTweetedBy().getId());
-        managedAccount.removeTweet(tweet.getId());
+        em.remove(tweet);
     }
 
     @Override

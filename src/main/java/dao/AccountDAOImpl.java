@@ -41,7 +41,7 @@ public class AccountDAOImpl implements AccountDAO {
         List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
         return temp.get(0).getFollowers();
     }
-    
+
     @Override
     public List<Account> getAccountFollowing(String email) throws PersistenceException {
         List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
@@ -50,13 +50,7 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void updateAccount(Account user) throws PersistenceException {
-        Account managedAccount = em.find(Account.class, user.getId());
-        managedAccount.setAvatarPath(user.getAvatarPath());
-        managedAccount.setBio(user.getBio());
-        managedAccount.setPassword(user.getPassword());
-        managedAccount.setLocation(user.getLocation());
-        managedAccount.setUserRole(user.getUserRole());
-        managedAccount.setWebsite(user.getWebsite());
+        em.merge(user);
     }
 
     @Override
@@ -71,12 +65,9 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deleteAccount(Account user) throws PersistenceException {
-        Account managedAccount = em.find(Account.class, user.getId());
-        
-        for (Tweet t : managedAccount.getTweets()) {
-            em.find(Tweet.class, t.getId());
+        for (Tweet t : user.getTweets()) {
             em.remove(t);
         }
-        em.remove(managedAccount);
+        em.remove(user);
     }
 }
