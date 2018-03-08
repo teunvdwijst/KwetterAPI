@@ -68,6 +68,12 @@ public class AccountDAOImpl implements AccountDAO {
         for (Tweet t : user.getTweets()) {
             em.remove(t);
         }
+        for (Account a : user.getFollowers()) {
+            em.remove(a);
+        }
+        for (Account a : user.getFollowing()) {
+            em.remove(a);
+        }
         em.remove(user);
     }
 }

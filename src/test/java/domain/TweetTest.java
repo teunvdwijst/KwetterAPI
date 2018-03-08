@@ -345,30 +345,6 @@ public class TweetTest {
     }
 
     /**
-     * Test of setLikedBy method, of class Tweet.
-     */
-    @Test
-    public void testSetLikedBy() {
-        System.out.println("setLikedBy");
-        List<Account> likedBy = new ArrayList<>();
-        Tweet instance = new Tweet();
-        instance.setLikedBy(likedBy);
-        assertEquals(likedBy, instance.getLikedBy());
-    }
-
-    /**
-     * Test of setMentions method, of class Tweet.
-     */
-    @Test
-    public void testSetMentions() {
-        System.out.println("setMentions");
-        List<Account> mentions = new ArrayList<>();
-        Tweet instance = new Tweet();
-        instance.setMentions(mentions);
-        assertEquals(mentions, instance.getMentions());
-    }
-
-    /**
      * Test of setId method, of class Tweet.
      */
     @Test

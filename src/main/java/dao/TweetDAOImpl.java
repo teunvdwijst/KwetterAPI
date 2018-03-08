@@ -47,6 +47,12 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public void deleteTweet(Tweet tweet) {
+        for (Account a : tweet.getLikedBy()) {
+            tweet.removeLike(a);
+        }
+        for (Account a : tweet.getMentions()) {
+            tweet.removeMention(a);
+        }
         em.remove(tweet);
     }
 
