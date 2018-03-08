@@ -58,7 +58,7 @@ public class TweetResource {
     }
 
     @POST
-    @Path("insert")
+    @Path("create")
     @Consumes(MediaType.APPLICATION_JSON)
     public void insertTweet(Tweet tweet) {
         tweetService.insertTweet(tweet);

@@ -65,15 +65,16 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deleteAccount(Account user) throws PersistenceException {
-        for (Tweet t : user.getTweets()) {
+        Account temp = em.find(Account.class, user.getId());
+        for (Tweet t : temp.getTweets()) {
             em.remove(t);
         }
-        for (Account a : user.getFollowers()) {
-            em.remove(a);
+        for (Account a : temp.getFollowers()) {
+            temp.removeFollower(a);
         }
-        for (Account a : user.getFollowing()) {
-            em.remove(a);
+        for (Account a : temp.getFollowing()) {
+            temp.removeFollowing(a);
         }
-        em.remove(user);
+        em.remove(temp);
     }
 }

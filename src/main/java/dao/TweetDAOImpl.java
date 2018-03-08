@@ -36,6 +36,16 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
+    public List<Tweet> getRecentTweets(int limit) {
+        return em.createNamedQuery("Tweet.findRecent").setMaxResults(limit).getResultList();
+    }
+
+    @Override
+    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
+        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setMaxResults(limit).getResultList();
+    }
+
+    @Override
     public void updateTweet(Tweet tweet) {
         em.merge(tweet);
     }
@@ -47,22 +57,13 @@ public class TweetDAOImpl implements TweetDAO {
 
     @Override
     public void deleteTweet(Tweet tweet) {
-        for (Account a : tweet.getLikedBy()) {
+        Tweet temp = em.find(Tweet.class, tweet.getId());
+        for (Account a : temp.getLikedBy()) {
             tweet.removeLike(a);
         }
-        for (Account a : tweet.getMentions()) {
+        for (Account a : temp.getMentions()) {
             tweet.removeMention(a);
         }
-        em.remove(tweet);
-    }
-
-    @Override
-    public List<Tweet> getRecentTweets(int limit) {
-        return em.createNamedQuery("Tweet.findRecent").setMaxResults(limit).getResultList();
-    }
-
-    @Override
-    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
-        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setMaxResults(limit).getResultList();
+        em.remove(temp);
     }
 }
