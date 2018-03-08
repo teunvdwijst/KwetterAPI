@@ -5,11 +5,16 @@
  */
 package service;
 
+import dao.AccountDAO;
 import dao.TweetDAO;
+import domain.Account;
 import domain.Tweet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
@@ -23,7 +28,10 @@ public class TweetService {
 
     @Inject
     TweetDAO tweetDao;
-    
+
+    @Inject
+    AccountDAO accountDao;
+
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
     /**
@@ -51,7 +59,7 @@ public class TweetService {
      * @param userEmail
      * @return List of Tweets
      */
-    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail)  {
+    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) {
         try {
             return tweetDao.getRecentTweetsByEmail(limit, userEmail);
         } catch (PersistenceException pe) {
@@ -98,6 +106,9 @@ public class TweetService {
      */
     public void insertTweet(Tweet tweet) {
         try {
+            for (Account a : findMentions(tweet.getContent())){
+                tweet.addMention(a);
+            }
             tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());
@@ -110,11 +121,25 @@ public class TweetService {
      *
      * @param tweet
      */
-    public void deleteTweet(Tweet tweet)  {
+    public void deleteTweet(Tweet tweet) {
         try {
             tweetDao.deleteTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTweet operation; {0}", pe.getMessage());
         }
+    }
+
+    private List<Account> findMentions(String message) {
+        List<Account> mentions = new ArrayList<>();
+        String prefix = " ".concat(message);
+        Matcher m = Pattern.compile("(?:\\s#)([A-Za-z0-9_]+)").matcher(prefix);
+
+        while (m.find()) {
+            List<Account> users = accountDao.getAccountByUsername(m.group(1));
+            if (!users.isEmpty()) {
+                mentions.add(users.get(0));
+            }
+        }
+        return mentions;
     }
 }
