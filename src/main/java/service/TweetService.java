@@ -132,7 +132,7 @@ public class TweetService {
     private List<Account> findMentions(String message) {
         List<Account> mentions = new ArrayList<>();
         String prefix = " ".concat(message);
-        Matcher m = Pattern.compile("(?:\\s#)([A-Za-z0-9_]+)").matcher(prefix);
+        Matcher m = Pattern.compile("(?:\\@)([A-Za-z0-9_]+)").matcher(prefix);
 
         while (m.find()) {
             List<Account> users = accountDao.getAccountByUsername(m.group(1));

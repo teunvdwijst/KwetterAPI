@@ -128,7 +128,7 @@ public class Tweet implements Serializable {
      * @return List of String objects
      */
     private List<String> findTags(String message) {
-        return findRegexMatches(message, "(?:\\s#)([A-Za-z0-9_]+)");
+        return findRegexMatches(message, "(?:\\#)([A-Za-z0-9_]+)");
     }
 
     /**
