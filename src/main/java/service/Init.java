@@ -1,6 +1,7 @@
 package service;
 
 import dao.AccountDAO;
+import dao.TweetDAO;
 import domain.Account;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
@@ -17,6 +18,9 @@ public class Init {
 
     @Inject
     AccountDAO accountDao;
+
+    @Inject
+    TweetDAO tweetDao;
 
     @PostConstruct
     public void init() {

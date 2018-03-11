@@ -69,6 +69,24 @@ public class TweetService {
     }
 
     /**
+     * Fetches 'limit' amount of tweets posted with the corresponding 'tag'
+     * Tweets are sorted by publish date descending. Returns an empty list if no
+     * Tweets were found
+     *
+     * @param limit
+     * @param tag
+     * @return List of Tweets
+     */
+    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
+        try {
+            return tweetDao.getRecentTweetsByTag(limit, tag);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getRecentTweetsByUser operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Fetches 'limit' amount of Tweets. Tweets are sorted by publish date
      * descending. Returns an empty list if no Tweets were found
      *
@@ -92,6 +110,10 @@ public class TweetService {
      */
     public void updateTweet(Tweet tweet) {
         try {
+            for (Account a : findMentions(tweet.getContent())) {
+                tweet.addMention(a);
+            }
+            tweet.findTags(tweet.getContent());
             tweetDao.updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
@@ -106,9 +128,10 @@ public class TweetService {
      */
     public void insertTweet(Tweet tweet) {
         try {
-            for (Account a : findMentions(tweet.getContent())){
+            for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
+            tweet.findTags(tweet.getContent());
             tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());

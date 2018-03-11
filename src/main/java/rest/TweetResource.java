@@ -50,6 +50,13 @@ public class TweetResource {
         return tweetService.getRecentTweets(limit);
     }
 
+    @GET
+    @Path("getbytag/{limit}/{tag}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Tweet> getRecentTweetsByTag(@PathParam("limit") int limit, @PathParam("tag") String tag) {
+        return tweetService.getRecentTweetsByTag(limit, tag);
+    }
+
     @POST
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)

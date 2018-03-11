@@ -24,6 +24,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  *
@@ -46,10 +47,10 @@ public class Tweet implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     private String content;
-    //@Column(name = "PUBLISH_DATE", nullable = false, columnDefinition = "TIMESTAMP default CURRENT_TIMESTAMP")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date published;
-    private List<String> tags;
+    @Transient
+    private final List<String> tags = new ArrayList<>();
     @ManyToOne
     private Account tweetedBy;
     @OneToMany
@@ -112,23 +113,23 @@ public class Tweet implements Serializable {
         this.tweetedBy = tweetedBy;
         this.content = content;
         this.published = new Date(System.currentTimeMillis());
-        this.tags = findTags(content);
+        findTags(content);
     }
 
     public Tweet(String content, Account tweetedBy, Date published) {
         this(content, tweetedBy);
         this.published = published;
-        this.tags = findTags(content);
+        findTags(content);
     }
 
     /**
-     * Finds tags preceded with a '#' and returns them as a List of Strings
+     * Finds tags preceded with a '#' and sets the Tags list
      *
      * @param message String
-     * @return List of String objects
      */
-    private List<String> findTags(String message) {
-        return findRegexMatches(message, "(?:\\#)([A-Za-z0-9_]+)");
+    public void findTags(String message) {
+        this.tags.clear();
+        this.tags.addAll(findRegexMatches(message, "(?:\\#)([A-Za-z0-9_]+)"));
     }
 
     /**
