@@ -1,8 +1,8 @@
-#Kwetter Backend API
+Kwetter Backend API
 
-##Teun van der Wijst
+Teun van der Wijst
 
-###S62, Fontys Eindhoven
+S62, Fontys Eindhoven
 
 Kwetter applicatie backend.
 
