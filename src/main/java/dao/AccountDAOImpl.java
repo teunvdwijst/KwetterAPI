@@ -39,20 +39,18 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public List<Account> getAccountFollowers(String email) throws PersistenceException {
         List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
+        return temp.get(0).getFollowers();
+    }
+
+    @Override
+    public List<Account> getAccountFollowing(String email) throws PersistenceException {
+        List<Account> temp = em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
         return temp.get(0).getFollowing();
     }
 
     @Override
     public void updateAccount(Account user) throws PersistenceException {
-        Account managedAccount = em.find(Account.class, user.getId());
-        managedAccount.setAvatarPath(user.getAvatarPath());
-        managedAccount.setBio(user.getBio());
-        managedAccount.setEncryptedPassword(user.getEncryptedPassword());
-        managedAccount.setLocation(user.getLocation());
-        managedAccount.setUserRole(user.getUserRole());
-        managedAccount.setWebsite(user.getWebsite());
-        managedAccount.setFollowing(user.getFollowing());
-        managedAccount.setTweets(user.getTweets());
+        em.merge(user);
     }
 
     @Override
@@ -67,12 +65,16 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public void deleteAccount(Account user) throws PersistenceException {
-        Account managedAccount = em.find(Account.class, user.getId());
-        
-        for (Tweet t : managedAccount.getTweets()) {
-            em.find(Tweet.class, t.getId());
+        Account temp = em.find(Account.class, user.getId());
+        for (Tweet t : temp.getTweets()) {
             em.remove(t);
         }
-        em.remove(managedAccount);
+        for (Account a : temp.getFollowers()) {
+            temp.removeFollower(a);
+        }
+        for (Account a : temp.getFollowing()) {
+            temp.removeFollowing(a);
+        }
+        em.remove(temp);
     }
 }

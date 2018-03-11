@@ -1,6 +1,7 @@
 package service;
 
 import dao.AccountDAO;
+import dao.TweetDAO;
 import domain.Account;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
@@ -18,6 +19,9 @@ public class Init {
     @Inject
     AccountDAO accountDao;
 
+    @Inject
+    TweetDAO tweetDao;
+
     @PostConstruct
     public void init() {
         Account a1 = new Account("testings@gmail.com", "passw1", "user1", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
@@ -30,7 +34,7 @@ public class Init {
         Account a8 = new Account("user8@gmail.com", "fdhgfkk", "user8", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
 
         a1.addTweet("Sup mah dudes.");
-        a1.addTweet("yoyo");
+        a1.addTweet("yoyo @user2");
         a2.addTweet("Allo Allo #tweeting");
         a2.addTweet("#testing yoyo");
         a1.getTweets().get(0).addLike(a3);

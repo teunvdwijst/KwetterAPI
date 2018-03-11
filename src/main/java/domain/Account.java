@@ -11,6 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import javax.enterprise.inject.Model;
+import javax.json.bind.annotation.JsonbTransient;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,13 +50,15 @@ public class Account implements Serializable {
     private String email;
     @Enumerated(EnumType.ORDINAL)
     private Role userRole;
-    private String encryptedPassword;
+    private String password;
     private String location;
     private String bio;
     private String website;
     private String avatarPath;
-    @OneToMany
+    @ManyToMany
     private final List<Account> following = new ArrayList<>();
+    @ManyToMany(mappedBy = "following")
+    private final List<Account> followers = new ArrayList<>();
     @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 
@@ -83,12 +87,12 @@ public class Account implements Serializable {
         this.email = email;
     }
 
-    public String getEncryptedPassword() {
-        return encryptedPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setEncryptedPassword(String encryptedPassword) {
-        this.encryptedPassword = encryptedPassword;
+    public void setPassword(String password) {
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
     public String getLocation() {
@@ -131,32 +135,27 @@ public class Account implements Serializable {
         this.userRole = userRole;
     }
 
+    @JsonbTransient
     public List<Account> getFollowing() {
         return Collections.unmodifiableList(following);
     }
 
+    @JsonbTransient
+    public List<Account> getFollowers() {
+        return Collections.unmodifiableList(followers);
+    }
+
+    @JsonbTransient
     public List<Tweet> getTweets() {
         return Collections.unmodifiableList(tweets);
     }
-
-    public void setFollowing(List<Account> following) {
-        this.following.clear();
-        this.following.addAll(following);
-    }
-
-    public void setTweets(List<Tweet> tweets) {
-        this.tweets.clear();
-        this.tweets.addAll(tweets);
-    }
     // </editor-fold>
-
     public Account() {
-
     }
 
     public Account(String email, String password) {
         this.email = email;
-        this.encryptedPassword = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
     }
 
     public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath) {
@@ -169,17 +168,26 @@ public class Account implements Serializable {
         this.userRole = Role.USER;
     }
 
-    @Override
-    public String toString() {
-        return "Account{" + "id=" + this.id
-                + ", email=" + this.email
-                + ", username=" + this.username
-                + ", encryptedPassword=" + this.encryptedPassword
-                + ", userRole=" + this.userRole
-                + ", location=" + this.location
-                + ", bio=" + this.bio
-                + ", website=" + this.website
-                + ", avatarPath=" + this.avatarPath + '}';
+    /**
+     * Adds an Account to the list of following accounts
+     *
+     * @param a Account
+     */
+    public void addFollower(Account a) {
+        if (!followers.contains(a)) {
+            followers.add(a);
+        }
+    }
+
+    /**
+     * Removes an Account from the list of following accounts
+     *
+     * @param a
+     */
+    public void removeFollower(Account a) {
+        if (followers.contains(a)) {
+            followers.remove(a);
+        }
     }
 
     /**
@@ -228,7 +236,7 @@ public class Account implements Serializable {
     }
 
     public boolean verifyPassword(String password) {
-        return BCrypt.checkpw(password, encryptedPassword);
+        return BCrypt.checkpw(password, this.password);
     }
 
     public Role promote() {

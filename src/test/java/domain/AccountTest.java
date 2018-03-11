@@ -13,6 +13,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
 import org.junit.Test;
+import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -447,5 +448,151 @@ public class AccountTest {
         assertEquals(expResult, instance.getUserRole());
         instance.demote();
         assertEquals(expResult, instance.getUserRole());
+    }
+
+    /**
+     * Test of getId method, of class Account.
+     */
+    @Test
+    public void testGetId() {
+        System.out.println("getId");
+        Account instance = new Account();
+        instance.setId(0L);
+        long expResult = 0L;
+        long result = instance.getId();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setId method, of class Account.
+     */
+    @Test
+    public void testSetId() {
+        System.out.println("setId");
+        long id = 0L;
+        Account instance = new Account();
+        instance.setId(id);
+        assertEquals(id, instance.getId());
+    }
+
+    /**
+     * Test of getUsername method, of class Account.
+     */
+    @Test
+    public void testGetUsername() {
+        System.out.println("getUsername");
+        Account instance = new Account("", "", "user", "", "", "", "");
+        String expResult = "user";
+        String result = instance.getUsername();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of setUsername method, of class Account.
+     */
+    @Test
+    public void testSetUsername() {
+        System.out.println("setUsername");
+        String username = "testing";
+        Account instance = new Account("", "", "user", "", "", "", "");
+        instance.setUsername(username);
+        assertEquals(username, instance.getUsername());
+    }
+
+    /**
+     * Test of getPassword method, of class Account.
+     */
+    @Test
+    public void testGetPassword() {
+        System.out.println("getPassword");
+        Account instance = new Account("email", "pass", "user", "", "", "", "");
+        String result = instance.getPassword();
+        assertTrue(BCrypt.checkpw("pass", result));
+    }
+
+    /**
+     * Test of setPassword method, of class Account.
+     */
+    @Test
+    public void testSetPassword() {
+        System.out.println("setPassword");
+        String password = "newpass";
+        Account instance = new Account("email", "pass", "user", "", "", "", "");
+        instance.setPassword(password);
+        String result = instance.getPassword();
+        assertTrue(BCrypt.checkpw("newpass", result));
+    }
+
+    /**
+     * Test of getFollowers method, of class Account.
+     */
+    @Test
+    public void testGetFollowers() {
+        System.out.println("getFollowers");
+        Account instance = new Account();
+        List<Account> expResult = new ArrayList<>();
+        List<Account> result = instance.getFollowers();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of addFollower method, of class Account.
+     */
+    @Test
+    public void testAddFollower() {
+        System.out.println("addFollower");
+        Account a = null;
+        Account instance = new Account();
+        instance.addFollower(a);
+        assertEquals(1, instance.getFollowers().size());
+        instance.addFollower(a);
+        assertEquals(1, instance.getFollowers().size());
+    }
+
+    /**
+     * Test of removeFollower method, of class Account.
+     */
+    @Test
+    public void testRemoveFollower() {
+        System.out.println("removeFollower");
+        Account a = null;
+        Account instance = new Account();
+        instance.removeFollower(a);
+        assertEquals(0, instance.getFollowers().size());
+        instance.addFollower(a);
+        instance.removeFollower(a);
+        assertEquals(0, instance.getFollowers().size());
+    }
+
+    /**
+     * Test of removeTweet method, of class Account.
+     */
+    @Test
+    public void testRemoveTweet() {
+        System.out.println("removeTweet");
+        long id = 1L;
+        Account instance = new Account();
+        instance.addTweet("message");
+        instance.getTweets().get(0).setId(1L);
+        instance.removeTweet(id);
+        assertEquals(0, instance.getTweets().size());
+    }
+
+    /**
+     * Test of verifyPassword method, of class Account.
+     */
+    @Test
+    public void testVerifyPassword() {
+        System.out.println("verifyPassword");
+        String password = "test";
+        Account instance = new Account("email", "pass");
+        boolean expResult = false;
+        boolean result = instance.verifyPassword(password);
+        assertEquals(expResult, result);
+
+        instance.setPassword("test");
+        expResult = true;
+        result = instance.verifyPassword(password);
+        assertEquals(expResult, result);
     }
 }
