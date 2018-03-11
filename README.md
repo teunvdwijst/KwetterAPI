@@ -6,6 +6,8 @@
 
 Kwetter applicatie backend.
 
+Domain model and class diagram : https://imgur.com/a/rK5km
+
 All API path calls are described below. All data is parsed in application/json format.
 
     /api
