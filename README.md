@@ -19,8 +19,8 @@ All API path calls are described below. All data is parsed in application/json f
 		/followers/{email}		(@GET)
 		/following/{email}		(@GET)
 		/create				(@POST)
-		/update				(@POST)
-		/delete				(@POST)
+		/update				(@PUT)
+		/delete				(@DELETE)
 	
 	/tweets
 		/{id}				(@GET)
@@ -28,5 +28,5 @@ All API path calls are described below. All data is parsed in application/json f
 		/recent/{limit}			(@GET)
 		/tag/{limit}/{tag}		(@GET)
 		/create				(@POST)
-		/update				(@POST)
-		/delete				(@POST)
+		/update				(@PUT)
+		/delete				(@DELETE)
