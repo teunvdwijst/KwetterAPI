@@ -44,6 +44,13 @@ public class TweetResource {
     public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getRecentTweetsByUser(limit, userEmail);
     }
+    
+    @GET
+    @Path("timeline/{limit}/{email}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
+        return tweetService.getTimeline(limit, userEmail);
+    }
 
     @GET
     @Path("recent/{limit}")

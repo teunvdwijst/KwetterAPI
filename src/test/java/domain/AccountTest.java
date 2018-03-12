@@ -12,6 +12,7 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -19,6 +20,7 @@ import org.mindrot.jbcrypt.BCrypt;
  *
  * @author Teun
  */
+@Ignore
 public class AccountTest {
 
     public AccountTest() {

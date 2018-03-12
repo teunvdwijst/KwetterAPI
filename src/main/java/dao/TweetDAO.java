@@ -22,6 +22,8 @@ public interface TweetDAO {
     List<Tweet> getRecentTweets(int limit) throws PersistenceException;
 
     List<Tweet> getRecentTweetsByTag(int limit, String tag) throws PersistenceException;
+    
+    List<Tweet> getTimeline(int limit, String userEmail) throws PersistenceException;
 
     void updateTweet(Tweet tweet) throws PersistenceException;
 

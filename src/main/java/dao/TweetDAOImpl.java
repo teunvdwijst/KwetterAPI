@@ -11,6 +11,7 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 
 /**
  *
@@ -43,6 +44,11 @@ public class TweetDAOImpl implements TweetDAO {
     @Override
     public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
         return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setMaxResults(limit).getResultList();
+    }
+
+    @Override
+    public List<Tweet> getTimeline(int limit, String userEmail) throws PersistenceException {
+        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("email", userEmail).setMaxResults(limit).getResultList();
     }
 
     @Override

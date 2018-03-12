@@ -103,6 +103,24 @@ public class TweetService {
     }
 
     /**
+     * Fetches 'limit' amount of Tweets. Only tweets posted by 'email' or
+     * Accounts followed by 'email'. Tweets are sorted by publish date
+     * descending. Returns an empty list if no Tweets were found
+     *
+     * @param limit
+     * @param email
+     * @return List of Tweets
+     */
+    public List<Tweet> getTimeline(int limit, String email) {
+        try {
+            return tweetDao.getTimeline(limit, email);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getTimeline operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
+    /**
      * Updates a Tweet object in the database, if update fails this function
      * does nothing
      *
