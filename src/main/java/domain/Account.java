@@ -58,7 +58,6 @@ public class Account implements Serializable {
     @OneToMany(cascade = ALL)
     @JoinTable(name = "followers")
     private final List<Account> followers = new ArrayList<>();
-    //@ManyToMany (mappedBy = "followers")
     @OneToMany(cascade = ALL)
     @JoinTable(name = "following")
     private final List<Account> following = new ArrayList<>();

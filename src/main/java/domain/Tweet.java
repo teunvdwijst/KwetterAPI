@@ -41,7 +41,7 @@ import javax.persistence.Transient;
     ,
     @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc")
     ,
-    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy IN (SELECT f FROM Account a JOIN a.following f WHERE a.id = f.id AND a.email = :email)")})
+    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy IN (SELECT f FROM Account a JOIN a.following f WHERE a.email = :email)")})
 public class Tweet implements Serializable {
 
     @Id
