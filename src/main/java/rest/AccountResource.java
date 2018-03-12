@@ -53,13 +53,6 @@ public class AccountResource {
     }
 
     @GET
-    @Path("followers/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
-    public List<Account> getAccountFollowers(@PathParam("email") String email) {
-        return accountService.getAccountFollowers(email);
-    }
-
-    @GET
     @Path("following/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountFollowing(@PathParam("email") String email) {

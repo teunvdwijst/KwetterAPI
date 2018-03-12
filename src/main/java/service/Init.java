@@ -32,11 +32,11 @@ public class Init {
         Account a7 = new Account("user7@gmail.com", "rtyu", "user7", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
         Account a8 = new Account("user8@gmail.com", "fdhgfkk", "user8", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
 
-        a2.addFollower(a3);
-        a2.addFollower(a4);
-        a2.addFollower(a5);
+        a2.addFollowing(a3);
         a2.addFollowing(a4);
-        a2.addFollowing(a1);
+        a2.addFollowing(a5);
+        a5.addFollowing(a2);
+        a6.addFollowing(a2);
 
         Tweet t1 = new Tweet("TESTING #tags", a1);
         Tweet t2 = new Tweet("mentioning @user2", a1);

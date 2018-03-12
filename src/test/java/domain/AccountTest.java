@@ -526,47 +526,6 @@ public class AccountTest {
     }
 
     /**
-     * Test of getFollowers method, of class Account.
-     */
-    @Test
-    public void testGetFollowers() {
-        System.out.println("getFollowers");
-        Account instance = new Account();
-        List<Account> expResult = new ArrayList<>();
-        List<Account> result = instance.getFollowers();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of addFollower method, of class Account.
-     */
-    @Test
-    public void testAddFollower() {
-        System.out.println("addFollower");
-        Account a = null;
-        Account instance = new Account();
-        instance.addFollower(a);
-        assertEquals(1, instance.getFollowers().size());
-        instance.addFollower(a);
-        assertEquals(1, instance.getFollowers().size());
-    }
-
-    /**
-     * Test of removeFollower method, of class Account.
-     */
-    @Test
-    public void testRemoveFollower() {
-        System.out.println("removeFollower");
-        Account a = null;
-        Account instance = new Account();
-        instance.removeFollower(a);
-        assertEquals(0, instance.getFollowers().size());
-        instance.addFollower(a);
-        instance.removeFollower(a);
-        assertEquals(0, instance.getFollowers().size());
-    }
-
-    /**
      * Test of removeTweet method, of class Account.
      */
     @Test

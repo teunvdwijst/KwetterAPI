@@ -118,17 +118,5 @@ public class AccountServiceTest {
         accountService.deleteAccount(user);
         
         verify(accountDao, times(1)).deleteAccount(user);
-    }
-
-    /**
-     * Test of getAccountFollowers method, of class AccountService.
-     */
-    @Test
-    public void testGetAccountFollowers() throws Exception {
-        System.out.println("getAccountFollowers");
-        accountService.getAccountFollowers("user");
-        
-        verify(accountDao, times(1)).getAccountFollowers("user");
-    }
-    
+    }   
 }

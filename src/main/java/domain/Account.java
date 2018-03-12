@@ -56,9 +56,6 @@ public class Account implements Serializable {
     private String website;
     private String avatarPath;
     @OneToMany(cascade = ALL)
-    @JoinTable(name = "followers")
-    private final List<Account> followers = new ArrayList<>();
-    @OneToMany(cascade = ALL)
     @JoinTable(name = "following")
     private final List<Account> following = new ArrayList<>();
     @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
@@ -143,11 +140,6 @@ public class Account implements Serializable {
     }
 
     @JsonbTransient
-    public List<Account> getFollowers() {
-        return Collections.unmodifiableList(followers);
-    }
-
-    @JsonbTransient
     public List<Tweet> getTweets() {
         return Collections.unmodifiableList(tweets);
     }
@@ -169,28 +161,6 @@ public class Account implements Serializable {
         this.website = website;
         this.avatarPath = avatarPath;
         this.userRole = Role.USER;
-    }
-
-    /**
-     * Adds an Account to the list of following accounts
-     *
-     * @param a Account
-     */
-    public void addFollower(Account a) {
-        if (!followers.contains(a)) {
-            followers.add(a);
-        }
-    }
-
-    /**
-     * Removes an Account from the list of following accounts
-     *
-     * @param a
-     */
-    public void removeFollower(Account a) {
-        if (followers.contains(a)) {
-            followers.remove(a);
-        }
     }
 
     /**

@@ -49,15 +49,6 @@ public class AccountService {
         }
     }
 
-    public List<Account> getAccountFollowers(String email) {
-        try {
-            return accountDao.getAccountFollowers(email);
-        } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowers operation; {0}", pe.getMessage());
-            return null;
-        }
-    }
-
     /**
      *
      * @param email
