@@ -12,6 +12,8 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,27 +39,27 @@ public class TweetResource {
     }
 
     @GET
-    @Path("getbyuser/{limit}/{email}")
+    @Path("user/{limit}/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getRecentTweetsByUser(limit, userEmail);
     }
 
     @GET
-    @Path("getrecent/{limit}")
+    @Path("recent/{limit}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweets(@PathParam("limit") int limit) {
         return tweetService.getRecentTweets(limit);
     }
 
     @GET
-    @Path("getbytag/{limit}/{tag}")
+    @Path("tag/{limit}/{tag}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweetsByTag(@PathParam("limit") int limit, @PathParam("tag") String tag) {
         return tweetService.getRecentTweetsByTag(limit, tag);
     }
 
-    @POST
+    @PUT
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateTweet(Tweet tweet) {
@@ -71,7 +73,7 @@ public class TweetResource {
         tweetService.insertTweet(tweet);
     }
 
-    @POST
+    @DELETE
     @Path("delete")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteTweet(Tweet tweet) {

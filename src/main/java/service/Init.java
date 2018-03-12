@@ -1,8 +1,7 @@
 package service;
 
-import dao.AccountDAO;
-import dao.TweetDAO;
 import domain.Account;
+import domain.Tweet;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
@@ -17,10 +16,10 @@ import javax.inject.Inject;
 public class Init {
 
     @Inject
-    AccountDAO accountDao;
+    AccountService accountService;
 
     @Inject
-    TweetDAO tweetDao;
+    TweetService tweetService;
 
     @PostConstruct
     public void init() {
@@ -33,22 +32,34 @@ public class Init {
         Account a7 = new Account("user7@gmail.com", "rtyu", "user7", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
         Account a8 = new Account("user8@gmail.com", "fdhgfkk", "user8", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
 
-        a1.addTweet("Sup mah dudes.");
-        a1.addTweet("yoyo @user2");
-        a2.addTweet("Allo Allo #tweeting");
-        a2.addTweet("#testing yoyo");
-        a1.getTweets().get(0).addLike(a3);
-        a1.addFollowing(a3);
-        a1.addFollowing(a4);
-        a1.addFollowing(a5);
+        a2.addFollowing(a3);
+        a2.addFollowing(a4);
+        a2.addFollowing(a5);
 
-        accountDao.insertAccount(a1);
-        accountDao.insertAccount(a2);
-        accountDao.insertAccount(a3);
-        accountDao.insertAccount(a4);
-        accountDao.insertAccount(a5);
-        accountDao.insertAccount(a6);
-        accountDao.insertAccount(a7);
-        accountDao.insertAccount(a8);
+        Tweet t1 = new Tweet("TESTING #tags", a1);
+        Tweet t2 = new Tweet("mentioning @user2", a1);
+        Tweet t3 = new Tweet("TESTING @user33", a2);
+        Tweet t4 = new Tweet("TESTING #tags", a3);
+        Tweet t5 = new Tweet("TESTING #tags", a4);
+        Tweet t6 = new Tweet("TESTING #tags", a3);
+
+        t1.addLike(a8);
+        t1.addLike(a3);
+
+        accountService.insertAccount(a1);
+        accountService.insertAccount(a2);
+        accountService.insertAccount(a3);
+        accountService.insertAccount(a4);
+        accountService.insertAccount(a5);
+        accountService.insertAccount(a6);
+        accountService.insertAccount(a7);
+        accountService.insertAccount(a8);
+
+        tweetService.insertTweet(t1);
+        tweetService.insertTweet(t2);
+        tweetService.insertTweet(t3);
+        tweetService.insertTweet(t4);
+        tweetService.insertTweet(t5);
+        tweetService.insertTweet(t6);
     }
 }

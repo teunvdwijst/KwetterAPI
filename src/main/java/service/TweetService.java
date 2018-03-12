@@ -113,7 +113,6 @@ public class TweetService {
             for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
-            tweet.findTags(tweet.getContent());
             tweetDao.updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
@@ -131,7 +130,6 @@ public class TweetService {
             for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
-            tweet.findTags(tweet.getContent());
             tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());

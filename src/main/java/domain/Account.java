@@ -33,12 +33,9 @@ import org.mindrot.jbcrypt.BCrypt;
 @Entity
 @Model
 @NamedQueries({
-    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
-    ,
-    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email")
-    ,
-    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")
-})
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a"),
+    @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email"),
+    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")})
 public class Account implements Serializable {
 
     @Id

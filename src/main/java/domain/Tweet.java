@@ -33,14 +33,12 @@ import javax.persistence.Transient;
 @Entity
 @Model
 @NamedQueries({
-    @NamedQuery(name = "Tweet.findById", query = "SELECT t FROM Tweet t WHERE t.id = :id")
-    ,
-    @NamedQuery(name = "Tweet.findRecent", query = "SELECT t FROM Tweet t order by t.published desc")
-    ,
-    @NamedQuery(name = "Tweet.findRecentByEmail", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a where a.email = :email) order by t.published desc")
-    ,
-    @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc")
-})
+    @NamedQuery(name = "Tweet.findById", query = "SELECT t FROM Tweet t WHERE t.id = :id"),
+    @NamedQuery(name = "Tweet.findRecent", query = "SELECT t FROM Tweet t order by t.published desc"),
+    @NamedQuery(name = "Tweet.findRecentByEmail", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a WHERE a.email = :email) order by t.published desc"),
+    @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc"),
+    @NamedQuery(name="Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a WHERE a.email = :email) or t.tweetedBy IN (SELECT f following_ID FROM kwetter.account_account where followers_ID in ((SELECT id FROM kwetter.account WHERE EMAIL = 'user2@gmail.com')))\n" +
+"order by PUBLISHED desc;")})
 public class Tweet implements Serializable {
 
     @Id
@@ -127,7 +125,7 @@ public class Tweet implements Serializable {
      *
      * @param message String
      */
-    public void findTags(String message) {
+    private void findTags(String message) {
         this.tags.clear();
         this.tags.addAll(findRegexMatches(message, "(?:\\#)([A-Za-z0-9_]+)"));
     }
