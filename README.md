@@ -6,26 +6,27 @@
 
 Kwetter applicatie backend.
 
+Domain model and class diagram : https://imgur.com/a/rK5km
+
 All API path calls are described below. All data is parsed in application/json format.
 
     /api
 
 	/accounts
-		/{limit}				(@GET)
-		/getbyusername/{username}		(@GET)
-		/getbyemail/{email}			(@GET)
-		/getfollowers/{email}			(@GET)
-		/getfollowing/{email}			(@GET)
-		/create					(@POST)
-		/update					(@POST)
-		/delete					(@POST)
+		/{limit}			(@GET)
+		/username/{username}		(@GET)
+		/email/{email}			(@GET)
+		/followers/{email}		(@GET)
+		/following/{email}		(@GET)
+		/create				(@POST)
+		/update				(@PUT)
+		/delete				(@DELETE)
 	
 	/tweets
-		/{id}					(@GET)
-		/getbyuser/{limit}/{email}		(@GET)
-		/getrecent/{limit}			(@GET)
-		/getbytag/{limit}/{tag}			(@GET)
-		/create					(@POST)
-		/update					(@POST)
-		/delete					(@POST)
-
+		/{id}				(@GET)
+		/user/{limit}/{email}		(@GET)
+		/recent/{limit}			(@GET)
+		/tag/{limit}/{tag}		(@GET)
+		/create				(@POST)
+		/update				(@PUT)
+		/delete				(@DELETE)
