@@ -41,7 +41,7 @@ import javax.persistence.Transient;
     ,
     @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc")
     ,
-    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a WHERE a.email = :email) OR t.tweetedBy IN (SELECT a.following.id FROM Account a WHERE a.email = :email)")})
+    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy IN (SELECT f FROM Account a JOIN a.following f WHERE a.id = f.id AND a.email = :email)")})
 public class Tweet implements Serializable {
 
     @Id
@@ -118,7 +118,8 @@ public class Tweet implements Serializable {
     }
 
     public Tweet(String content, Account tweetedBy, Date published) {
-        this(content, tweetedBy);
+        this.tweetedBy = tweetedBy;
+        this.content = content;
         this.published = published;
         findTags(content);
     }

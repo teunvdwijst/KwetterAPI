@@ -14,14 +14,14 @@ import javax.enterprise.inject.Model;
 import javax.json.bind.annotation.JsonbTransient;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,10 +55,13 @@ public class Account implements Serializable {
     private String bio;
     private String website;
     private String avatarPath;
-    @ManyToMany
-    private final List<Account> following = new ArrayList<>();
-    @ManyToMany(mappedBy = "following")
+    @OneToMany(cascade = ALL)
+    @JoinTable(name = "followers")
     private final List<Account> followers = new ArrayList<>();
+    //@ManyToMany (mappedBy = "followers")
+    @OneToMany(cascade = ALL)
+    @JoinTable(name = "following")
+    private final List<Account> following = new ArrayList<>();
     @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 

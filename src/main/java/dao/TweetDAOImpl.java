@@ -47,8 +47,8 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public List<Tweet> getTimeline(int limit, String userEmail) throws PersistenceException {
-        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("email", userEmail).setMaxResults(limit).getResultList();
+    public List<Tweet> getTimeline(int limit, String useremail) throws PersistenceException {
+        return em.createNamedQuery("Tweet.timeline").setParameter("email", useremail).setMaxResults(limit).getResultList();
     }
 
     @Override
