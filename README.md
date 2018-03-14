@@ -17,6 +17,7 @@ All API path calls are described below. All data is parsed in application/json f
 		/username/{username}		(@GET)
 		/email/{email}			(@GET)
 		/following/{email}		(@GET)
+		/followers/{email}		(@GET)
 		/create				(@POST)
 		/update				(@PUT)
 		/delete				(@DELETE)
