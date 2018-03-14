@@ -28,6 +28,9 @@ public class AccountDAOImpl implements AccountDAO {
 
     @Override
     public List<Account> getAllAccounts(int limit) throws PersistenceException {
+        if (limit == 0) {
+            return em.createNamedQuery("Account.findAll").getResultList();
+        }
         return em.createNamedQuery("Account.findAll").setMaxResults(limit).getResultList();
     }
 
