@@ -20,7 +20,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -38,7 +37,11 @@ import org.mindrot.jbcrypt.BCrypt;
     ,
     @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email")
     ,
-    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")})
+    @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")
+    ,
+    @NamedQuery(name = "Account.following", query = "SELECT f FROM Account a JOIN a.following f WHERE a.email = :email")
+    ,
+    @NamedQuery(name = "Account.followers", query = "SELECT a FROM Account a JOIN a.following f WHERE f.id = (SELECT a.id FROM Account a WHERE a.email = :email)")})
 public class Account implements Serializable {
 
     @Id
