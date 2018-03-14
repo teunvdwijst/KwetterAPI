@@ -25,26 +25,12 @@ public class AccountService {
     AccountDAO accountDao;
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
-
-    /**
-     *
-     * @param limit
-     * @return
-     */
+    
     public List<Account> getAllAccounts(int limit) {
         try {
             return accountDao.getAllAccounts(limit);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getAllAccounts operation; {0}", pe.getMessage());
-            return null;
-        }
-    }
-
-    public List<Account> getAccountFollowing(String email) {
-        try {
-            return accountDao.getAccountFollowing(email);
-        } catch (PersistenceException pe) {
-            LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowing operation; {0}", pe.getMessage());
             return null;
         }
     }
@@ -58,11 +44,15 @@ public class AccountService {
         }
     }
 
-    /**
-     *
-     * @param email
-     * @return
-     */
+    public List<Account> getAccountFollowing(String email) {
+        try {
+            return accountDao.getAccountFollowing(email);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowing operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+    
     public List<Account> getAccountByEmail(String email) {
         try {
             return accountDao.getAccountByEmail(email);
@@ -71,12 +61,7 @@ public class AccountService {
             return null;
         }
     }
-
-    /**
-     *
-     * @param username
-     * @return
-     */
+    
     public List<Account> getAccountByUsername(String username) {
         try {
             return accountDao.getAccountByUsername(username);
@@ -85,11 +70,7 @@ public class AccountService {
             return null;
         }
     }
-
-    /**
-     *
-     * @param user
-     */
+    
     public void updateAccount(Account user) {
         try {
             accountDao.updateAccount(user);
@@ -97,11 +78,7 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing updateAccount operation; {0}", pe.getMessage());
         }
     }
-
-    /**
-     *
-     * @param user
-     */
+    
     public void insertAccount(Account user) {
         try {
             accountDao.insertAccount(user);
@@ -109,11 +86,7 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
         }
     }
-
-    /**
-     *
-     * @param user
-     */
+    
     public void deleteAccount(Account user) {
         try {
             accountDao.deleteAccount(user);

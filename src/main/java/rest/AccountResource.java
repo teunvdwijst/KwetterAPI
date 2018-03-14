@@ -10,8 +10,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -37,28 +39,28 @@ public class AccountResource {
     }
 
     @GET
-    @Path("getbyusername/{username}")
+    @Path("username/{username}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountByUsername(@PathParam("username") String username) {
         return accountService.getAccountByUsername(username);
     }
 
     @GET
-    @Path("getbyemail/{email}")
+    @Path("email/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountByEmail(@PathParam("email") String email) {
         return accountService.getAccountByEmail(email);
     }
 
     @GET
-    @Path("getfollowers/{email}")
+    @Path("followers/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountFollowers(@PathParam("email") String email) {
         return accountService.getAccountFollowers(email);
     }
 
     @GET
-    @Path("getfollowing/{email}")
+    @Path("following/{email}")
     @Produces(MediaType.APPLICATION_JSON)
     public List<Account> getAccountFollowing(@PathParam("email") String email) {
         return accountService.getAccountFollowing(email);
@@ -71,14 +73,14 @@ public class AccountResource {
         accountService.insertAccount(user);
     }
 
-    @POST
+    @PUT
     @Path("update")
     @Consumes(MediaType.APPLICATION_JSON)
     public void updateAccount(Account user) {
         accountService.updateAccount(user);
     }
 
-    @POST
+    @DELETE
     @Path("delete")
     @Consumes(MediaType.APPLICATION_JSON)
     public void deleteAccount(Account user) {

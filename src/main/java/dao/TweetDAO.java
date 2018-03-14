@@ -5,6 +5,7 @@
  */
 package dao;
 
+import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.persistence.PersistenceException;
@@ -22,6 +23,8 @@ public interface TweetDAO {
     List<Tweet> getRecentTweets(int limit) throws PersistenceException;
 
     List<Tweet> getRecentTweetsByTag(int limit, String tag) throws PersistenceException;
+    
+    List<Tweet> getTimeline(int limit, String useremail) throws PersistenceException;
 
     void updateTweet(Tweet tweet) throws PersistenceException;
 

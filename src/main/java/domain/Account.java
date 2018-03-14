@@ -20,7 +20,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -38,7 +38,10 @@ import org.mindrot.jbcrypt.BCrypt;
     @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email")
     ,
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")
-})
+    ,
+    @NamedQuery(name = "Account.following", query = "SELECT f FROM Account a JOIN a.following f WHERE a.email = :email")
+    ,
+    @NamedQuery(name = "Account.followers", query = "SELECT a FROM Account a JOIN a.following f WHERE f.id = (SELECT a.id FROM Account a WHERE a.email = :email)")})
 public class Account implements Serializable {
 
     @Id
@@ -55,10 +58,9 @@ public class Account implements Serializable {
     private String bio;
     private String website;
     private String avatarPath;
-    @ManyToMany
+    @OneToMany(cascade = ALL)
+    @JoinTable(name = "following")
     private final List<Account> following = new ArrayList<>();
-    @ManyToMany(mappedBy = "following")
-    private final List<Account> followers = new ArrayList<>();
     @OneToMany(mappedBy = "tweetedBy", cascade = ALL)
     private final List<Tweet> tweets = new ArrayList<>();
 
@@ -141,14 +143,10 @@ public class Account implements Serializable {
     }
 
     @JsonbTransient
-    public List<Account> getFollowers() {
-        return Collections.unmodifiableList(followers);
-    }
-
-    @JsonbTransient
     public List<Tweet> getTweets() {
         return Collections.unmodifiableList(tweets);
     }
+
     // </editor-fold>
     public Account() {
     }
@@ -166,28 +164,6 @@ public class Account implements Serializable {
         this.website = website;
         this.avatarPath = avatarPath;
         this.userRole = Role.USER;
-    }
-
-    /**
-     * Adds an Account to the list of following accounts
-     *
-     * @param a Account
-     */
-    public void addFollower(Account a) {
-        if (!followers.contains(a)) {
-            followers.add(a);
-        }
-    }
-
-    /**
-     * Removes an Account from the list of following accounts
-     *
-     * @param a
-     */
-    public void removeFollower(Account a) {
-        if (followers.contains(a)) {
-            followers.remove(a);
-        }
     }
 
     /**
