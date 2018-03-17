@@ -20,6 +20,7 @@ public class TweetController {
     TweetService tweetService;
 
     private List<Tweet> tweets;
+    private Tweet selectedTweet;
 
     public TweetController() {
     }
@@ -31,5 +32,24 @@ public class TweetController {
 
     public List<Tweet> getTweets() {
         return tweets;
+    }
+
+    public void setSelectedTweet(Tweet selected) {
+        if (selected != null) {
+            this.selectedTweet = selected;
+        }
+    }
+
+    public Tweet getSelectedTweet() {
+        if (selectedTweet != null) {
+            return selectedTweet;
+        }
+        return null;
+    }
+    
+    public void removeTweet(Tweet tweet){
+        if (tweet != null) {
+            tweetService.deleteTweet(tweet);
+        }
     }
 }

@@ -23,14 +23,14 @@ public class Init {
 
     @PostConstruct
     public void init() {
-        Account a1 = new Account("testings@gmail.com", "passw1", "user1", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a2 = new Account("user2@gmail.com", "herrow", "user2", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a3 = new Account("user3@gmail.com", "wacist", "user3", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a4 = new Account("user4@gmail.com", "rorrypop", "user4", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a5 = new Account("user5@gmail.com", "asdf", "user5", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a6 = new Account("user6@gmail.com", "zxcv", "user6", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a7 = new Account("user7@gmail.com", "rtyu", "user7", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
-        Account a8 = new Account("user8@gmail.com", "fdhgfkk", "user8", "Eindhoven", "my personal life sux", "reddit.com", "c://avatar.jpg");
+        Account a1 = new Account("francisco.richardson83@gmail.com", "gymnastic", "franciscorichardson", "2943 FS Eindhoven", "I Like rowing and fancy dinners", "reddit.com", "c://avatar.jpg");
+        Account a2 = new Account("marsha_32@gmail.com", "maryland", "marshajackson", "6148 ST Eindhoven", "Find me on Tinder ;)", "tinder.com", "c://avatar.jpg");
+        Account a3 = new Account("bernicenichols66@gmail.com", "plastics45", "bernicenichols", "4074 TL Eindhoven", "I <3 photoshopping and good coffee in the afternoon", "pinterest.com", "c://avatar.jpg");
+        Account a4 = new Account("carr1990@gmail.com", "photo12", "scottcarr", "6810 EL Eindhoven", "DM me for donger", "", "c://avatar.jpg");
+        Account a5 = new Account("rolandlowe@gmail.com", "asdf", "rolandlowe", "2012 CS Eindhoven", "", "reddit.com", "c://avatar.jpg");
+        Account a6 = new Account("mariestevens.70@gmail.com", "biggles", "mariestevens", "6417 EP Veldhoven", "I like turtles", "", "c://avatar.jpg");
+        Account a7 = new Account("breyes@gmail.com", "icecream", "brettreyes", "Mystery island", "my personal life sux", "reddit.com", "c://avatar.jpg");
+        Account a8 = new Account("teunvdwijst@gmail.com", "skrrrrrt", "teunvdwijst", "Venhorst", "Als dat jasje van je beschadigd is...", "Fontys.nl", "c://avatar.jpg");
 
         a2.addFollowing(a3);
         a2.addFollowing(a4);
@@ -39,8 +39,8 @@ public class Init {
         a6.addFollowing(a2);
 
         Tweet t1 = new Tweet("TESTING #tags", a1);
-        Tweet t2 = new Tweet("mentioning @user2", a1);
-        Tweet t3 = new Tweet("TESTING @user33", a2);
+        Tweet t2 = new Tweet("mentioning @franciscorichardson", a1);
+        Tweet t3 = new Tweet("TESTING @teunvdwijst", a2);
         Tweet t4 = new Tweet("TESTING #tags", a3);
         Tweet t5 = new Tweet("TESTING #tags", a4);
         Tweet t6 = new Tweet("TESTING #tags", a3);
