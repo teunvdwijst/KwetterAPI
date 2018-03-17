@@ -37,6 +37,8 @@ public class Init {
         a2.addFollowing(a5);
         a5.addFollowing(a2);
         a6.addFollowing(a2);
+        a8.promote();
+        a8.promote();
 
         Tweet t1 = new Tweet("TESTING #tags", a1);
         Tweet t2 = new Tweet("mentioning @franciscorichardson", a1);

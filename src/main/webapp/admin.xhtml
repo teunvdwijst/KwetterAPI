@@ -9,26 +9,28 @@
         <title>Admin Panel</title>
     </h:head>
     <h:body>
+        <h1>Admin Panel</h1>
+        <br />
+
         <h:form id="tableAccounts">
-            <h1>Admin Panel</h1>
-            <br />
+
             <h2>User accounts</h2>
             <br />
 
             <p:dataTable var="vAccount" value="#{accountController.accounts}" selectionMode="single" selection="#{accountController.selectedUser}" rowKey="#{vAccount.username}">
-                <p:column headerText="Id">
+                <p:column headerText="Id" width="1">
                     <h:outputText value="#{vAccount.id}" />
                 </p:column>
 
-                <p:column headerText="Username">
+                <p:column headerText="Username" width="100">
                     <h:outputText value="#{vAccount.username}" />
                 </p:column>
 
-                <p:column headerText="Email">
+                <p:column headerText="Email" width="100">
                     <h:outputText value="#{vAccount.email}" />
                 </p:column>
 
-                <p:column headerText="Role">
+                <p:column headerText="Role" width="50">
                     <h:outputText value="#{vAccount.userRole}" />
                 </p:column>
                 <f:facet name="footer">
@@ -37,33 +39,32 @@
                 </f:facet>
             </p:dataTable>
         </h:form>
-        
+
         <h:form id="tableTweets">
-            <h1>Admin Panel</h1>
             <br />
-            <h2>User accounts</h2>
+            <h2>Published Tweets</h2>
 
             <p:dataTable var="vTweet" value="#{tweetController.tweets}" selectionMode="single" selection="#{tweetController.selectedTweet}" rowKey="#{vTweet.id}">
-                <p:column headerText="Id">
+                <p:column headerText="Id" width="1">
                     <h:outputText value="#{vTweet.id}" />
                 </p:column>
 
-                <p:column headerText="Message">
+                <p:column headerText="Message" width="100">
                     <h:outputText value="#{vTweet.content}" />
                 </p:column>
 
-                <p:column headerText="Tweeted By">
+                <p:column headerText="Tweeted By" width="100">
                     <h:outputText value="#{vTweet.tweetedBy.username}" />
                 </p:column>
 
-                <p:column headerText="Tweeted At">
+                <p:column headerText="Tweeted At" width="100">
                     <h:outputText value="#{vTweet.published}" />
                 </p:column>
-                <p:column headerText="Liked By">
-                    <h:outputText value="#{vTweet.likedBy}" />
+                <p:column headerText="Liked By" width="50">
+                    <h:outputText value="#{vTweet.getLikedByString()}" />
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton action="#{tweetController.removeTweet()}" update="tableTweets" value="Remove"/>
+                    <p:commandButton action="#{tweetController.removeTweet()}" update=":tableTweets" value="Remove"/>
                 </f:facet>
             </p:dataTable>
         </h:form>

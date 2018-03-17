@@ -1,5 +1,6 @@
 package controller;
 
+import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -46,10 +47,10 @@ public class TweetController {
         }
         return null;
     }
-    
-    public void removeTweet(Tweet tweet){
-        if (tweet != null) {
-            tweetService.deleteTweet(tweet);
+
+    public void removeTweet() {
+        if (selectedTweet != null) {
+            tweetService.deleteTweet(selectedTweet);
         }
     }
 }
