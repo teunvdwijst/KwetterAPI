@@ -15,16 +15,16 @@ import javax.json.bind.annotation.JsonbTransient;
 import static javax.persistence.CascadeType.ALL;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import org.mindrot.jbcrypt.BCrypt;
+import org.apache.commons.codec.cli.Digest;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -51,8 +51,8 @@ public class Account implements Serializable {
     private String username;
     @Column(unique = true)
     private String email;
-    @Enumerated(EnumType.ORDINAL)
-    private Role userRole;
+    @ManyToMany(mappedBy = "users", cascade = ALL)
+    private final List<UserGroup> groups = new ArrayList<>();
     private String password;
     private String location;
     private String bio;
@@ -94,7 +94,7 @@ public class Account implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        this.password = DigestUtils.sha512Hex(password);
     }
 
     public String getLocation() {
@@ -129,12 +129,9 @@ public class Account implements Serializable {
         this.avatarPath = avatarPath;
     }
 
-    public Role getUserRole() {
-        return userRole;
-    }
-
-    public void setUserRole(Role userRole) {
-        this.userRole = userRole;
+    @JsonbTransient
+    public List<UserGroup> getUserGroup() {
+        return groups;
     }
 
     @JsonbTransient
@@ -153,7 +150,7 @@ public class Account implements Serializable {
 
     public Account(String email, String password) {
         this.email = email;
-        this.password = BCrypt.hashpw(password, BCrypt.gensalt(12));
+        this.password = DigestUtils.sha512Hex(password);
     }
 
     public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath) {
@@ -163,7 +160,28 @@ public class Account implements Serializable {
         this.bio = bio;
         this.website = website;
         this.avatarPath = avatarPath;
-        this.userRole = Role.USER;
+    }
+
+    public Account(String email, String password, String userName, String location, String bio, String website, String avatarPath, UserGroup group) {
+        this(email, password);
+        this.username = userName;
+        this.location = location;
+        this.bio = bio;
+        this.website = website;
+        this.avatarPath = avatarPath;
+        this.addUserGroup(group);
+    }
+
+    public String getUserGroupsString() {
+        if (this.getUserGroup().size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (UserGroup ug : this.getUserGroup()) {
+                sb.append(ug.getGroupname());
+                sb.append(" - ");
+            }
+            return sb.substring(0, sb.length() - 3);
+        }
+        return "";
     }
 
     /**
@@ -211,40 +229,14 @@ public class Account implements Serializable {
         }
     }
 
-    public boolean verifyPassword(String password) {
-        return BCrypt.checkpw(password, this.password);
+    public void addUserGroup(UserGroup userGroup) {
+        this.groups.add(userGroup);
+        userGroup.addUser(this);
     }
 
-    public Role promote() {
-        switch (userRole) {
-            case USER:
-                userRole = Role.MODERATOR;
-                break;
-            case MODERATOR:
-                userRole = Role.ADMIN;
-                break;
-            case ADMIN:
-                break;
-            default:
-                break;
-        }
-        return userRole;
-    }
-
-    public Role demote() {
-        switch (userRole) {
-            case MODERATOR:
-                userRole = Role.USER;
-                break;
-            case ADMIN:
-                userRole = Role.MODERATOR;
-                break;
-            case USER:
-                break;
-            default:
-                break;
-        }
-        return userRole;
+    public void removeUserGroup(UserGroup userGroups) {
+        this.groups.remove(userGroups);
+        userGroups.removeUser(this);
     }
 
     @Override
@@ -264,7 +256,6 @@ public class Account implements Serializable {
         int hash = 5;
         hash = 53 * hash + Objects.hashCode(this.username);
         hash = 53 * hash + Objects.hashCode(this.email);
-        hash = 53 * hash + Objects.hashCode(this.userRole);
         hash = 53 * hash + Objects.hashCode(this.location);
         hash = 53 * hash + Objects.hashCode(this.bio);
         hash = 53 * hash + Objects.hashCode(this.website);

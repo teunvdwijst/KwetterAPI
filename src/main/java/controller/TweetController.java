@@ -5,6 +5,8 @@ import domain.Tweet;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import service.TweetService;
@@ -49,8 +51,10 @@ public class TweetController {
     }
 
     public void removeTweet() {
-        if (selectedTweet != null) {
-            tweetService.deleteTweet(selectedTweet);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (selectedTweet == null) {
+            context.addMessage("msg2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Tweet selected."));
         }
+        tweetService.deleteTweet(selectedTweet);
     }
 }

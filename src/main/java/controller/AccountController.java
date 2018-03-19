@@ -1,29 +1,37 @@
 package controller;
 
 import domain.Account;
+import domain.UserGroup;
+import java.io.Serializable;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 import service.AccountService;
+import service.UserGroupService;
 
 /**
  *
  * @author Teun
  */
 @Named
-@RequestScoped
-public class AccountController {
+@ViewScoped
+public class AccountController implements Serializable {
 
     @Inject
     AccountService accountService;
 
+    @Inject
+    UserGroupService userGroupService;
+
     private List<Account> users;
     private Account selectedUser;
+
+    private List<UserGroup> groups;
+    private UserGroup selectedGroup;
 
     public AccountController() {
     }
@@ -31,6 +39,7 @@ public class AccountController {
     @PostConstruct
     private void init() {
         users = accountService.getAllAccounts(0);
+        groups = userGroupService.getAllUserGroups();
     }
 
     public List<Account> getAccounts() {
@@ -50,17 +59,46 @@ public class AccountController {
         }
     }
 
+    public UserGroup getSelectedGroup() {
+        return selectedGroup;
+    }
+
+    public void setSelectedGroup(UserGroup selectedGroup) {
+        this.selectedGroup = selectedGroup;
+    }
+
+    public List<UserGroup> getGroups() {
+        return groups;
+    }
+
     public void promoteUser() {
-        if (selectedUser != null) {
-            selectedUser.promote();
-            accountService.updateAccount(selectedUser);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (selectedUser == null) {
+            context.addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Account selected."));
+            return;
         }
+        if (selectedGroup == null) {
+            context.addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No UserGroup selected."));
+            return;
+        }
+        selectedUser.addUserGroup(selectedGroup);
+        accountService.updateAccount(selectedUser);
+        init();
+
     }
 
     public void demoteUser() {
-        if (selectedUser != null) {
-            selectedUser.demote();
-            accountService.updateAccount(selectedUser);
+        FacesContext context = FacesContext.getCurrentInstance();
+        if (selectedUser == null) {
+            context.addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Account selected."));
+            return;
         }
+        if (selectedGroup == null) {
+            context.addMessage("msg", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No UserGroup selected."));
+            return;
+        }
+        selectedUser.removeUserGroup(selectedGroup);
+        accountService.updateAccount(selectedUser);
+        init();
     }
 }

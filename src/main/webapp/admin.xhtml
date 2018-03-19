@@ -10,13 +10,13 @@
     </h:head>
     <h:body>
         <h1>Admin Panel</h1>
-        <br />
 
         <h:form id="tableAccounts">
 
             <h2>User accounts</h2>
             <br />
 
+            <p:growl id="growl" for="msg" showDetail="true" />  
             <p:dataTable var="vAccount" value="#{accountController.accounts}" selectionMode="single" selection="#{accountController.selectedUser}" rowKey="#{vAccount.username}">
                 <p:column headerText="Id" width="1">
                     <h:outputText value="#{vAccount.id}" />
@@ -31,12 +31,21 @@
                 </p:column>
 
                 <p:column headerText="Role" width="50">
-                    <h:outputText value="#{vAccount.userRole}" />
+                    <h:outputText value="#{vAccount.userGroupsString}" />
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton action="#{accountController.promoteUser()}" update=":tableAccounts" value="Promote" />
-                    <p:commandButton action="#{accountController.demoteUser()}" update=":tableAccounts" value="Demote" />
+                    <p:commandButton action="#{accountController.promoteUser()}" update=":tableAccounts" value="Add Group" />
+                    <p:commandButton action="#{accountController.demoteUser()}" update=":tableAccounts" value="Remove Group" />
                 </f:facet>
+            </p:dataTable>
+
+            <h2>User groups</h2>
+            <br />
+
+            <p:dataTable var="vGroup" value="#{accountController.groups}" selectionMode="single" selection="#{accountController.selectedGroup}" rowKey="#{vGroup.groupname}">
+                <p:column headerText="GroupName" width="1">
+                    <h:outputText value="#{vGroup.groupname}" />
+                </p:column>
             </p:dataTable>
         </h:form>
 
@@ -44,6 +53,7 @@
             <br />
             <h2>Published Tweets</h2>
 
+            <p:growl id="growl2" for="msg2" showDetail="true" />  
             <p:dataTable var="vTweet" value="#{tweetController.tweets}" selectionMode="single" selection="#{tweetController.selectedTweet}" rowKey="#{vTweet.id}">
                 <p:column headerText="Id" width="1">
                     <h:outputText value="#{vTweet.id}" />
@@ -64,7 +74,7 @@
                     <h:outputText value="#{vTweet.getLikedByString()}" />
                 </p:column>
                 <f:facet name="footer">
-                    <p:commandButton action="#{tweetController.removeTweet()}" update=":tableTweets" value="Remove"/>
+                    <p:commandButton action="#{tweetController.removeTweet()}" update=":tableTweets" value="Remove" />
                 </f:facet>
             </p:dataTable>
         </h:form>
