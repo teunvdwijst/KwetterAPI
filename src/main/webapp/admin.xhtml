@@ -21,15 +21,12 @@
                 <p:column headerText="Id" width="1">
                     <h:outputText value="#{vAccount.id}" />
                 </p:column>
-
                 <p:column headerText="Username" width="100">
                     <h:outputText value="#{vAccount.username}" />
                 </p:column>
-
                 <p:column headerText="Email" width="100">
                     <h:outputText value="#{vAccount.email}" />
                 </p:column>
-
                 <p:column headerText="Role" width="50">
                     <h:outputText value="#{vAccount.userGroupsString}" />
                 </p:column>
@@ -43,7 +40,7 @@
             <br />
 
             <p:dataTable var="vGroup" value="#{accountController.groups}" selectionMode="single" selection="#{accountController.selectedGroup}" rowKey="#{vGroup.groupname}">
-                <p:column headerText="GroupName" width="1">
+                <p:column headerText="GroupName">
                     <h:outputText value="#{vGroup.groupname}" />
                 </p:column>
             </p:dataTable>
@@ -58,15 +55,12 @@
                 <p:column headerText="Id" width="1">
                     <h:outputText value="#{vTweet.id}" />
                 </p:column>
-
                 <p:column headerText="Message" width="100">
                     <h:outputText value="#{vTweet.content}" />
                 </p:column>
-
                 <p:column headerText="Tweeted By" width="100">
                     <h:outputText value="#{vTweet.tweetedBy.username}" />
                 </p:column>
-
                 <p:column headerText="Tweeted At" width="100">
                     <h:outputText value="#{vTweet.published}" />
                 </p:column>

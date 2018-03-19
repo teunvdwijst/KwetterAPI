@@ -31,6 +31,7 @@ public class Init {
     public void init() {
         UserGroup user = new UserGroup("USER");
         UserGroup admins = new UserGroup("ADMIN");
+        UserGroup mods = new UserGroup("MODERATOR");
 
         Account a1 = new Account("francisco.richardson83@gmail.com", "gymnastic", "franciscorichardson", "2943 FS Eindhoven", "I Like rowing and fancy dinners", "reddit.com", "c://avatar.jpg", user);
         Account a2 = new Account("marsha_32@gmail.com", "maryland", "marshajackson", "6148 ST Eindhoven", "Find me on Tinder ;)", "tinder.com", "c://avatar.jpg", user);
@@ -47,6 +48,8 @@ public class Init {
         a5.addFollowing(a2);
         a6.addFollowing(a2);
         a8.addUserGroup(admins);
+        a8.addUserGroup(mods);
+        a7.addUserGroup(mods);
 
         Tweet t1 = new Tweet("TESTING #tags", a1);
         Tweet t2 = new Tweet("mentioning @franciscorichardson", a1);
@@ -60,6 +63,7 @@ public class Init {
 
         groupService.insertUserGroup(user);
         groupService.insertUserGroup(admins);
+        groupService.insertUserGroup(mods);
 
         accountService.insertAccount(a1);
         accountService.insertAccount(a2);

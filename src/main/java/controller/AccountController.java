@@ -83,8 +83,8 @@ public class AccountController implements Serializable {
         }
         selectedUser.addUserGroup(selectedGroup);
         accountService.updateAccount(selectedUser);
+        userGroupService.updateUserGroup(selectedGroup);
         init();
-
     }
 
     public void demoteUser() {
@@ -99,6 +99,7 @@ public class AccountController implements Serializable {
         }
         selectedUser.removeUserGroup(selectedGroup);
         accountService.updateAccount(selectedUser);
+        userGroupService.updateUserGroup(selectedGroup);
         init();
     }
 }

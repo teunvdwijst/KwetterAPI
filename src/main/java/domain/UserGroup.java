@@ -3,6 +3,7 @@ package domain;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -50,5 +51,22 @@ public class UserGroup implements Serializable {
 
     public UserGroup(String name) {
         this.groupname = name;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj != null) {
+            UserGroup temp = (UserGroup) obj;
+            return this.getGroupname().equals(temp.getGroupname());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 2;
+        hash = 76 * hash + Objects.hashCode(this.groupname);
+        hash = 76 * hash + Objects.hashCode(this.users);
+        return hash;
     }
 }

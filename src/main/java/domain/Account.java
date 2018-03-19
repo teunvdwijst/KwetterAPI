@@ -23,7 +23,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import org.apache.commons.codec.cli.Digest;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
@@ -230,13 +229,17 @@ public class Account implements Serializable {
     }
 
     public void addUserGroup(UserGroup userGroup) {
-        this.groups.add(userGroup);
-        userGroup.addUser(this);
+        if (!this.groups.contains(userGroup)) {
+            this.groups.add(userGroup);
+            userGroup.addUser(this);
+        }
     }
 
-    public void removeUserGroup(UserGroup userGroups) {
-        this.groups.remove(userGroups);
-        userGroups.removeUser(this);
+    public void removeUserGroup(UserGroup userGroup) {
+        if (this.groups.contains(userGroup)) {
+            this.groups.remove(userGroup);
+            userGroup.removeUser(this);
+        }
     }
 
     @Override
