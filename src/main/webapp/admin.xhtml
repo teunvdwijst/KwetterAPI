@@ -75,9 +75,6 @@
                 <p:column headerText="Liked By" width="50">
                     <h:outputText value="#{vTweet.getLikedByString()}" />
                 </p:column>
-                <f:facet name="footer">
-                    <p:commandButton action="#{tweetController.removeTweet()}" update=":tableTweets" value="Remove" />
-                </f:facet>
             </p:dataTable>
             
             <p:contextMenu for="tweetTable">

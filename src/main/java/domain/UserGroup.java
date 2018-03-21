@@ -64,9 +64,9 @@ public class UserGroup implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 2;
-        hash = 76 * hash + Objects.hashCode(this.groupname);
-        hash = 76 * hash + Objects.hashCode(this.users);
+        int hash = 7;
+        hash = 59 * hash + Objects.hashCode(this.groupname);
+        hash = 59 * hash + Objects.hashCode(this.users);
         return hash;
     }
 }
