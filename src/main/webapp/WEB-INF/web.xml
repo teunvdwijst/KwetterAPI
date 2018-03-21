@@ -37,16 +37,6 @@
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
-            <web-resource-name>Basic Pages</web-resource-name>
-            <description/>
-            <url-pattern>/account.xhtml</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <role-name>user</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
             <web-resource-name>Moderator Pages</web-resource-name>
             <description/>
             <url-pattern>/moderator.xhtml</url-pattern>

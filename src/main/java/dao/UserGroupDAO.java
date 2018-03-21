@@ -10,6 +10,8 @@ import javax.persistence.PersistenceException;
  */
 public interface UserGroupDAO {
 
+    UserGroup getUserGroup(String name) throws PersistenceException;
+
     List<UserGroup> getAllUserGroups() throws PersistenceException;
 
     void updateUserGroup(UserGroup group) throws PersistenceException;

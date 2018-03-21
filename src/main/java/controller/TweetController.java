@@ -1,6 +1,5 @@
 package controller;
 
-import domain.Account;
 import domain.Tweet;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -54,7 +53,9 @@ public class TweetController {
         FacesContext context = FacesContext.getCurrentInstance();
         if (selectedTweet == null) {
             context.addMessage("msg2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Tweet selected."));
+            return;
         }
         tweetService.deleteTweet(selectedTweet);
+        init();
     }
 }

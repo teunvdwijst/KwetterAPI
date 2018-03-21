@@ -21,6 +21,15 @@ public class UserGroupService {
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
+    public UserGroup getUserGroup(String name) {
+        try {
+            return userGroupDao.getUserGroup(name);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing getAllUserGroups operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
+
     public List<UserGroup> getAllUserGroups() {
         try {
             return userGroupDao.getAllUserGroups();

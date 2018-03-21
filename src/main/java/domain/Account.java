@@ -228,11 +228,47 @@ public class Account implements Serializable {
         }
     }
 
+    public String promoteUserGroup() {
+        boolean mod = false;
+        boolean admin = false;
+        for (UserGroup g : groups) {
+            if (g.getGroupname().equals("MODERATOR")) {
+                mod = true;
+            } else if (g.getGroupname().equals("ADMIN")) {
+                admin = true;
+            }
+        }
+        if (!mod && !admin) {
+            return "MODERATOR";
+        } else if (mod && !admin) {
+            return "ADMIN";
+        }
+        return null;
+    }
+
     public void addUserGroup(UserGroup userGroup) {
         if (!this.groups.contains(userGroup)) {
             this.groups.add(userGroup);
             userGroup.addUser(this);
         }
+    }
+
+    public String demoteUserGroup() {
+        boolean mod = false;
+        boolean admin = false;
+        for (UserGroup g : groups) {
+            if (g.getGroupname().equals("MODERATOR")) {
+                mod = true;
+            } else if (g.getGroupname().equals("ADMIN")) {
+                admin = true;
+            }
+        }
+        if (mod && admin) {
+            return "ADMIN";
+        } else if (mod && !admin) {
+            return "MODERATOR";
+        }
+        return null;
     }
 
     public void removeUserGroup(UserGroup userGroup) {

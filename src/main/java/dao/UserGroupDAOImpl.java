@@ -21,6 +21,11 @@ public class UserGroupDAOImpl implements UserGroupDAO {
     }
 
     @Override
+    public UserGroup getUserGroup(String name) throws PersistenceException {
+        return em.find(UserGroup.class, name);
+    }
+
+    @Override
     public List<UserGroup> getAllUserGroups() throws PersistenceException {
         return em.createQuery("SELECT g FROM UserGroup g").getResultList();
     }
