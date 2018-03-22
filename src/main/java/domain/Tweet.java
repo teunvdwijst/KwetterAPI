@@ -198,6 +198,18 @@ public class Tweet implements Serializable {
         }
     }
 
+    public String getLikedByString() {
+        if (this.getLikedBy().size() > 0) {
+            StringBuilder sb = new StringBuilder();
+            for (Account a : this.getLikedBy()) {
+                sb.append(a.getUsername());
+                sb.append(" - ");
+            }
+            return sb.substring(0, sb.length() - 3);
+        }
+        return "";
+    }
+
     @Override
     public boolean equals(Object obj) {
         if ((obj == null) || (!(obj instanceof Tweet))) {
