@@ -54,19 +54,29 @@ public class UserGroup implements Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj != null) {
-            UserGroup temp = (UserGroup) obj;
-            return this.getGroupname().equals(temp.getGroupname());
-        }
-        return false;
+    public int hashCode() {
+        int hash = 5;
+        return hash;
     }
 
     @Override
-    public int hashCode() {
-        int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.groupname);
-        hash = 59 * hash + Objects.hashCode(this.users);
-        return hash;
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserGroup other = (UserGroup) obj;
+        if (!Objects.equals(this.groupname, other.groupname)) {
+            return false;
+        }
+        if (!Objects.equals(this.users, other.users)) {
+            return false;
+        }
+        return true;
     }
 }
