@@ -14,7 +14,6 @@ import org.junit.BeforeClass;
 import static org.junit.Assert.*;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.mindrot.jbcrypt.BCrypt;
 
 /**
  *
@@ -48,9 +47,10 @@ public class AccountTest {
     @org.junit.Test
     public void testHashCode() {
         System.out.println("hashCode");
-        Account a1 = new Account("1", "", "", "", "", "", "");
-        Account a2 = new Account("2", "", "", "", "", "", "");
-        Account a3 = new Account("1", "", "", "", "", "", "");
+        UserGroup user = new UserGroup("USER");
+        Account a1 = new Account("1", "", "", "", "", "", "", user);
+        Account a2 = new Account("2", "", "", "", "", "", "", user);
+        Account a3 = new Account("1", "", "", "", "", "", "", user);
         assertFalse(a1.hashCode() == a2.hashCode());
         assertTrue(a1.hashCode() == a3.hashCode());
     }
@@ -62,8 +62,9 @@ public class AccountTest {
     public void testEquals() {
         System.out.println("equals");
         Object ojb = null;
-        Account instance = new Account("1", "", "", "", "", "", "");
-        Account other = new Account("2", "", "", "", "", "", "");
+        UserGroup user = new UserGroup("USER");
+        Account instance = new Account("1", "", "", "", "", "", "", user);
+        Account other = new Account("2", "", "", "", "", "", "", user);
         Account another = new Account();
 
         boolean equals = instance.equals(ojb);
@@ -85,13 +86,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetUserName() {
         System.out.println("getUserName");
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         String expResult = "";
         String result = instance.getUsername();
         assertEquals(expResult, result);
 
         expResult = "Account";
-        instance = new Account("", "", expResult, "", "", "", "");
+        instance = new Account("", "", expResult, "", "", "", "", new UserGroup("USER"));
         result = instance.getUsername();
         assertEquals(expResult, result);
     }
@@ -103,7 +104,7 @@ public class AccountTest {
     public void testSetUserName() {
         System.out.println("setUserName");
         String userName = "setUserName";
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         assertEquals("", instance.getUsername());
         instance.setUsername(userName);
         assertEquals(userName, instance.getUsername());
@@ -151,13 +152,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetLocation() {
         System.out.println("getLocation");
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         String expResult = "";
         String result = instance.getLocation();
         assertEquals(expResult, result);
 
         expResult = "getLocation";
-        instance = new Account("", "", "", expResult, "", "", "");
+        instance = new Account("", "", "", expResult, "", "", "", new UserGroup("USER"));
         result = instance.getLocation();
         assertEquals(expResult, result);
     }
@@ -169,7 +170,7 @@ public class AccountTest {
     public void testSetLocation() {
         System.out.println("setLocation");
         String location = "setLocation";
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         assertEquals("", instance.getLocation());
         instance.setLocation(location);
         assertEquals(location, instance.getLocation());
@@ -184,13 +185,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetBio() {
         System.out.println("getBio");
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         String expResult = "";
         String result = instance.getBio();
         assertEquals(expResult, result);
 
         expResult = "getBio";
-        instance = new Account("", "", "", "", expResult, "", "");
+        instance = new Account("", "", "", "", expResult, "", "", new UserGroup("USER"));
         result = instance.getBio();
         assertEquals(expResult, result);
     }
@@ -202,7 +203,7 @@ public class AccountTest {
     public void testSetBio() {
         System.out.println("setBio");
         String bio = "setBio";
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         assertEquals("", instance.getBio());
         instance.setBio(bio);
         assertEquals(bio, instance.getBio());
@@ -217,13 +218,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetWebsite() {
         System.out.println("getWebsite");
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         String expResult = "";
         String result = instance.getWebsite();
         assertEquals(expResult, result);
 
         expResult = "getWebsite";
-        instance = new Account("", "", "", "", "", expResult, "");
+        instance = new Account("", "", "", "", "", expResult, "", new UserGroup("USER"));
         assertEquals(expResult, instance.getWebsite());
     }
 
@@ -234,7 +235,7 @@ public class AccountTest {
     public void testSetWebsite() {
         System.out.println("setWebsite");
         String website = "setWebsite";
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         assertEquals("", instance.getWebsite());
         instance.setWebsite(website);
         assertEquals(website, instance.getWebsite());
@@ -249,13 +250,13 @@ public class AccountTest {
     @org.junit.Test
     public void testGetAvatarPath() {
         System.out.println("getAvatarPath");
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         String expResult = "";
         String result = instance.getAvatarPath();
         assertEquals(expResult, result);
 
         expResult = "getAvatarPath";
-        instance = new Account("", "", "", "", "", "", expResult);
+        instance = new Account("", "", "", "", "", "", expResult, new UserGroup("USER"));
         assertEquals(expResult, instance.getAvatarPath());
     }
 
@@ -266,46 +267,13 @@ public class AccountTest {
     public void testSetAvatarPath() {
         System.out.println("setAvatarPath");
         String avatarPath = "setAvatarPath";
-        Account instance = new Account("", "", "", "", "", "", "");
+        Account instance = new Account("", "", "", "", "", "", "", new UserGroup("USER"));
         assertEquals("", instance.getAvatarPath());
         instance.setAvatarPath(avatarPath);
         assertEquals(avatarPath, instance.getAvatarPath());
 
         instance.setAvatarPath(null);
         assertNull(instance.getAvatarPath());
-    }
-
-    /**
-     * Test of getUserRole method, of class Account.
-     */
-    @org.junit.Test
-    public void testGetUserRole() {
-        System.out.println("getUserRole");
-        Account instance = new Account("", "", "", "", "", "", "");
-        Role expResult = Role.USER;
-        Role result = instance.getUserRole();
-        assertEquals(expResult, result);
-
-        expResult = Role.MODERATOR;
-        instance.promote();
-        assertEquals(expResult, instance.getUserRole());
-
-        expResult = Role.ADMIN;
-        instance.promote();
-        assertEquals(expResult, instance.getUserRole());
-    }
-
-    /**
-     * Test of setUserRole method, of class Account.
-     */
-    @org.junit.Test
-    public void testSetUserRole() {
-        System.out.println("setUserRole");
-        Role userRole = Role.MODERATOR;
-        Account instance = new Account("", "", "", "", "", "", "");
-        assertEquals(Role.USER, instance.getUserRole());
-        instance.setUserRole(userRole);
-        assertEquals(userRole, instance.getUserRole());
     }
 
     /**
@@ -411,48 +379,6 @@ public class AccountTest {
     }
 
     /**
-     * Test of promote method, of class Account.
-     */
-    @Test
-    public void testPromote() {
-        System.out.println("promote");
-        Role expResult = Role.USER;
-        Account instance = new Account("", "", "", "", "", "", "");
-
-        assertEquals(expResult, instance.getUserRole());
-        instance.promote();
-        expResult = Role.MODERATOR;
-        assertEquals(expResult, instance.getUserRole());
-        instance.promote();
-        expResult = Role.ADMIN;
-        assertEquals(expResult, instance.getUserRole());
-        instance.promote();
-        assertEquals(expResult, instance.getUserRole());
-    }
-
-    /**
-     * Test of demote method, of class Account.
-     */
-    @Test
-    public void testDemote() {
-        System.out.println("demote");
-        Role expResult = Role.ADMIN;
-        Account instance = new Account("", "", "", "", "", "", "");
-        instance.promote();
-        instance.promote();
-
-        assertEquals(expResult, instance.getUserRole());
-        instance.demote();
-        expResult = Role.MODERATOR;
-        assertEquals(expResult, instance.getUserRole());
-        instance.demote();
-        expResult = Role.USER;
-        assertEquals(expResult, instance.getUserRole());
-        instance.demote();
-        assertEquals(expResult, instance.getUserRole());
-    }
-
-    /**
      * Test of getId method, of class Account.
      */
     @Test
@@ -483,7 +409,7 @@ public class AccountTest {
     @Test
     public void testGetUsername() {
         System.out.println("getUsername");
-        Account instance = new Account("", "", "user", "", "", "", "");
+        Account instance = new Account("", "", "user", "", "", "", "", new UserGroup("USER"));
         String expResult = "user";
         String result = instance.getUsername();
         assertEquals(expResult, result);
@@ -496,33 +422,9 @@ public class AccountTest {
     public void testSetUsername() {
         System.out.println("setUsername");
         String username = "testing";
-        Account instance = new Account("", "", "user", "", "", "", "");
+        Account instance = new Account("", "", "user", "", "", "", "", new UserGroup("USER"));
         instance.setUsername(username);
         assertEquals(username, instance.getUsername());
-    }
-
-    /**
-     * Test of getPassword method, of class Account.
-     */
-    @Test
-    public void testGetPassword() {
-        System.out.println("getPassword");
-        Account instance = new Account("email", "pass", "user", "", "", "", "");
-        String result = instance.getPassword();
-        assertTrue(BCrypt.checkpw("pass", result));
-    }
-
-    /**
-     * Test of setPassword method, of class Account.
-     */
-    @Test
-    public void testSetPassword() {
-        System.out.println("setPassword");
-        String password = "newpass";
-        Account instance = new Account("email", "pass", "user", "", "", "", "");
-        instance.setPassword(password);
-        String result = instance.getPassword();
-        assertTrue(BCrypt.checkpw("newpass", result));
     }
 
     /**
@@ -537,23 +439,5 @@ public class AccountTest {
         instance.getTweets().get(0).setId(1L);
         instance.removeTweet(id);
         assertEquals(0, instance.getTweets().size());
-    }
-
-    /**
-     * Test of verifyPassword method, of class Account.
-     */
-    @Test
-    public void testVerifyPassword() {
-        System.out.println("verifyPassword");
-        String password = "test";
-        Account instance = new Account("email", "pass");
-        boolean expResult = false;
-        boolean result = instance.verifyPassword(password);
-        assertEquals(expResult, result);
-
-        instance.setPassword("test");
-        expResult = true;
-        result = instance.verifyPassword(password);
-        assertEquals(expResult, result);
     }
 }
