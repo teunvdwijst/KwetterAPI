@@ -1,8 +1,8 @@
-def CONTAINER_NAME="politiesysteem"
+def CONTAINER_NAME="Kwetter"
 def CONTAINER_TAG="latest"
 
 node {
-    git url: 'https://github.com/S62Groep4/PolitieSysteem.git'
+    git url: 'https://github.com/teunvdwijst/KwetterAPI.git'
 
     stage('Initialize'){
         def dockerHome = tool 'Docker'
@@ -27,9 +27,6 @@ node {
     }
 
     stage('Docker-compose'){
-		try {
-            sh "sudo docker-compose down"
-        }catch(error){}
         try {
             sh "sudo docker-compose down"
         }catch(error){}
