@@ -12,17 +12,3 @@
     </jdbc-connection-pool>
     <jdbc-resource enabled="true" jndi-name="java:app/jdbc/kwetter" object-type="user" pool-name="mysql_fontys_fontysPool"/>
 </resources>
-
-<auth-realm classname="com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm" name="kwetter_security_realm">
-	<property name="file" value="${com.sun.aas.instanceRoot}/config/keyfile"></property>
-	<property name="jaas-context" value="jdbcRealm"></property>
-	<property name="user-table" value="account"></property>
-	<property name="user-name-column" value="USERNAME"></property>
-	<property name="password-column" value="PASSWORD"></property>
-	<property name="group-table" value="usergroup"></property>
-	<property name="group-name-column" value="GROUPNAME"></property>
-	<property name="group-table-user-name-column" value="username"></property>
-	<property name="charset" value="UTF-8"></property>
-	<property name="datasource-jndi" value="java:app/jdbc/kwetter"></property>
-	<property name="digest-algorithm" value="SHA-512"></property>
-</auth-realm>
