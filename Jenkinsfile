@@ -27,9 +27,6 @@ node {
     }
 
     stage('Docker-compose'){
-		try {
-            sh "sudo docker-compose down"
-        }catch(error){}
         try {
             sh "sudo docker-compose down"
         }catch(error){}
