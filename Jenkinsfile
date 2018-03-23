@@ -2,7 +2,6 @@ def CONTAINER_NAME="Kwetter"
 def CONTAINER_TAG="latest"
 
 node {
-    git url: 'https://github.com/teunvdwijst/KwetterAPI.git'
 
     stage('Initialize'){
         def dockerHome = tool 'Docker'
