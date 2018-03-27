@@ -28,15 +28,16 @@ node {
 	stage('Artifactory'){
 		try {
 			// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
-        server = Artifactory.server 'artifactory'
+			server = Artifactory.server 'artifactory'
 
-        rtMaven = Artifactory.newMavenBuild()
-        rtMaven.tool = 'Maven3' // Tool name from Jenkins configuration
-        rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
-        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
-        rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
+			rtMaven = Artifactory.newMavenBuild()
+			rtMaven.tool = 'Maven3' // Tool name from Jenkins configuration
+			rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
+			rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+			rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
 
-		buildInfo = Artifactory.newBuildInfo()
+			buildInfo = Artifactory.newBuildInfo()
+			server.publishBuildInfo buildInfo
 		} catch(error){
 			echo "The artifactory server could not be reached ${error}"
 		}
