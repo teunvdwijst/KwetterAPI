@@ -3,8 +3,6 @@ package service;
 import domain.Account;
 import domain.Tweet;
 import domain.UserGroup;
-import java.util.ArrayList;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
