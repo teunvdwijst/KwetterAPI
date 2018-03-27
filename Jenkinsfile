@@ -27,20 +27,16 @@ node {
 	
 	stage('Artifactory'){
 		try {
-			def server = Artifactory.server "artifactory"
-			def buildInfo = Artifactory.newBuildInfo()
-			buildInfo.env.capture = true
-			def rtMaven = Artifactory.newMavenBuild()
-			rtMaven.tool = 'Maven3' // Tool name from Jenkins configuration
-			rtMaven.opts = "-Denv=dev"
-			rtMaven.deployer releaseRepo:'libs-release-local', snapshotRepo:'libs-snapshot-local', server: server
-			rtMaven.resolver releaseRepo:'libs-release', snapshotRepo:'libs-snapshot', server: server
+			// Obtain an Artifactory server instance, defined in Jenkins --> Manage:
+        server = Artifactory.server 'artifactory'
 
-			rtMaven.run pom: 'pom.xml', goals: 'clean install', buildInfo: buildInfo
+        rtMaven = Artifactory.newMavenBuild()
+        rtMaven.tool = 'Maven3' // Tool name from Jenkins configuration
+        rtMaven.deployer releaseRepo: 'libs-release-local', snapshotRepo: 'libs-snapshot-local', server: server
+        rtMaven.resolver releaseRepo: 'libs-release', snapshotRepo: 'libs-snapshot', server: server
+        rtMaven.deployer.deployArtifacts = false // Disable artifacts deployment during Maven run
 
-			buildInfo.retention maxBuilds: 10, maxDays: 7, deleteBuildArtifacts: true
-			// Publish build info.
-			server.publishBuildInfo buildInfo
+		buildInfo = Artifactory.newBuildInfo()
 		} catch(error){
 			echo "The artifactory server could not be reached ${error}"
 		}
