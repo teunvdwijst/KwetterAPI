@@ -17,9 +17,9 @@ public interface AccountDAO {
 
     List<Account> getAllAccounts(int limit) throws PersistenceException;
 
-    List<Account> getAccountByEmail(String email) throws PersistenceException;
+    Account getAccountByEmail(String email) throws PersistenceException;
 
-    List<Account> getAccountByUsername(String username) throws PersistenceException;
+    Account getAccountByUsername(String username) throws PersistenceException;
     
     List<Account> getAccountFollowers(String email) throws PersistenceException;
     

@@ -41,13 +41,13 @@ public class AccountResource {
 
     @GET
     @Path("username/{username}")
-    public List<Account> getAccountByUsername(@PathParam("username") String username) {
+    public Account getAccountByUsername(@PathParam("username") String username) {
         return accountService.getAccountByUsername(username);
     }
 
     @GET
     @Path("email/{email}")
-    public List<Account> getAccountByEmail(@PathParam("email") String email) {
+    public Account getAccountByEmail(@PathParam("email") String email) {
         return accountService.getAccountByEmail(email);
     }
 
@@ -69,13 +69,11 @@ public class AccountResource {
     }
 
     @PUT
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateAccount(Account user) {
         accountService.updateAccount(user);
     }
 
     @DELETE
-    @Consumes(MediaType.APPLICATION_JSON)
     public void deleteAccount(Account user) {
         accountService.deleteAccount(user);
     }

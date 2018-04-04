@@ -35,8 +35,13 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<Account> getAccountByEmail(String email) throws PersistenceException {
-        return em.createNamedQuery("Account.findByEmail").setParameter("email", email).getResultList();
+    public Account getAccountByEmail(String email) throws PersistenceException {
+        return (Account) em.createNamedQuery("Account.findByEmail").setParameter("email", email).getSingleResult();
+    }
+
+    @Override
+    public Account getAccountByUsername(String username) throws PersistenceException {
+        return (Account) em.createNamedQuery("Account.findByUsername").setParameter("username", username).getSingleResult();
     }
 
     @Override
@@ -47,11 +52,6 @@ public class AccountDAOImpl implements AccountDAO {
     @Override
     public List<Account> getAccountFollowing(String email) throws PersistenceException {
         return em.createNamedQuery("Account.following").setParameter("email", email).getResultList();
-    }
-
-    @Override
-    public List<Account> getAccountByUsername(String username) throws PersistenceException {
-        return em.createNamedQuery("Account.findByUsername").setParameter("username", username).getResultList();
     }
 
     @Override

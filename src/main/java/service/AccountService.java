@@ -53,7 +53,7 @@ public class AccountService {
         }
     }
     
-    public List<Account> getAccountByEmail(String email) {
+    public Account getAccountByEmail(String email) {
         try {
             return accountDao.getAccountByEmail(email);
         } catch (PersistenceException pe) {
@@ -62,7 +62,7 @@ public class AccountService {
         }
     }
     
-    public List<Account> getAccountByUsername(String username) {
+    public Account getAccountByUsername(String username) {
         try {
             return accountDao.getAccountByUsername(username);
         } catch (PersistenceException pe) {

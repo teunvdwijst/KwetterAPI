@@ -174,9 +174,9 @@ public class TweetService {
         Matcher m = Pattern.compile("(?:\\@)([A-Za-z0-9_]+)").matcher(prefix);
 
         while (m.find()) {
-            List<Account> users = accountDao.getAccountByUsername(m.group(1));
-            if (!users.isEmpty()) {
-                mentions.add(users.get(0));
+            Account user = accountDao.getAccountByUsername(m.group(1));
+            if (user != null) {
+                mentions.add(user);
             }
         }
         return mentions;
