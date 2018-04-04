@@ -24,8 +24,10 @@ import service.TweetService;
  *
  * @author Teun
  */
-@Path("tweets")
 @Stateless
+@Path("tweets")
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
 public class TweetResource {
 
     @Inject
@@ -33,56 +35,45 @@ public class TweetResource {
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Tweet getTweet(@PathParam("id") int id) {
         return tweetService.getTweet(id);
     }
 
     @GET
     @Path("user/{limit}/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getRecentTweetsByUser(limit, userEmail);
     }
     
     @GET
     @Path("timeline/{limit}/{email}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getTimeline(limit, userEmail);
     }
 
     @GET
     @Path("recent/{limit}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweets(@PathParam("limit") int limit) {
         return tweetService.getRecentTweets(limit);
     }
 
     @GET
     @Path("tag/{limit}/{tag}")
-    @Produces(MediaType.APPLICATION_JSON)
     public List<Tweet> getRecentTweetsByTag(@PathParam("limit") int limit, @PathParam("tag") String tag) {
         return tweetService.getRecentTweetsByTag(limit, tag);
     }
 
     @PUT
-    @Path("update")
-    @Consumes(MediaType.APPLICATION_JSON)
     public void updateTweet(Tweet tweet) {
         tweetService.updateTweet(tweet);
     }
 
     @POST
-    @Path("create")
-    @Consumes(MediaType.APPLICATION_JSON)
     public void insertTweet(Tweet tweet) {
         tweetService.insertTweet(tweet);
     }
 
     @DELETE
-    @Path("delete")
-    @Consumes(MediaType.APPLICATION_JSON)
     public void deleteTweet(Tweet tweet) {
         tweetService.deleteTweet(tweet);
     }
