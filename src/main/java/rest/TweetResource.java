@@ -26,8 +26,8 @@ import service.TweetService;
  */
 @Stateless
 @Path("tweets")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class TweetResource {
 
     @Inject
@@ -44,7 +44,7 @@ public class TweetResource {
     public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
         return tweetService.getRecentTweetsByUser(limit, userEmail);
     }
-    
+
     @GET
     @Path("timeline/{limit}/{email}")
     public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("email") String userEmail) {

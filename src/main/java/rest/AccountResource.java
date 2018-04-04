@@ -26,8 +26,8 @@ import service.AccountService;
  */
 @Stateless
 @Path("accounts")
-    @Produces(MediaType.APPLICATION_JSON)
-    @Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class AccountResource {
 
     @Inject
