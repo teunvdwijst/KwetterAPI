@@ -50,7 +50,7 @@ public class Account implements Serializable {
     private String username;
     @Column(unique = true)
     private String email;
-    @ManyToMany(mappedBy = "users", cascade = ALL)
+    @ManyToMany(mappedBy = "users")
     private final List<UserGroup> groups = new ArrayList<>();
     private String password;
     private String location;

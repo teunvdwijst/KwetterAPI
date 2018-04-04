@@ -6,7 +6,9 @@
 package service;
 
 import dao.AccountDAO;
+import dao.UserGroupDAO;
 import domain.Account;
+import domain.UserGroup;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -25,7 +27,7 @@ public class AccountService {
     AccountDAO accountDao;
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
-    
+
     public List<Account> getAllAccounts(int limit) {
         try {
             return accountDao.getAllAccounts(limit);
@@ -52,7 +54,7 @@ public class AccountService {
             return null;
         }
     }
-    
+
     public Account getAccountByEmail(String email) {
         try {
             return accountDao.getAccountByEmail(email);
@@ -61,7 +63,7 @@ public class AccountService {
             return null;
         }
     }
-    
+
     public Account getAccountByUsername(String username) {
         try {
             return accountDao.getAccountByUsername(username);
@@ -70,7 +72,7 @@ public class AccountService {
             return null;
         }
     }
-    
+
     public void updateAccount(Account user) {
         try {
             accountDao.updateAccount(user);
@@ -78,7 +80,7 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing updateAccount operation; {0}", pe.getMessage());
         }
     }
-    
+
     public void insertAccount(Account user) {
         try {
             accountDao.insertAccount(user);
@@ -86,10 +88,11 @@ public class AccountService {
             LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
         }
     }
-    
-    public void deleteAccount(Account user) {
+
+    public void deleteAccount(String username) {
         try {
-            accountDao.deleteAccount(user);
+            Account temp = accountDao.getAccountByUsername(username);
+            accountDao.deleteAccount(temp);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing deleteAccount operation; {0}", pe.getMessage());
         }

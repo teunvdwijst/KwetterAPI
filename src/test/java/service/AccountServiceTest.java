@@ -115,7 +115,7 @@ public class AccountServiceTest {
     public void testDeleteAccount() throws Exception {
         System.out.println("deleteAccount");
         Account user = new Account("user", "pass");
-        accountService.deleteAccount(user);
+        accountService.deleteAccount(user.getUsername());
         
         verify(accountDao, times(1)).deleteAccount(user);
     }   

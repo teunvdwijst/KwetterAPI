@@ -160,9 +160,10 @@ public class TweetService {
      *
      * @param tweet
      */
-    public void deleteTweet(Tweet tweet) {
+    public void deleteTweet(int id) {
         try {
-            tweetDao.deleteTweet(tweet);
+            Tweet temp = tweetDao.getTweetById(id);
+            tweetDao.deleteTweet(temp);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing removeTweet operation; {0}", pe.getMessage());
         }

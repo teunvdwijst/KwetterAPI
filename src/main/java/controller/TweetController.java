@@ -55,7 +55,7 @@ public class TweetController {
             context.addMessage("msg2", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "No Tweet selected."));
             return;
         }
-        tweetService.deleteTweet(selectedTweet);
+        tweetService.deleteTweet(Math.toIntExact(selectedTweet.getId()));
         init();
     }
 }

@@ -110,7 +110,9 @@ public class TweetServiceTest {
     public void testDeleteTweet() throws Exception {
         System.out.println("deleteTweet");
         Tweet tweet = new Tweet("tweet", null);
-        tweetService.deleteTweet(tweet);
+        tweet.setId(1L);
+                
+        tweetService.deleteTweet(1);
 
         verify(tweetDao, times(1)).deleteTweet(tweet);
     }

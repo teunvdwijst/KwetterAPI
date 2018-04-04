@@ -74,7 +74,8 @@ public class AccountResource {
     }
 
     @DELETE
-    public void deleteAccount(Account user) {
-        accountService.deleteAccount(user);
+    @Path("{id}")
+    public void deleteAccount(@PathParam("id") String id) {
+        accountService.deleteAccount(id);
     }
 }

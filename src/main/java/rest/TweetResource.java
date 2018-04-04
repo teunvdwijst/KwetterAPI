@@ -74,7 +74,8 @@ public class TweetResource {
     }
 
     @DELETE
-    public void deleteTweet(Tweet tweet) {
-        tweetService.deleteTweet(tweet);
+    @Path("{id}")
+    public void deleteTweet(@PathParam("id") int id) {
+        tweetService.deleteTweet(id);
     }
 }
