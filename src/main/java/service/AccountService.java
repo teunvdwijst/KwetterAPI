@@ -5,16 +5,18 @@
  */
 package service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
 import dao.AccountDAO;
-import dao.UserGroupDAO;
 import domain.Account;
-import domain.UserGroup;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -27,6 +29,28 @@ public class AccountService {
     AccountDAO accountDao;
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
+
+    public boolean validateCredentials(String username, String password) {
+        Account temp = getAccountByUsername(username);
+
+        if (temp != null) {
+            String hashedPass = DigestUtils.sha512Hex(password);
+            return hashedPass.equals(temp.getPassword());
+        }
+        return false;
+    }
+
+    public String getWebToken(String login) {
+        String webToken = "";
+
+        try {
+            Algorithm a = Algorithm.HMAC512("Auth_0_JWT_secret");
+            webToken = JWT.create().withSubject(login).withIssuer("KwetterBV").sign(a);
+        } catch (UnsupportedEncodingException ex) {
+            LOGGER.log(Level.FINE, "ERROR while performing getWebToken operation; {0}", ex.getMessage());
+        }
+        return webToken;
+    }
 
     public List<Account> getAllAccounts(int limit) {
         try {
