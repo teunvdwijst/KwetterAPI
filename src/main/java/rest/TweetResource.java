@@ -45,15 +45,15 @@ public class TweetResource {
     }
 
     @GET
-    @Path("user/{limit}/{email}")
-    public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
-        return tweetService.getRecentTweetsByUser(limit, userEmail);
+    @Path("user/{limit}/{username}")
+    public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("username") String username) {
+        return tweetService.getRecentTweetsByUser(limit, username);
     }
 
     @GET
-    @Path("timeline/{limit}/{email}")
-    public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("email") String userEmail) {
-        return tweetService.getTimeline(limit, userEmail);
+    @Path("timeline/{limit}/{username}")
+    public List<Tweet> getUserTimeline(@PathParam("username") int limit, @PathParam("username") String username) {
+        return tweetService.getTimeline(limit, username);
     }
 
     @GET

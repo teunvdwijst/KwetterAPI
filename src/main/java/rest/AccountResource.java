@@ -71,15 +71,15 @@ public class AccountResource {
     }
 
     @GET
-    @Path("followers/{email}")
-    public List<Account> getAccountFollowers(@PathParam("email") String email) {
-        return accountService.getAccountFollowers(email);
+    @Path("followers/{username}")
+    public List<Account> getAccountFollowers(@PathParam("username") String username) {
+        return accountService.getAccountFollowers(username);
     }
 
     @GET
-    @Path("following/{email}")
-    public List<Account> getAccountFollowing(@PathParam("email") String email) {
-        return accountService.getAccountFollowing(email);
+    @Path("following/{username}")
+    public List<Account> getAccountFollowing(@PathParam("username") String username) {
+        return accountService.getAccountFollowing(username);
     }
 
     @POST

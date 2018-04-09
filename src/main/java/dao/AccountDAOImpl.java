@@ -45,13 +45,13 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public List<Account> getAccountFollowers(String email) throws PersistenceException {
-        return em.createNamedQuery("Account.followers").setParameter("email", email).getResultList();
+    public List<Account> getAccountFollowers(String username) throws PersistenceException {
+        return em.createNamedQuery("Account.followers").setParameter("username", username).getResultList();
     }
 
     @Override
-    public List<Account> getAccountFollowing(String email) throws PersistenceException {
-        return em.createNamedQuery("Account.following").setParameter("email", email).getResultList();
+    public List<Account> getAccountFollowing(String username) throws PersistenceException {
+        return em.createNamedQuery("Account.following").setParameter("username", username).getResultList();
     }
 
     @Override

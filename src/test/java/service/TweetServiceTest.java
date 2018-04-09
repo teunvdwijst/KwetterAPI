@@ -65,7 +65,7 @@ public class TweetServiceTest {
         System.out.println("getRecentTweetsByUser");
         tweetService.getRecentTweetsByUser(1, "user");
 
-        verify(tweetDao, times(1)).getRecentTweetsByEmail(1, "user");
+        verify(tweetDao, times(1)).getRecentTweetsByUsername(1, "user");
     }
 
     /**

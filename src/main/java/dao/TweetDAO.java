@@ -18,13 +18,13 @@ public interface TweetDAO {
 
     Tweet getTweetById(int id) throws PersistenceException;
 
-    List<Tweet> getRecentTweetsByEmail(int limit, String userEmail) throws PersistenceException;
+    List<Tweet> getRecentTweetsByUsername(int limit, String username) throws PersistenceException;
 
     List<Tweet> getRecentTweets(int limit) throws PersistenceException;
 
     List<Tweet> getRecentTweetsByTag(int limit, String tag) throws PersistenceException;
     
-    List<Tweet> getTimeline(int limit, String useremail) throws PersistenceException;
+    List<Tweet> getTimeline(int limit, String username) throws PersistenceException;
 
     void updateTweet(Tweet tweet) throws PersistenceException;
 

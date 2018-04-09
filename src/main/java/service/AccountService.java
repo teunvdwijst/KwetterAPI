@@ -59,18 +59,18 @@ public class AccountService {
         }
     }
 
-    public List<Account> getAccountFollowers(String email) {
+    public List<Account> getAccountFollowers(String username) {
         try {
-            return accountDao.getAccountFollowers(email);
+            return accountDao.getAccountFollowers(username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowers operation; {0}", pe.getMessage());
             return null;
         }
     }
 
-    public List<Account> getAccountFollowing(String email) {
+    public List<Account> getAccountFollowing(String username) {
         try {
-            return accountDao.getAccountFollowing(email);
+            return accountDao.getAccountFollowing(username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getAccountFollowing operation; {0}", pe.getMessage());
             return null;

@@ -38,9 +38,9 @@ import org.apache.commons.codec.digest.DigestUtils;
     ,
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")
     ,
-    @NamedQuery(name = "Account.following", query = "SELECT f FROM Account a JOIN a.following f WHERE a.email = :email")
+    @NamedQuery(name = "Account.following", query = "SELECT f FROM Account a JOIN a.following f WHERE a.username = :username")
     ,
-    @NamedQuery(name = "Account.followers", query = "SELECT a FROM Account a JOIN a.following f WHERE f.id = (SELECT a.id FROM Account a WHERE a.email = :email)")})
+    @NamedQuery(name = "Account.followers", query = "SELECT a FROM Account a JOIN a.following f WHERE f.id = (SELECT a.id FROM Account a WHERE a.username = :username)")})
 public class Account implements Serializable {
 
     @Id

@@ -25,7 +25,6 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.Transient;
-import static javax.persistence.CascadeType.ALL;
 
 /**
  *
@@ -38,11 +37,11 @@ import static javax.persistence.CascadeType.ALL;
     ,
     @NamedQuery(name = "Tweet.findRecent", query = "SELECT t FROM Tweet t order by t.published desc")
     ,
-    @NamedQuery(name = "Tweet.findRecentByEmail", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a WHERE a.email = :email) order by t.published desc")
+    @NamedQuery(name = "Tweet.findRecentByUsername", query = "SELECT t FROM Tweet t WHERE t.tweetedBy = (SELECT a.id FROM Account a WHERE a.username = :username) order by t.published desc")
     ,
     @NamedQuery(name = "Tweet.findRecentByTag", query = "SELECT t FROM Tweet t WHERE t.content LIKE :tag order by t.published desc")
     ,
-    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy IN (SELECT f FROM Account a JOIN a.following f WHERE a.email = :email)")
+    @NamedQuery(name = "Tweet.timeline", query = "SELECT t FROM Tweet t WHERE t.tweetedBy IN (SELECT f FROM Account a JOIN a.following f WHERE a.username = :username)")
 })
 public class Tweet implements Serializable {
 

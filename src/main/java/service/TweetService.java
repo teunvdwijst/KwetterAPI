@@ -59,9 +59,9 @@ public class TweetService {
      * @param userEmail
      * @return List of Tweets
      */
-    public List<Tweet> getRecentTweetsByUser(int limit, String userEmail) {
+    public List<Tweet> getRecentTweetsByUser(int limit, String username) {
         try {
-            return tweetDao.getRecentTweetsByEmail(limit, userEmail);
+            return tweetDao.getRecentTweetsByUsername(limit, username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getRecentTweetsByUser operation; {0}", pe.getMessage());
             return null;
@@ -108,12 +108,12 @@ public class TweetService {
      * descending. Returns an empty list if no Tweets were found
      *
      * @param limit
-     * @param email
+     * @param username
      * @return List of Tweets
      */
-    public List<Tweet> getTimeline(int limit, String email) {
+    public List<Tweet> getTimeline(int limit, String username) {
         try {
-            return tweetDao.getTimeline(limit, email);
+            return tweetDao.getTimeline(limit, username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getTimeline operation; {0}", pe.getMessage());
             return null;

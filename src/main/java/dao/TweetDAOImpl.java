@@ -32,11 +32,11 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public List<Tweet> getRecentTweetsByEmail(int limit, String userEmail) {
+    public List<Tweet> getRecentTweetsByUsername(int limit, String username) {
         if (limit == 0){
-            return em.createNamedQuery("Tweet.findRecentByEmail").setParameter("email", userEmail).getResultList();
+            return em.createNamedQuery("Tweet.findRecentByUsername").setParameter("username", username).getResultList();
         }
-        return em.createNamedQuery("Tweet.findRecentByEmail").setParameter("email", userEmail).setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.findRecentByUsername").setParameter("username", username).setMaxResults(limit).getResultList();
     }
 
     @Override
@@ -56,11 +56,11 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public List<Tweet> getTimeline(int limit, String useremail) throws PersistenceException {
+    public List<Tweet> getTimeline(int limit, String username) throws PersistenceException {
         if (limit == 0){
-            return em.createNamedQuery("Tweet.timeline").setParameter("email", useremail).getResultList();
+            return em.createNamedQuery("Tweet.timeline").setParameter("username", username).getResultList();
         }
-        return em.createNamedQuery("Tweet.timeline").setParameter("email", useremail).setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.timeline").setParameter("username", username).setMaxResults(limit).getResultList();
     }
 
     @Override
