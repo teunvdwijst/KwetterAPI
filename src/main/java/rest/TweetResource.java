@@ -52,7 +52,7 @@ public class TweetResource {
 
     @GET
     @Path("timeline/{limit}/{username}")
-    public List<Tweet> getUserTimeline(@PathParam("username") int limit, @PathParam("username") String username) {
+    public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("username") String username) {
         return tweetService.getTimeline(limit, username);
     }
 

@@ -49,6 +49,7 @@ public class Init {
         a5.addFollowing(a8);
         a8.addFollowing(a4);
         a8.addFollowing(a5);
+        
         a8.addUserGroup(admins);
         a8.addUserGroup(mods);
         a7.addUserGroup(mods);
