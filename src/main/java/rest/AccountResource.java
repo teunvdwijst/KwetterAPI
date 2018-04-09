@@ -47,7 +47,7 @@ public class AccountResource {
 
         if (result) {
             String webToken = accountService.getWebToken(account.getUsername());
-            return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + webToken).build();
+            return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + webToken).header("Access-Control-Expose-Headers", "Authorization").build();
         }
         return Response.status(Response.Status.UNAUTHORIZED).build();
     }

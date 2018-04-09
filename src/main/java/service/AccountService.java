@@ -16,7 +16,6 @@ import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
