@@ -17,7 +17,9 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.SecurityContext;
 import service.TweetService;
 
 /**
@@ -32,6 +34,9 @@ public class TweetResource {
 
     @Inject
     TweetService tweetService;
+    
+    @Context
+    SecurityContext securityContext;
 
     @GET
     @Path("{id}")
@@ -64,16 +69,19 @@ public class TweetResource {
     }
 
     @PUT
+    @JWToken
     public void updateTweet(Tweet tweet) {
         tweetService.updateTweet(tweet);
     }
 
     @POST
+    @JWToken
     public void insertTweet(Tweet tweet) {
         tweetService.insertTweet(tweet);
     }
 
     @DELETE
+    @JWToken
     @Path("{id}")
     public void deleteTweet(@PathParam("id") int id) {
         tweetService.deleteTweet(id);

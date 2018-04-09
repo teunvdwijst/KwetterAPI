@@ -34,8 +34,7 @@ public class AccountService {
         Account temp = getAccountByUsername(username);
 
         if (temp != null) {
-            String hashedPass = DigestUtils.sha512Hex(password);
-            return hashedPass.equals(temp.getPassword());
+            return password.equals(temp.getPassword());
         }
         return false;
     }
