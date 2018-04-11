@@ -10,6 +10,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import dao.AccountDAO;
 import domain.Account;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +44,7 @@ public class AccountService {
 
         try {
             Algorithm a = Algorithm.HMAC512("Auth_0_JWT_secret");
-            webToken = JWT.create().withSubject(login).withIssuer("KwetterBV").sign(a);
+            webToken = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + 900000)).withSubject(login).withIssuer("KwetterBV").sign(a);
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.FINE, "ERROR while performing getWebToken operation; {0}", ex.getMessage());
         }
