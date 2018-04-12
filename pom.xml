@@ -104,10 +104,15 @@
             <version>2.5</version>
             <scope>provided</scope>
         </dependency>
-                <dependency>
+        <dependency>
             <groupId>com.auth0</groupId>
             <artifactId>java-jwt</artifactId>
             <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.stagemonitor</groupId>
+            <artifactId>stagemonitor-web-servlet</artifactId>
+            <version>0.88.2</version>
         </dependency>
     </dependencies>
 

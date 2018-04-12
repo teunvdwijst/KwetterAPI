@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
+import org.stagemonitor.core.Stagemonitor;
 
 /**
  *
@@ -27,6 +28,7 @@ public class Init {
 
     @PostConstruct
     public void init() {
+        Stagemonitor.init();
         UserGroup user = new UserGroup("USER");
         UserGroup admins = new UserGroup("ADMIN");
         UserGroup mods = new UserGroup("MODERATOR");
@@ -49,7 +51,7 @@ public class Init {
         a5.addFollowing(a8);
         a8.addFollowing(a4);
         a8.addFollowing(a5);
-        
+
         a8.addUserGroup(admins);
         a8.addUserGroup(mods);
         a7.addUserGroup(mods);

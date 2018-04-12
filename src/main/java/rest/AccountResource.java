@@ -83,7 +83,6 @@ public class AccountResource {
     }
 
     @POST
-    @JWToken
     public void insertAccount(Account user) {
         accountService.insertAccount(user);
     }

@@ -44,7 +44,7 @@ public class AccountService {
 
         try {
             Algorithm a = Algorithm.HMAC512("Auth_0_JWT_secret");
-            webToken = JWT.create().withExpiresAt(new Date(System.currentTimeMillis() + 900000)).withSubject(login).withIssuer("KwetterBV").sign(a);
+            webToken = JWT.create().withSubject(login).withIssuer("KwetterBV").sign(a); //.withExpiresAt(new Date(System.currentTimeMillis() + 900000))
         } catch (UnsupportedEncodingException ex) {
             LOGGER.log(Level.FINE, "ERROR while performing getWebToken operation; {0}", ex.getMessage());
         }
