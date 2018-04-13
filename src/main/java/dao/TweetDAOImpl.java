@@ -32,35 +32,35 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public List<Tweet> getRecentTweetsByUsername(int limit, String username) {
-        if (limit == 0){
+    public List<Tweet> getRecentTweetsByUsername(int limit, int offset, String username) {
+        if (limit == 0) {
             return em.createNamedQuery("Tweet.findRecentByUsername").setParameter("username", username).getResultList();
         }
-        return em.createNamedQuery("Tweet.findRecentByUsername").setParameter("username", username).setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.findRecentByUsername").setParameter("username", username).setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
     @Override
-    public List<Tweet> getRecentTweets(int limit) {
-        if (limit == 0){
+    public List<Tweet> getRecentTweets(int limit, int offset) {
+        if (limit == 0) {
             return em.createNamedQuery("Tweet.findRecent").getResultList();
         }
-        return em.createNamedQuery("Tweet.findRecent").setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.findRecent").setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
     @Override
-    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
-        if (limit == 0){
+    public List<Tweet> getRecentTweetsByTag(int limit, int offset, String tag) {
+        if (limit == 0) {
             return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").getResultList();
         }
-        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.findRecentByTag").setParameter("tag", "%" + tag + "%").setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
     @Override
-    public List<Tweet> getTimeline(int limit, String username) throws PersistenceException {
-        if (limit == 0){
+    public List<Tweet> getTimeline(int limit, int offset, String username) throws PersistenceException {
+        if (limit == 0) {
             return em.createNamedQuery("Tweet.timeline").setParameter("username", username).getResultList();
         }
-        return em.createNamedQuery("Tweet.timeline").setParameter("username", username).setMaxResults(limit).getResultList();
+        return em.createNamedQuery("Tweet.timeline").setParameter("username", username).setFirstResult(offset).setMaxResults(limit).getResultList();
     }
 
     @Override

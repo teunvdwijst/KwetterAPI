@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.SecurityContext;
 
 /**
  *
@@ -31,6 +33,9 @@ public class TweetService {
 
     @Inject
     AccountDAO accountDao;
+
+    @Context
+    SecurityContext securityContext;
 
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
@@ -59,9 +64,9 @@ public class TweetService {
      * @param userEmail
      * @return List of Tweets
      */
-    public List<Tweet> getRecentTweetsByUser(int limit, String username) {
+    public List<Tweet> getRecentTweetsByUser(int limit, int offset, String username) {
         try {
-            return tweetDao.getRecentTweetsByUsername(limit, username);
+            return tweetDao.getRecentTweetsByUsername(limit, offset, username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getRecentTweetsByUser operation; {0}", pe.getMessage());
             return null;
@@ -77,9 +82,9 @@ public class TweetService {
      * @param tag
      * @return List of Tweets
      */
-    public List<Tweet> getRecentTweetsByTag(int limit, String tag) {
+    public List<Tweet> getRecentTweetsByTag(int limit, int offset, String tag) {
         try {
-            return tweetDao.getRecentTweetsByTag(limit, tag);
+            return tweetDao.getRecentTweetsByTag(limit, offset, tag);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getRecentTweetsByUser operation; {0}", pe.getMessage());
             return null;
@@ -93,9 +98,9 @@ public class TweetService {
      * @param limit
      * @return List of Tweets
      */
-    public List<Tweet> getRecentTweets(int limit) {
+    public List<Tweet> getRecentTweets(int limit, int offset) {
         try {
-            return tweetDao.getRecentTweets(limit);
+            return tweetDao.getRecentTweets(limit, offset);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getRecentTweets operation; {0}", pe.getMessage());
             return null;
@@ -111,9 +116,9 @@ public class TweetService {
      * @param username
      * @return List of Tweets
      */
-    public List<Tweet> getTimeline(int limit, String username) {
+    public List<Tweet> getTimeline(int limit, int offset, String username) {
         try {
-            return tweetDao.getTimeline(limit, username);
+            return tweetDao.getTimeline(limit, offset, username);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing getTimeline operation; {0}", pe.getMessage());
             return null;
@@ -134,6 +139,30 @@ public class TweetService {
             tweetDao.updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
+        }
+    }
+
+    public void likeTweet(int id) {
+        try {
+            Tweet t = getTweet(id);
+            Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
+            t.addLike(a);
+            updateTweet(t);
+            accountDao.updateAccount(a);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing likeTweet operation; {0}", pe.getMessage());
+        }
+    }
+
+    public void unlikeTweet(int id) {
+        try {
+            Tweet t = getTweet(id);
+            Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
+            t.removeLike(a);
+            updateTweet(t);
+            accountDao.updateAccount(a);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing unlikeTweet operation; {0}", pe.getMessage());
         }
     }
 

@@ -7,7 +7,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Startup;
 import javax.ejb.Singleton;
 import javax.inject.Inject;
-import org.stagemonitor.core.Stagemonitor;
 
 /**
  *
@@ -28,7 +27,6 @@ public class Init {
 
     @PostConstruct
     public void init() {
-        Stagemonitor.init();
         UserGroup user = new UserGroup("USER");
         UserGroup admins = new UserGroup("ADMIN");
         UserGroup mods = new UserGroup("MODERATOR");

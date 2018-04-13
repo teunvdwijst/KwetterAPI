@@ -69,6 +69,22 @@ public class AccountService {
         }
     }
 
+    public void addAccountFollowing(String username, String following) {
+        try {
+            accountDao.addAccountFollowing(username, following);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing addAccountFollowing operation; {0}", pe.getMessage());
+        }
+    }
+
+    public void removeAccountFollowing(String username, String following) {
+        try {
+            accountDao.removeAccountFollowing(username, following);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing removeAccountFollowing operation; {0}", pe.getMessage());
+        }
+    }
+
     public List<Account> getAccountFollowing(String username) {
         try {
             return accountDao.getAccountFollowing(username);

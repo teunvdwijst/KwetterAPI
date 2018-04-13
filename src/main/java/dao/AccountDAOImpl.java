@@ -75,4 +75,26 @@ public class AccountDAOImpl implements AccountDAO {
         }
         em.remove(temp);
     }
+
+    @Override
+    public void removeAccountFollowing(String username, String following) throws PersistenceException {
+        Account acc = getAccountByUsername(username);
+        Account fol = getAccountByUsername(following);
+        
+        acc.removeFollowing(fol);
+        
+        updateAccount(fol);
+        updateAccount(acc);
+    }
+
+    @Override
+    public void addAccountFollowing(String username, String following) throws PersistenceException {
+        Account acc = getAccountByUsername(username);
+        Account fol = getAccountByUsername(following);
+        
+        acc.addFollowing(fol);
+        
+        updateAccount(fol);
+        updateAccount(acc);
+    }
 }

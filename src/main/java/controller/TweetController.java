@@ -17,38 +17,38 @@ import service.TweetService;
 @Named
 @RequestScoped
 public class TweetController {
-
+    
     @Inject
     TweetService tweetService;
-
+    
     private List<Tweet> tweets;
     private Tweet selectedTweet;
-
+    
     public TweetController() {
     }
-
+    
     @PostConstruct
     private void init() {
-        tweets = tweetService.getRecentTweets(0);
+        tweets = tweetService.getRecentTweets(0, 0);
     }
-
+    
     public List<Tweet> getTweets() {
         return tweets;
     }
-
+    
     public void setSelectedTweet(Tweet selected) {
         if (selected != null) {
             this.selectedTweet = selected;
         }
     }
-
+    
     public Tweet getSelectedTweet() {
         if (selectedTweet != null) {
             return selectedTweet;
         }
         return null;
     }
-
+    
     public void removeTweet() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (selectedTweet == null) {

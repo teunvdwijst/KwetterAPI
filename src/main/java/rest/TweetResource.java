@@ -14,9 +14,11 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.SecurityContext;
@@ -34,7 +36,7 @@ public class TweetResource {
 
     @Inject
     TweetService tweetService;
-    
+
     @Context
     SecurityContext securityContext;
 
@@ -45,27 +47,53 @@ public class TweetResource {
     }
 
     @GET
-    @Path("user/{limit}/{username}")
-    public List<Tweet> getRecentTweetsByUser(@PathParam("limit") int limit, @PathParam("username") String username) {
-        return tweetService.getRecentTweetsByUser(limit, username);
+    @Path("username/{username}")
+    public List<Tweet> getRecentTweetsByUser(
+            @DefaultValue("0") @QueryParam("offset") int offset,
+            @DefaultValue("20") @QueryParam("limit") int limit,
+            @PathParam("username") String username) {
+        return tweetService.getRecentTweetsByUser(limit, offset, username);
     }
 
     @GET
-    @Path("timeline/{limit}/{username}")
-    public List<Tweet> getUserTimeline(@PathParam("limit") int limit, @PathParam("username") String username) {
-        return tweetService.getTimeline(limit, username);
+    @JWToken
+    @Path("timeline")
+    public List<Tweet> getUserTimeline(
+            @DefaultValue("0") @QueryParam("offset") int offset,
+            @DefaultValue("20") @QueryParam("limit") int limit) {
+        String username = securityContext.getUserPrincipal().getName();
+        return tweetService.getTimeline(limit, offset, username);
     }
 
     @GET
-    @Path("recent/{limit}")
-    public List<Tweet> getRecentTweets(@PathParam("limit") int limit) {
-        return tweetService.getRecentTweets(limit);
+    @Path("recent")
+    public List<Tweet> getRecentTweets(
+            @DefaultValue("0") @QueryParam("offset") int offset,
+            @DefaultValue("20") @QueryParam("limit") int limit) {
+        return tweetService.getRecentTweets(limit, offset);
     }
 
     @GET
-    @Path("tag/{limit}/{tag}")
-    public List<Tweet> getRecentTweetsByTag(@PathParam("limit") int limit, @PathParam("tag") String tag) {
-        return tweetService.getRecentTweetsByTag(limit, tag);
+    @Path("tag/{tag}")
+    public List<Tweet> getRecentTweetsByTag(
+            @DefaultValue("0") @QueryParam("offset") int offset,
+            @DefaultValue("20") @QueryParam("limit") int limit,
+            @PathParam("tag") String tag) {
+        return tweetService.getRecentTweetsByTag(limit, offset, tag);
+    }
+
+    @DELETE
+    @JWToken
+    @Path("like/{id}")
+    public void unlikeTweet(@PathParam("id") int id) {
+        tweetService.unlikeTweet(id);
+    }
+
+    @POST
+    @JWToken
+    @Path("like/{id}")
+    public void likeTweet(@PathParam("id") int id) {
+        tweetService.likeTweet(id);
     }
 
     @PUT

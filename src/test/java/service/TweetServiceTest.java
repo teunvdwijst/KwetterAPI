@@ -20,6 +20,7 @@ import org.mockito.MockitoAnnotations;
  */
 @Ignore
 public class TweetServiceTest {
+
     @Mock
     private TweetDAO tweetDao;
 
@@ -63,9 +64,9 @@ public class TweetServiceTest {
     @Test
     public void testGetRecentTweetsByUser() throws Exception {
         System.out.println("getRecentTweetsByUser");
-        tweetService.getRecentTweetsByUser(1, "user");
+        tweetService.getRecentTweetsByUser(1, 0, "user");
 
-        verify(tweetDao, times(1)).getRecentTweetsByUsername(1, "user");
+        verify(tweetDao, times(1)).getRecentTweetsByUsername(1, 0, "user");
     }
 
     /**
@@ -74,9 +75,9 @@ public class TweetServiceTest {
     @Test
     public void testGetRecentTweets() throws Exception {
         System.out.println("getRecentTweets");
-        tweetService.getRecentTweets(1);
+        tweetService.getRecentTweets(1, 0);
 
-        verify(tweetDao, times(1)).getRecentTweets(1);
+        verify(tweetDao, times(1)).getRecentTweets(1, 0);
     }
 
     /**
@@ -111,7 +112,7 @@ public class TweetServiceTest {
         System.out.println("deleteTweet");
         Tweet tweet = new Tweet("tweet", null);
         tweet.setId(1L);
-                
+
         tweetService.deleteTweet(1);
 
         verify(tweetDao, times(1)).deleteTweet(tweet);

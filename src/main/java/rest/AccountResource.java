@@ -83,6 +83,20 @@ public class AccountResource {
     }
 
     @POST
+    @JWToken
+    @Path("followers/{username}")
+    public void addAccountFollowing(@PathParam("username") String username) {
+        accountService.addAccountFollowing(securityContext.getUserPrincipal().getName(), username);
+    }
+
+    @DELETE
+    @JWToken
+    @Path("following/{username}")
+    public void removeAccountFollowing(@PathParam("username") String username) {
+        accountService.removeAccountFollowing(securityContext.getUserPrincipal().getName(), username);
+    }
+
+    @POST
     public void insertAccount(Account user) {
         accountService.insertAccount(user);
     }
