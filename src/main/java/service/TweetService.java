@@ -10,6 +10,7 @@ import dao.TweetDAO;
 import domain.Account;
 import domain.Tweet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -27,16 +28,16 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 public class TweetService {
-
+    
     @Inject
     TweetDAO tweetDao;
-
+    
     @Inject
     AccountDAO accountDao;
-
+    
     @Context
     SecurityContext securityContext;
-
+    
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
     /**
@@ -141,7 +142,7 @@ public class TweetService {
             LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
         }
     }
-
+    
     public void likeTweet(int id) {
         try {
             Tweet t = getTweet(id);
@@ -153,7 +154,7 @@ public class TweetService {
             LOGGER.log(Level.FINE, "ERROR while performing likeTweet operation; {0}", pe.getMessage());
         }
     }
-
+    
     public void unlikeTweet(int id) {
         try {
             Tweet t = getTweet(id);
@@ -177,6 +178,7 @@ public class TweetService {
             for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
+            tweet.setPublished(new Date());
             tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());
@@ -197,12 +199,12 @@ public class TweetService {
             LOGGER.log(Level.FINE, "ERROR while performing removeTweet operation; {0}", pe.getMessage());
         }
     }
-
+    
     private List<Account> findMentions(String message) {
         List<Account> mentions = new ArrayList<>();
         String prefix = " ".concat(message);
         Matcher m = Pattern.compile("(?:\\@)([A-Za-z0-9_]+)").matcher(prefix);
-
+        
         while (m.find()) {
             Account user = accountDao.getAccountByUsername(m.group(1));
             if (user != null) {
