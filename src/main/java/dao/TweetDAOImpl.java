@@ -64,13 +64,14 @@ public class TweetDAOImpl implements TweetDAO {
     }
 
     @Override
-    public void updateTweet(Tweet tweet) {
-        em.merge(tweet);
+    public Tweet updateTweet(Tweet tweet) {
+       return em.merge(tweet);
     }
 
     @Override
-    public void insertTweet(Tweet tweet) {
+    public Tweet insertTweet(Tweet tweet) {
         em.persist(tweet);
+        return tweet;
     }
 
     @Override

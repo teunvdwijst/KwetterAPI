@@ -83,30 +83,30 @@ public class TweetResource {
         return tweetService.getRecentTweetsByTag(limit, offset, tag);
     }
 
-    @DELETE
+    @POST
     @JWToken
-    @Path("like/{id}")
-    public void unlikeTweet(@PathParam("id") int id) {
-        tweetService.unlikeTweet(id);
+    @Path("unlike")
+    public Tweet unlikeTweet(Tweet tweet) {
+        return tweetService.unlikeTweet(tweet);
     }
 
     @POST
     @JWToken
-    @Path("like/{id}")
-    public void likeTweet(@PathParam("id") int id) {
-        tweetService.likeTweet(id);
+    @Path("like")
+    public Tweet likeTweet(Tweet tweet) {
+        return tweetService.likeTweet(tweet);
     }
 
     @PUT
     @JWToken
-    public void updateTweet(Tweet tweet) {
-        tweetService.updateTweet(tweet);
+    public Tweet updateTweet(Tweet tweet) {
+        return tweetService.updateTweet(tweet);
     }
 
     @POST
     @JWToken
-    public void insertTweet(Tweet tweet) {
-        tweetService.insertTweet(tweet);
+    public Tweet insertTweet(Tweet tweet) {
+        return tweetService.insertTweet(tweet, securityContext.getUserPrincipal().getName());
     }
 
     @DELETE

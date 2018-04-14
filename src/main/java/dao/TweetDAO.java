@@ -26,9 +26,9 @@ public interface TweetDAO {
 
     List<Tweet> getTimeline(int limit, int offset, String username) throws PersistenceException;
 
-    void updateTweet(Tweet tweet) throws PersistenceException;
+    Tweet updateTweet(Tweet tweet) throws PersistenceException;
 
-    void insertTweet(Tweet tweet) throws PersistenceException;
+    Tweet insertTweet(Tweet tweet) throws PersistenceException;
 
     void deleteTweet(Tweet tweet) throws PersistenceException;
 }

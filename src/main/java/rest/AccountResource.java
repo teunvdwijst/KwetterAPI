@@ -84,7 +84,7 @@ public class AccountResource {
 
     @POST
     @JWToken
-    @Path("followers/{username}")
+    @Path("following/{username}")
     public void addAccountFollowing(@PathParam("username") String username) {
         accountService.addAccountFollowing(securityContext.getUserPrincipal().getName(), username);
     }

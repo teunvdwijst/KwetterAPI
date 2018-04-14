@@ -28,16 +28,16 @@ import javax.ws.rs.core.SecurityContext;
  */
 @Stateless
 public class TweetService {
-    
+
     @Inject
     TweetDAO tweetDao;
-    
+
     @Inject
     AccountDAO accountDao;
-    
+
     @Context
     SecurityContext securityContext;
-    
+
     private static final Logger LOGGER = Logger.getLogger(AccountService.class.getName());
 
     /**
@@ -132,38 +132,39 @@ public class TweetService {
      *
      * @param tweet
      */
-    public void updateTweet(Tweet tweet) {
+    public Tweet updateTweet(Tweet tweet) {
         try {
             for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
-            tweetDao.updateTweet(tweet);
+            return tweetDao.updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateTweet operation; {0}", pe.getMessage());
+            return new Tweet();
         }
     }
-    
-    public void likeTweet(int id) {
+
+    public Tweet likeTweet(Tweet tweet) {
         try {
-            Tweet t = getTweet(id);
             Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
-            t.addLike(a);
-            updateTweet(t);
+            tweet.addLike(a);
             accountDao.updateAccount(a);
+            return updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing likeTweet operation; {0}", pe.getMessage());
+            return new Tweet();
         }
     }
-    
-    public void unlikeTweet(int id) {
+
+    public Tweet unlikeTweet(Tweet tweet) {
         try {
-            Tweet t = getTweet(id);
             Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
-            t.removeLike(a);
-            updateTweet(t);
+            tweet.removeLike(a);
             accountDao.updateAccount(a);
+            return updateTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing unlikeTweet operation; {0}", pe.getMessage());
+            return new Tweet();
         }
     }
 
@@ -173,15 +174,30 @@ public class TweetService {
      *
      * @param tweet
      */
-    public void insertTweet(Tweet tweet) {
+    public Tweet insertTweet(Tweet tweet, String username) {
+        try {
+            for (Account a : findMentions(tweet.getContent())) {
+                tweet.addMention(a);
+            }
+            tweet.setTweetedBy(accountDao.getAccountByUsername(username));
+            tweet.setPublished(new Date());
+            return tweetDao.insertTweet(tweet);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());
+            return new Tweet();
+        }
+    }
+
+    public Tweet insertTweet(Tweet tweet) {
         try {
             for (Account a : findMentions(tweet.getContent())) {
                 tweet.addMention(a);
             }
             tweet.setPublished(new Date());
-            tweetDao.insertTweet(tweet);
+            return tweetDao.insertTweet(tweet);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertTweet operation; {0}", pe.getMessage());
+            return new Tweet();
         }
     }
 
@@ -199,12 +215,12 @@ public class TweetService {
             LOGGER.log(Level.FINE, "ERROR while performing removeTweet operation; {0}", pe.getMessage());
         }
     }
-    
+
     private List<Account> findMentions(String message) {
         List<Account> mentions = new ArrayList<>();
         String prefix = " ".concat(message);
         Matcher m = Pattern.compile("(?:\\@)([A-Za-z0-9_]+)").matcher(prefix);
-        
+
         while (m.find()) {
             Account user = accountDao.getAccountByUsername(m.group(1));
             if (user != null) {
