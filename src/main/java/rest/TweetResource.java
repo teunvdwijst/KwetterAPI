@@ -5,7 +5,9 @@
  */
 package rest;
 
+import domain.Account;
 import domain.Tweet;
+import dto.TweetDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -21,7 +23,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
+import service.AccountService;
 import service.TweetService;
 
 /**
@@ -36,6 +40,9 @@ public class TweetResource {
 
     @Inject
     TweetService tweetService;
+    
+    @Inject
+    AccountService accountService;
 
     @Context
     SecurityContext securityContext;
@@ -96,7 +103,7 @@ public class TweetResource {
         return tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName());
     }
 
-    @PUT
+    /*@PUT
     @JWToken
     public Tweet updateTweet(Tweet tweet) {
         return tweetService.updateTweet(tweet);
@@ -106,12 +113,21 @@ public class TweetResource {
     @JWToken
     public Tweet insertTweet(Tweet tweet) {
         return tweetService.insertTweet(tweet, securityContext.getUserPrincipal().getName());
-    }
-
-    @DELETE
+    }*/
+    
+    @POST
     @JWToken
-    @Path("{id}")
-    public void deleteTweet(@PathParam("id") int id) {
-        tweetService.deleteTweet(id);
+    public Response insertTweet(TweetDTO tweet) {
+        String username = securityContext.getUserPrincipal().getName();
+        Account account = accountService.getAccountByUsername(username);
+        
+        if (account == null) {
+            Response.serverError().build();
+        }
+        
+        Tweet temp = account.addTweet(tweet.getContent());
+        Tweet persistedTweet = tweetService.insertTweet(temp);
+        TweetDTO persistedTweetDto = util.DomainToDto.tweetToDto(persistedTweet);
+        return Response.ok(persistedTweetDto).build();
     }
 }

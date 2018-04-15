@@ -210,8 +210,10 @@ public class Account implements Serializable {
      *
      * @param message String
      */
-    public void addTweet(String message) {
-        tweets.add(new Tweet(message, this));
+    public Tweet addTweet(String message) {
+        Tweet temp = new Tweet(message, this);
+        tweets.add(temp);
+        return temp;
     }
 
     /**

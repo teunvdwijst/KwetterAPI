@@ -35,6 +35,23 @@ public class DomainToDto {
         return accountDtos;
     }
 
+    public static AccountDTO accountToDto(Account account) {
+        if (account == null) {
+            return new AccountDTO();
+        }
+
+        return new AccountDTO(
+                Math.toIntExact(account.getId()),
+                account.getUsername(),
+                account.getEmail(),
+                account.getUserGroupsString(),
+                account.getPassword(),
+                account.getLocation(),
+                account.getBio(),
+                account.getWebsite(),
+                account.getAvatarPath());
+    }
+
     public static List<TweetDTO> tweetsToDtos(List<Tweet> tweets) {
         List<TweetDTO> tweetDtos = new ArrayList<>();
         if (tweets == null || tweets.isEmpty()) {
@@ -53,5 +70,20 @@ public class DomainToDto {
             tweetDtos.add(dto);
         }
         return tweetDtos;
+    }
+
+    public static TweetDTO tweetToDto(Tweet tweet) {
+        if (tweet == null) {
+            return new TweetDTO();
+        }
+
+        return new TweetDTO(
+                Math.toIntExact(tweet.getId()),
+                tweet.getContent(),
+                tweet.getPublished().toString(),
+                tweet.getTags(),
+                tweet.getTweetedBy().getUsername(),
+                tweet.getLikedBy(),
+                tweet.getMentions());
     }
 }
