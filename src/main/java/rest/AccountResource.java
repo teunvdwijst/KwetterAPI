@@ -84,14 +84,14 @@ public class AccountResource {
 
     @POST
     @JWToken
-    @Path("following/{username}")
+    @Path("follow/{username}")
     public void addAccountFollowing(@PathParam("username") String username) {
         accountService.addAccountFollowing(securityContext.getUserPrincipal().getName(), username);
     }
 
-    @DELETE
+    @POST
     @JWToken
-    @Path("following/{username}")
+    @Path("unfollow/{username}")
     public void removeAccountFollowing(@PathParam("username") String username) {
         accountService.removeAccountFollowing(securityContext.getUserPrincipal().getName(), username);
     }

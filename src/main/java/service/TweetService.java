@@ -144,9 +144,9 @@ public class TweetService {
         }
     }
 
-    public Tweet likeTweet(Tweet tweet) {
+    public Tweet likeTweet(Tweet tweet, String username) {
         try {
-            Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
+            Account a = accountDao.getAccountByUsername(username);
             tweet.addLike(a);
             accountDao.updateAccount(a);
             return updateTweet(tweet);
@@ -156,9 +156,9 @@ public class TweetService {
         }
     }
 
-    public Tweet unlikeTweet(Tweet tweet) {
+    public Tweet unlikeTweet(Tweet tweet, String username) {
         try {
-            Account a = accountDao.getAccountByUsername(securityContext.getUserPrincipal().getName());
+            Account a = accountDao.getAccountByUsername(username);
             tweet.removeLike(a);
             accountDao.updateAccount(a);
             return updateTweet(tweet);

@@ -21,7 +21,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import service.TweetService;
 
@@ -87,14 +86,14 @@ public class TweetResource {
     @JWToken
     @Path("unlike")
     public Tweet unlikeTweet(Tweet tweet) {
-        return tweetService.unlikeTweet(tweet);
+        return tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName());
     }
 
     @POST
     @JWToken
     @Path("like")
     public Tweet likeTweet(Tweet tweet) {
-        return tweetService.likeTweet(tweet);
+        return tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName());
     }
 
     @PUT
