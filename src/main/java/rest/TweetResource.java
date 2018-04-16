@@ -126,13 +126,13 @@ public class TweetResource {
         String username = securityContext.getUserPrincipal().getName();
         Account account = accountService.getAccountByUsername(username);
 
-        if (account == null) {
-            Response.serverError().build();
+        if (account == null || tweet == null || tweet.getContent() == null || tweet.getContent().isEmpty()) {
+            return Response.serverError().build();
         }
 
         Tweet temp = account.addTweet(tweet.getContent());
         Tweet persistedTweet = tweetService.insertTweet(temp);
-        TweetDTO persistedTweetDto = util.DomainToDto.tweetToDto(persistedTweet);
+        TweetDTO persistedTweetDto = DomainToDto.tweetToDto(persistedTweet);
         return Response.ok(persistedTweetDto).build();
     }
 }

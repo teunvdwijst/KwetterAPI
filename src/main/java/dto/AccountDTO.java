@@ -1,5 +1,7 @@
 package dto;
 
+import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  *
  * @author Teun
@@ -24,7 +26,7 @@ public class AccountDTO {
         this.username = username;
         this.email = email;
         this.groups = groups;
-        this.password = password;
+        this.password = DigestUtils.sha512Hex(password);
         this.location = location;
         this.bio = bio;
         this.website = website;
@@ -68,7 +70,7 @@ public class AccountDTO {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = DigestUtils.sha512Hex(password);
     }
 
     public String getLocation() {

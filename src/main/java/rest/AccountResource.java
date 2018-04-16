@@ -45,13 +45,16 @@ public class AccountResource {
     @POST
     @Path("login")
     public Response login(AccountDTO account) {
-        boolean result = accountService.validateCredentials(account.getUsername(), account.getPassword());
+        if (account != null && !account.getUsername().isEmpty() && !account.getPassword().isEmpty()) {
+            boolean result = accountService.validateCredentials(account.getUsername(), account.getPassword());
 
-        if (result) {
-            String webToken = accountService.getWebToken(account.getUsername());
-            return Response.ok().header(HttpHeaders.AUTHORIZATION, webToken).header("Access-Control-Expose-Headers", "Authorization").build();
+            if (result) {
+                String webToken = accountService.getWebToken(account.getUsername());
+                return Response.ok().header(HttpHeaders.AUTHORIZATION, "Bearer " + webToken).header("Access-Control-Expose-Headers", "Authorization").build();
+            }
+            return Response.status(Response.Status.UNAUTHORIZED).build();
         }
-        return Response.status(Response.Status.UNAUTHORIZED).build();
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
     }
 
     @GET
