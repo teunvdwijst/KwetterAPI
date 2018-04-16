@@ -127,7 +127,7 @@ public class TweetResource {
         Account account = accountService.getAccountByUsername(username);
 
         if (account == null || tweet == null || tweet.getContent() == null || tweet.getContent().isEmpty()) {
-            return Response.serverError().build();
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
 
         Tweet temp = account.addTweet(tweet.getContent());
