@@ -14,8 +14,6 @@ import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.DefaultValue;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -27,6 +25,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import service.AccountService;
 import service.TweetService;
+import util.DomainToDto;
 
 /**
  *
@@ -40,7 +39,7 @@ public class TweetResource {
 
     @Inject
     TweetService tweetService;
-    
+
     @Inject
     AccountService accountService;
 
@@ -49,58 +48,65 @@ public class TweetResource {
 
     @GET
     @Path("{id}")
-    public Tweet getTweet(@PathParam("id") int id) {
-        return tweetService.getTweet(id);
+    public Response getTweet(@PathParam("id") int id) {
+        TweetDTO dto = DomainToDto.tweetToDto(tweetService.getTweet(id));
+        return Response.ok(dto).build();
     }
 
     @GET
     @Path("username/{username}")
-    public List<Tweet> getRecentTweetsByUser(
+    public Response getRecentTweetsByUser(
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("limit") int limit,
             @PathParam("username") String username) {
-        return tweetService.getRecentTweetsByUser(limit, offset, username);
+        List<TweetDTO> dtos = DomainToDto.tweetsToDtos(tweetService.getRecentTweetsByUser(limit, offset, username));
+        return Response.ok(dtos).build();
     }
 
     @GET
     @JWToken
     @Path("timeline")
-    public List<Tweet> getUserTimeline(
+    public Response getUserTimeline(
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("limit") int limit) {
         String username = securityContext.getUserPrincipal().getName();
-        return tweetService.getTimeline(limit, offset, username);
+        List<TweetDTO> dtos = DomainToDto.tweetsToDtos(tweetService.getTimeline(limit, offset, username));
+        return Response.ok(dtos).build();
     }
 
     @GET
     @Path("recent")
-    public List<Tweet> getRecentTweets(
+    public Response getRecentTweets(
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("limit") int limit) {
-        return tweetService.getRecentTweets(limit, offset);
+        List<TweetDTO> dtos = DomainToDto.tweetsToDtos(tweetService.getRecentTweets(limit, offset));
+        return Response.ok(dtos).build();
     }
 
     @GET
     @Path("tag/{tag}")
-    public List<Tweet> getRecentTweetsByTag(
+    public Response getRecentTweetsByTag(
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("limit") int limit,
             @PathParam("tag") String tag) {
-        return tweetService.getRecentTweetsByTag(limit, offset, tag);
+        List<TweetDTO> dtos = DomainToDto.tweetsToDtos(tweetService.getRecentTweetsByTag(limit, offset, tag));
+        return Response.ok(dtos).build();
     }
 
     @POST
     @JWToken
     @Path("unlike")
-    public Tweet unlikeTweet(Tweet tweet) {
-        return tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName());
+    public Response unlikeTweet(Tweet tweet) {
+        TweetDTO dto = DomainToDto.tweetToDto(tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName()));
+        return Response.ok(dto).build();
     }
 
     @POST
     @JWToken
     @Path("like")
-    public Tweet likeTweet(Tweet tweet) {
-        return tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName());
+    public Response likeTweet(Tweet tweet) {
+        TweetDTO dto = DomainToDto.tweetToDto(tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName()));
+        return Response.ok(dto).build();
     }
 
     /*@PUT
@@ -114,17 +120,16 @@ public class TweetResource {
     public Tweet insertTweet(Tweet tweet) {
         return tweetService.insertTweet(tweet, securityContext.getUserPrincipal().getName());
     }*/
-    
     @POST
     @JWToken
     public Response insertTweet(TweetDTO tweet) {
         String username = securityContext.getUserPrincipal().getName();
         Account account = accountService.getAccountByUsername(username);
-        
+
         if (account == null) {
             Response.serverError().build();
         }
-        
+
         Tweet temp = account.addTweet(tweet.getContent());
         Tweet persistedTweet = tweetService.insertTweet(temp);
         TweetDTO persistedTweetDto = util.DomainToDto.tweetToDto(persistedTweet);

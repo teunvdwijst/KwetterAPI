@@ -6,6 +6,7 @@
 package rest;
 
 import domain.Account;
+import dto.AccountDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -23,6 +24,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import service.AccountService;
+import util.DomainToDto;
 
 /**
  *
@@ -42,7 +44,7 @@ public class AccountResource {
 
     @POST
     @Path("login")
-    public Response login(Account account) {
+    public Response login(AccountDTO account) {
         boolean result = accountService.validateCredentials(account.getUsername(), account.getPassword());
 
         if (result) {
@@ -54,32 +56,37 @@ public class AccountResource {
 
     @GET
     @Path("{limit}")
-    public List<Account> getAllAccounts(@PathParam("limit") int limit) {
-        return accountService.getAllAccounts(limit);
+    public Response getAllAccounts(@PathParam("limit") int limit) {
+        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(limit));
+        return Response.ok(dtos).build();
     }
 
     @GET
     @Path("username/{username}")
-    public Account getAccountByUsername(@PathParam("username") String username) {
-        return accountService.getAccountByUsername(username);
+    public Response getAccountByUsername(@PathParam("username") String username) {
+        AccountDTO dto = DomainToDto.accountToDto(accountService.getAccountByUsername(username));
+        return Response.ok(dto).build();
     }
 
     @GET
     @Path("email/{email}")
-    public Account getAccountByEmail(@PathParam("email") String email) {
-        return accountService.getAccountByEmail(email);
+    public Response getAccountByEmail(@PathParam("email") String email) {
+        AccountDTO dto = DomainToDto.accountToDto(accountService.getAccountByEmail(email));
+        return Response.ok(dto).build();
     }
 
     @GET
     @Path("followers/{username}")
-    public List<Account> getAccountFollowers(@PathParam("username") String username) {
-        return accountService.getAccountFollowers(username);
+    public Response getAccountFollowers(@PathParam("username") String username) {
+        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAccountFollowers(username));
+        return Response.ok(dtos).build();
     }
 
     @GET
     @Path("following/{username}")
-    public List<Account> getAccountFollowing(@PathParam("username") String username) {
-        return accountService.getAccountFollowing(username);
+    public Response getAccountFollowing(@PathParam("username") String username) {
+        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAccountFollowing(username));
+        return Response.ok(dtos).build();
     }
 
     @POST
@@ -97,14 +104,18 @@ public class AccountResource {
     }
 
     @POST
-    public void insertAccount(Account user) {
-        accountService.insertAccount(user);
+    public Response insertAccount(AccountDTO user) {
+        Account newAccount = new Account(user.getEmail(), user.getPassword(), user.getUsername(), null, null, null, null);
+        AccountDTO dto = DomainToDto.accountToDto(accountService.insertAccount(newAccount));
+        return Response.ok(dto).build();
     }
 
     @PUT
     @JWToken
-    public void updateAccount(Account user) {
-        accountService.updateAccount(user);
+    public Response updateAccount(AccountDTO user) {
+        Account updatedAccount = new Account(user.getEmail(), user.getPassword(), user.getUsername(), user.getLocation(), user.getBio(), user.getWebsite(), user.getAvatarPath());
+        AccountDTO dto = DomainToDto.accountToDto(accountService.updateAccount(updatedAccount));
+        return Response.ok(dto).build();
     }
 
     @DELETE

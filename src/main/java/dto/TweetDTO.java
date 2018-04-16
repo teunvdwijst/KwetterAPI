@@ -13,8 +13,8 @@ public class TweetDTO {
     private int id;
     private String content;
     private String published;
-    private List<String> tags;
     private String tweetedBy;
+    private List<String> tags;
     private List<String> likedBy;
     private List<String> mentions;
 

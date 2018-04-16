@@ -29,9 +29,9 @@ public interface AccountDAO {
 
     void addAccountFollowing(String username, String following) throws PersistenceException;
 
-    void updateAccount(Account user) throws PersistenceException;
+    Account updateAccount(Account user) throws PersistenceException;
 
-    void insertAccount(Account user) throws PersistenceException;
+    Account insertAccount(Account user) throws PersistenceException;
 
     void deleteAccount(Account user) throws PersistenceException;
 }

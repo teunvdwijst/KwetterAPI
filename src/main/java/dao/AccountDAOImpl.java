@@ -55,13 +55,14 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
-    public void updateAccount(Account user) throws PersistenceException {
-        em.merge(user);
+    public Account updateAccount(Account user) throws PersistenceException {
+        return em.merge(user);
     }
 
     @Override
-    public void insertAccount(Account user) throws PersistenceException {
+    public Account insertAccount(Account user) throws PersistenceException {
         em.persist(user);
+        return user;
     }
 
     @Override
@@ -80,9 +81,9 @@ public class AccountDAOImpl implements AccountDAO {
     public void removeAccountFollowing(String username, String following) throws PersistenceException {
         Account acc = getAccountByUsername(username);
         Account fol = getAccountByUsername(following);
-        
+
         acc.removeFollowing(fol);
-        
+
         updateAccount(fol);
         updateAccount(acc);
     }
@@ -91,9 +92,9 @@ public class AccountDAOImpl implements AccountDAO {
     public void addAccountFollowing(String username, String following) throws PersistenceException {
         Account acc = getAccountByUsername(username);
         Account fol = getAccountByUsername(following);
-        
+
         acc.addFollowing(fol);
-        
+
         updateAccount(fol);
         updateAccount(acc);
     }

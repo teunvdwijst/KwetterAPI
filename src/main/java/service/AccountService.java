@@ -111,19 +111,21 @@ public class AccountService {
         }
     }
 
-    public void updateAccount(Account user) {
+    public Account updateAccount(Account user) {
         try {
-            accountDao.updateAccount(user);
+            return accountDao.updateAccount(user);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing updateAccount operation; {0}", pe.getMessage());
+            return new Account();
         }
     }
 
-    public void insertAccount(Account user) {
+    public Account insertAccount(Account user) {
         try {
-            accountDao.insertAccount(user);
+            return accountDao.insertAccount(user);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing insertAccount operation; {0}", pe.getMessage());
+            return new Account();
         }
     }
 
