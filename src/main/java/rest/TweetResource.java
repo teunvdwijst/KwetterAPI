@@ -96,7 +96,7 @@ public class TweetResource {
     @POST
     @JWToken
     @Path("unlike")
-    public Response unlikeTweet(Tweet tweet) {
+    public Response unlikeTweet(TweetDTO tweet) {
         TweetDTO dto = DomainToDto.tweetToDto(tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName()));
         return Response.ok(dto).build();
     }
@@ -104,7 +104,7 @@ public class TweetResource {
     @POST
     @JWToken
     @Path("like")
-    public Response likeTweet(Tweet tweet) {
+    public Response likeTweet(TweetDTO tweet) {
         TweetDTO dto = DomainToDto.tweetToDto(tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName()));
         return Response.ok(dto).build();
     }

@@ -21,7 +21,7 @@ public class DomainToDto {
 
         for (Account a : accounts) {
             AccountDTO dto = new AccountDTO(
-                    Math.toIntExact(a.getId()),
+                    a.getId(),
                     a.getUsername(),
                     a.getEmail(),
                     a.getUserGroupsString(),
@@ -41,7 +41,7 @@ public class DomainToDto {
         }
 
         return new AccountDTO(
-                Math.toIntExact(account.getId()),
+                account.getId(),
                 account.getUsername(),
                 account.getEmail(),
                 account.getUserGroupsString(),
@@ -60,7 +60,7 @@ public class DomainToDto {
 
         for (Tweet t : tweets) {
             TweetDTO dto = new TweetDTO(
-                    Math.toIntExact(t.getId()),
+                    t.getId(),
                     t.getContent(),
                     t.getPublished().toString(),
                     t.getTags(),
@@ -78,7 +78,7 @@ public class DomainToDto {
         }
 
         return new TweetDTO(
-                Math.toIntExact(tweet.getId()),
+                tweet.getId(),
                 tweet.getContent(),
                 tweet.getPublished().toString(),
                 tweet.getTags(),

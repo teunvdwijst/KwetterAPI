@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class TweetDTO {
 
-    private int id;
+    private Long id;
     private String content;
     private String published;
     private String tweetedBy;
@@ -21,7 +21,7 @@ public class TweetDTO {
     public TweetDTO() {
     }
 
-    public TweetDTO(int id, String content, String published, List<String> tags, String tweetedBy, List<Account> likedBy, List<Account> mentions) {
+    public TweetDTO(Long id, String content, String published, List<String> tags, String tweetedBy, List<Account> likedBy, List<Account> mentions) {
         this.id = id;
         this.content = content;
         this.published = published;
@@ -61,11 +61,11 @@ public class TweetDTO {
         this.content = content;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

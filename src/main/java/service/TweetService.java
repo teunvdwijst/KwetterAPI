@@ -9,6 +9,7 @@ import dao.AccountDAO;
 import dao.TweetDAO;
 import domain.Account;
 import domain.Tweet;
+import dto.TweetDTO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -144,24 +145,26 @@ public class TweetService {
         }
     }
 
-    public Tweet likeTweet(Tweet tweet, String username) {
+    public Tweet likeTweet(TweetDTO tweet, String username) {
         try {
+            Tweet temp = getTweet(Math.toIntExact(tweet.getId()));
             Account a = accountDao.getAccountByUsername(username);
-            tweet.addLike(a);
+            temp.addLike(a);
             accountDao.updateAccount(a);
-            return updateTweet(tweet);
+            return updateTweet(temp);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing likeTweet operation; {0}", pe.getMessage());
             return new Tweet();
         }
     }
 
-    public Tweet unlikeTweet(Tweet tweet, String username) {
+    public Tweet unlikeTweet(TweetDTO tweet, String username) {
         try {
+            Tweet temp = getTweet(Math.toIntExact(tweet.getId()));
             Account a = accountDao.getAccountByUsername(username);
-            tweet.removeLike(a);
+            temp.removeLike(a);
             accountDao.updateAccount(a);
-            return updateTweet(tweet);
+            return updateTweet(temp);
         } catch (PersistenceException pe) {
             LOGGER.log(Level.FINE, "ERROR while performing unlikeTweet operation; {0}", pe.getMessage());
             return new Tweet();

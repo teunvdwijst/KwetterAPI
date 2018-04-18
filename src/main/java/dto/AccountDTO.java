@@ -8,7 +8,7 @@ import org.apache.commons.codec.digest.DigestUtils;
  */
 public class AccountDTO {
 
-    private int id;
+    private Long id;
     private String username;
     private String email;
     private String groups;
@@ -21,7 +21,7 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(int id, String username, String email, String groups, String password, String location, String bio, String website, String avatarPath) {
+    public AccountDTO(Long id, String username, String email, String groups, String password, String location, String bio, String website, String avatarPath) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -33,11 +33,11 @@ public class AccountDTO {
         this.avatarPath = avatarPath;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

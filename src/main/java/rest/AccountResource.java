@@ -92,18 +92,20 @@ public class AccountResource {
         return Response.ok(dtos).build();
     }
 
-    @POST
+    @PUT
     @JWToken
-    @Path("follow/{username}")
-    public void addAccountFollowing(@PathParam("username") String username) {
-        accountService.addAccountFollowing(securityContext.getUserPrincipal().getName(), username);
+    @Path("follow")
+    public Response addAccountFollowing(AccountDTO account) {
+        accountService.addAccountFollowing(securityContext.getUserPrincipal().getName(), account.getUsername());
+        return Response.ok().build();
     }
 
-    @POST
+    @PUT
     @JWToken
-    @Path("unfollow/{username}")
-    public void removeAccountFollowing(@PathParam("username") String username) {
-        accountService.removeAccountFollowing(securityContext.getUserPrincipal().getName(), username);
+    @Path("unfollow")
+    public Response removeAccountFollowing(AccountDTO account) {
+        accountService.removeAccountFollowing(securityContext.getUserPrincipal().getName(), account.getUsername());
+        return Response.ok().build();
     }
 
     @POST
@@ -124,7 +126,8 @@ public class AccountResource {
     @DELETE
     @JWToken
     @Path("{id}")
-    public void deleteAccount(@PathParam("id") String id) {
+    public Response deleteAccount(@PathParam("id") String id) {
         accountService.deleteAccount(id);
+        return Response.ok().build();
     }
 }
