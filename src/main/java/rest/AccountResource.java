@@ -68,8 +68,8 @@ public class AccountResource {
 
     @GET
     @Path("search")
-    public Response getAllAccounts(@DefaultValue("") @QueryParam("searchterm") String searchTerm) {
-        List<AccountDTO> dtos = null;
+    public Response searchAllAccounts(@DefaultValue("") @QueryParam("searchterm") String searchTerm) {
+        List<AccountDTO> dtos;
         if (searchTerm.trim().isEmpty()) {
             dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(0));
         } else {
