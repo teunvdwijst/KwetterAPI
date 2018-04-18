@@ -34,6 +34,8 @@ import org.apache.commons.codec.digest.DigestUtils;
 @NamedQueries({
     @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Account a")
     ,
+    @NamedQuery(name = "Account.findBySearchterm", query = "SELECT a FROM Account a WHERE (a.email LIKE :search) OR (a.username LIKE :search)")
+    ,
     @NamedQuery(name = "Account.findByEmail", query = "SELECT a FROM Account a WHERE a.email LIKE :email")
     ,
     @NamedQuery(name = "Account.findByUsername", query = "SELECT a FROM Account a WHERE a.username LIKE :username")

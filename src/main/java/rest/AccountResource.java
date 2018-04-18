@@ -12,12 +12,14 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
@@ -61,6 +63,18 @@ public class AccountResource {
     @Path("{limit}")
     public Response getAllAccounts(@PathParam("limit") int limit) {
         List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(limit));
+        return Response.ok(dtos).build();
+    }
+
+    @GET
+    @Path("search")
+    public Response getAllAccounts(@DefaultValue("") @QueryParam("searchterm") String searchTerm) {
+        List<AccountDTO> dtos = null;
+        if (searchTerm.trim().isEmpty()) {
+            dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(0));
+        } else {
+            dtos = DomainToDto.accountsToDtos(accountService.searchAllAccounts(searchTerm));
+        }
         return Response.ok(dtos).build();
     }
 

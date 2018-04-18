@@ -35,6 +35,11 @@ public class AccountDAOImpl implements AccountDAO {
     }
 
     @Override
+    public List<Account> searchAccounts(String searchTerm) throws PersistenceException {
+        return em.createNamedQuery("Account.findBySearchterm").setParameter("search", "%" + searchTerm + "%").getResultList();
+    }
+
+    @Override
     public Account getAccountByEmail(String email) throws PersistenceException {
         return (Account) em.createNamedQuery("Account.findByEmail").setParameter("email", email).getSingleResult();
     }

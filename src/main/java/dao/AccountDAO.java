@@ -16,6 +16,8 @@ import javax.persistence.PersistenceException;
 public interface AccountDAO {
 
     List<Account> getAllAccounts(int limit) throws PersistenceException;
+    
+    List<Account> searchAccounts(String searchTerm) throws PersistenceException;
 
     Account getAccountByEmail(String email) throws PersistenceException;
 

@@ -58,6 +58,15 @@ public class AccountService {
             return null;
         }
     }
+    
+    public List<Account> searchAllAccounts(String searchTerm) {
+        try {
+            return accountDao.searchAccounts(searchTerm);
+        } catch (PersistenceException pe) {
+            LOGGER.log(Level.FINE, "ERROR while performing searchAllAccounts operation; {0}", pe.getMessage());
+            return null;
+        }
+    }
 
     public List<Account> getAccountFollowers(String username) {
         try {
