@@ -7,10 +7,12 @@ package rest;
 
 import domain.Account;
 import domain.Tweet;
+import dto.AccountDTO;
 import dto.TweetDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.persistence.QueryHint;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -48,7 +50,23 @@ public class TweetResource {
 
     @GET
     @Path("{id}")
-    public Response getTweet(@PathParam("id") int id) {
+    public Response getTweet(
+            @PathParam("id") int id/*,
+            @QueryParam("tags") int tags,
+            @QueryParam("mentions") int mentions,
+            @QueryParam("likes") int likes*/) {/*
+        if (tags > 0) {
+            List< String> dtos = tweetService.getTweet(id).getTags();
+            return Response.ok(dtos).build();
+        }
+        if (mentions > 0) {
+            List< AccountDTO> dtos = DomainToDto.accountsToDtos(tweetService.getTweet(id).getMentions());
+            return Response.ok(dtos).build();
+        }
+        if (likes > 0) {
+            List< AccountDTO> dtos = DomainToDto.accountsToDtos(tweetService.getTweet(id).getLikedBy());
+            return Response.ok(dtos).build();
+        }*/
         TweetDTO dto = DomainToDto.tweetToDto(tweetService.getTweet(id));
         return Response.ok(dto).build();
     }
