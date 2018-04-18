@@ -109,17 +109,6 @@ public class TweetResource {
         return Response.ok(dto).build();
     }
 
-    /*@PUT
-    @JWToken
-    public Tweet updateTweet(Tweet tweet) {
-        return tweetService.updateTweet(tweet);
-    }
-
-    @POST
-    @JWToken
-    public Tweet insertTweet(Tweet tweet) {
-        return tweetService.insertTweet(tweet, securityContext.getUserPrincipal().getName());
-    }*/
     @POST
     @JWToken
     public Response insertTweet(TweetDTO tweet) {
