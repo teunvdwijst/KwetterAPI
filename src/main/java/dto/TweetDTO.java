@@ -37,59 +37,31 @@ public class TweetDTO {
         });
     }
 
-    public List<String> getLikedBy() {
-        return likedBy;
-    }
-
-    public void setLikedBy(List<String> likedBy) {
-        this.likedBy = likedBy;
-    }
-
-    public List<String> getMentions() {
-        return mentions;
-    }
-
-    public void setMentions(List<String> mentions) {
-        this.mentions = mentions;
+    public Long getId() {
+        return id;
     }
 
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getPublished() {
         return published;
-    }
-
-    public void setPublished(String published) {
-        this.published = published;
-    }
-
-    public List<String> getTags() {
-        return tags;
-    }
-
-    public void setTags(List<String> tags) {
-        this.tags = tags;
     }
 
     public String getTweetedBy() {
         return tweetedBy;
     }
 
-    public void setTweetedBy(String tweetedBy) {
-        this.tweetedBy = tweetedBy;
+    public List<String> getTags() {
+        return tags;
+    }
+
+    public List<String> getLikedBy() {
+        return likedBy;
+    }
+
+    public List<String> getMentions() {
+        return mentions;
     }
 }
