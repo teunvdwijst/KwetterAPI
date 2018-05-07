@@ -9,7 +9,7 @@ import dao.AccountDAO;
 import dao.TweetDAO;
 import domain.Account;
 import domain.Tweet;
-import dto.TweetDTO;
+import dto.hateoas.TweetDTO;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

@@ -6,7 +6,7 @@
 package rest;
 
 import domain.Account;
-import dto.AccountDTO;
+import dto.hateoas.AccountDTO;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.SecurityContext;
 import service.AccountService;
-import util.DomainToDto;
+import util.DomainToHateoasDto;
 
 /**
  *
@@ -62,7 +62,7 @@ public class AccountResource {
     @GET
     @Path("{limit}")
     public Response getAllAccounts(@PathParam("limit") int limit) {
-        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(limit));
+        List<AccountDTO> dtos = DomainToHateoasDto.accountsToDtos(accountService.getAllAccounts(limit));
         return Response.ok(dtos).build();
     }
 
@@ -71,9 +71,9 @@ public class AccountResource {
     public Response searchAllAccounts(@DefaultValue("") @QueryParam("searchterm") String searchTerm) {
         List<AccountDTO> dtos;
         if (searchTerm.trim().isEmpty()) {
-            dtos = DomainToDto.accountsToDtos(accountService.getAllAccounts(0));
+            dtos = DomainToHateoasDto.accountsToDtos(accountService.getAllAccounts(0));
         } else {
-            dtos = DomainToDto.accountsToDtos(accountService.searchAllAccounts(searchTerm));
+            dtos = DomainToHateoasDto.accountsToDtos(accountService.searchAllAccounts(searchTerm));
         }
         return Response.ok(dtos).build();
     }
@@ -81,28 +81,28 @@ public class AccountResource {
     @GET
     @Path("username/{username}")
     public Response getAccountByUsername(@PathParam("username") String username) {
-        AccountDTO dto = DomainToDto.accountToDto(accountService.getAccountByUsername(username));
+        AccountDTO dto = DomainToHateoasDto.accountToDto(accountService.getAccountByUsername(username));
         return Response.ok(dto).build();
     }
 
     @GET
     @Path("email/{email}")
     public Response getAccountByEmail(@PathParam("email") String email) {
-        AccountDTO dto = DomainToDto.accountToDto(accountService.getAccountByEmail(email));
+        AccountDTO dto = DomainToHateoasDto.accountToDto(accountService.getAccountByEmail(email));
         return Response.ok(dto).build();
     }
 
     @GET
     @Path("followers/{username}")
     public Response getAccountFollowers(@PathParam("username") String username) {
-        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAccountFollowers(username));
+        List<AccountDTO> dtos = DomainToHateoasDto.accountsToDtos(accountService.getAccountFollowers(username));
         return Response.ok(dtos).build();
     }
 
     @GET
     @Path("following/{username}")
     public Response getAccountFollowing(@PathParam("username") String username) {
-        List<AccountDTO> dtos = DomainToDto.accountsToDtos(accountService.getAccountFollowing(username));
+        List<AccountDTO> dtos = DomainToHateoasDto.accountsToDtos(accountService.getAccountFollowing(username));
         return Response.ok(dtos).build();
     }
 
@@ -125,7 +125,7 @@ public class AccountResource {
     @POST
     public Response insertAccount(AccountDTO user) {
         Account newAccount = new Account(user.getEmail(), user.getPassword(), user.getUsername(), null, null, null, null);
-        AccountDTO dto = DomainToDto.accountToDto(accountService.insertAccount(newAccount));
+        AccountDTO dto = DomainToHateoasDto.accountToDto(accountService.insertAccount(newAccount));
         return Response.ok(dto).build();
     }
 
@@ -133,7 +133,7 @@ public class AccountResource {
     @JWToken
     public Response updateAccount(AccountDTO user) {
         Account updatedAccount = new Account(user.getEmail(), user.getPassword(), user.getUsername(), user.getLocation(), user.getBio(), user.getWebsite(), user.getAvatarPath());
-        AccountDTO dto = DomainToDto.accountToDto(accountService.updateAccount(updatedAccount));
+        AccountDTO dto = DomainToHateoasDto.accountToDto(accountService.updateAccount(updatedAccount));
         return Response.ok(dto).build();
     }
 

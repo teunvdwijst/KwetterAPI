@@ -1,12 +1,13 @@
 package dto.hateoas;
 
 import domain.Account;
+import java.io.Serializable;
 
 /**
  *
  * @author Teun
  */
-public class TweetDTO {
+public class TweetDTO implements Serializable {
 
     private final String apiUri = "http://localhost:8080/KwetterS62/api/";
 
@@ -31,35 +32,60 @@ public class TweetDTO {
         this.mentionsUri = apiUri + "tweets/" + id + "?mentions=10";
     }
 
-    public String getApiUri() {
-        return apiUri;
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getContent() {
         return content;
     }
 
+    public void setContent(String content) {
+        this.content = content;
+    }
+
     public String getPublished() {
         return published;
+    }
+
+    public void setPublished(String published) {
+        this.published = published;
     }
 
     public String getTweetedByUri() {
         return tweetedByUri;
     }
 
+    public void setTweetedByUri(String tweetedByUri) {
+        this.tweetedByUri = tweetedByUri;
+    }
+
     public String getTagsUri() {
         return tagsUri;
+    }
+
+    public void setTagsUri(String tagsUri) {
+        this.tagsUri = tagsUri;
     }
 
     public String getLikedByUri() {
         return likedByUri;
     }
 
+    public void setLikedByUri(String likedByUri) {
+        this.likedByUri = likedByUri;
+    }
+
     public String getMentionsUri() {
         return mentionsUri;
     }
+
+    public void setMentionsUri(String mentionsUri) {
+        this.mentionsUri = mentionsUri;
+    }
+
 }

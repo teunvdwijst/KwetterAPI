@@ -1,6 +1,7 @@
 package dto;
 
 import domain.Account;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,7 +9,7 @@ import java.util.List;
  *
  * @author Teun
  */
-public class TweetDTO {
+public class TweetDTO implements Serializable {
 
     private Long id;
     private String content;
@@ -63,5 +64,33 @@ public class TweetDTO {
 
     public List<String> getMentions() {
         return mentions;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public void setPublished(String published) {
+        this.published = published;
+    }
+
+    public void setTweetedBy(String tweetedBy) {
+        this.tweetedBy = tweetedBy;
+    }
+
+    public void setTags(List<String> tags) {
+        this.tags = tags;
+    }
+
+    public void setLikedBy(List<String> likedBy) {
+        this.likedBy = likedBy;
+    }
+
+    public void setMentions(List<String> mentions) {
+        this.mentions = mentions;
     }
 }

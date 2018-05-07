@@ -1,12 +1,13 @@
 package dto.hateoas;
 
+import java.io.Serializable;
 import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
  * @author Teun
  */
-public class AccountDTO {
+public class AccountDTO implements Serializable {
 
     private final String apiUri = "http://localhost:8080/KwetterS62/api/";
 
@@ -91,5 +92,53 @@ public class AccountDTO {
 
     public String getFollowersUri() {
         return followersUri;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setGroups(String groups) {
+        this.groups = groups;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setAvatarPath(String avatarPath) {
+        this.avatarPath = avatarPath;
+    }
+
+    public void setTweetsUri(String tweetsUri) {
+        this.tweetsUri = tweetsUri;
+    }
+
+    public void setFollowingUri(String followingUri) {
+        this.followingUri = followingUri;
+    }
+
+    public void setFollowersUri(String followersUri) {
+        this.followersUri = followersUri;
     }
 }
