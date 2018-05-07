@@ -38,7 +38,7 @@ public class AccountDTO implements Serializable {
         this.website = website;
         this.avatarPath = avatarPath;
         this.tweetsUri = apiUri + "tweets/username/" + username;
-        this.followingUri = apiUri + "accounts/followers/" + username;
+        this.followersUri = apiUri + "accounts/followers/" + username;
         this.followingUri = apiUri + "accounts/following/" + username;
     }
 

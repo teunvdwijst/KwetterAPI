@@ -53,7 +53,7 @@ public class TweetResource {
             @PathParam("id") int id,
             @QueryParam("tags") int tags,
             @QueryParam("mentions") int mentions,
-            @QueryParam("likes") int likes) {
+            @QueryParam("likedby") int likes) {
         if (tags > 0) {
             List< String> dtos = tweetService.getTweet(id).getTags();
             return Response.ok(dtos).build();
@@ -87,7 +87,7 @@ public class TweetResource {
             @DefaultValue("0") @QueryParam("offset") int offset,
             @DefaultValue("20") @QueryParam("limit") int limit) {
         String username = securityContext.getUserPrincipal().getName();
-        List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getTimeline(limit, offset, username));
+        List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getTimeline(limit, offset, username), username);
         return Response.ok(dtos).build();
     }
 
@@ -114,7 +114,8 @@ public class TweetResource {
     @JWToken
     @Path("unlike")
     public Response unlikeTweet(TweetDTO tweet) {
-        TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName()));
+        String username = securityContext.getUserPrincipal().getName();
+        TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName()), username);
         return Response.ok(dto).build();
     }
 
@@ -122,7 +123,8 @@ public class TweetResource {
     @JWToken
     @Path("like")
     public Response likeTweet(TweetDTO tweet) {
-        TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName()));
+        String username = securityContext.getUserPrincipal().getName();
+        TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName()), username);
         return Response.ok(dto).build();
     }
 

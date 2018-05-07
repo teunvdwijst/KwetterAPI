@@ -63,7 +63,8 @@ public class DomainToHateoasDto {
                     t.getId(),
                     t.getContent(),
                     t.getPublished().toString(),
-                    t.getTweetedBy());
+                    t.getTweetedBy(),
+                    t.getLikedBy());
             tweetDtos.add(dto);
         }
         return tweetDtos;
@@ -78,6 +79,52 @@ public class DomainToHateoasDto {
                 tweet.getId(),
                 tweet.getContent(),
                 tweet.getPublished().toString(),
-                tweet.getTweetedBy());
+                tweet.getTweetedBy(),
+                tweet.getLikedBy());
+    }
+
+    public static List<TweetDTO> tweetsToDtos(List<Tweet> tweets, String loggedInUser) {
+        List<TweetDTO> tweetDtos = new ArrayList<>();
+        if (tweets == null || tweets.isEmpty()) {
+            return tweetDtos;
+        }
+
+        for (Tweet t : tweets) {
+            TweetDTO dto = new TweetDTO(
+                    t.getId(),
+                    t.getContent(),
+                    t.getPublished().toString(),
+                    t.getTweetedBy(),
+                    t.getLikedBy());
+            for (Account a : t.getLikedBy()) {
+                if (a.getUsername().equals(loggedInUser)) {
+                    dto.setHasBeenLiked(true);
+                    break;
+                }
+            }
+            tweetDtos.add(dto);
+        }
+        return tweetDtos;
+    }
+
+    public static TweetDTO tweetToDto(Tweet tweet, String loggedInUser) {
+        if (tweet == null) {
+            return new TweetDTO();
+        }
+
+        TweetDTO dto = new TweetDTO(
+                tweet.getId(),
+                tweet.getContent(),
+                tweet.getPublished().toString(),
+                tweet.getTweetedBy(),
+                tweet.getLikedBy());
+
+        for (Account a : tweet.getLikedBy()) {
+            if (a.getUsername().equals(loggedInUser)) {
+                dto.setHasBeenLiked(true);
+                break;
+            }
+        }
+        return dto;
     }
 }

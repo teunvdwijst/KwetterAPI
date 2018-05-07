@@ -2,6 +2,7 @@ package dto.hateoas;
 
 import domain.Account;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -14,22 +15,44 @@ public class TweetDTO implements Serializable {
     private Long id;
     private String content;
     private String published;
+    private String tweetedBy;
     private String tweetedByUri;
     private String tagsUri;
     private String likedByUri;
+    private String likedBySize;
+    private boolean hasBeenLiked;
     private String mentionsUri;
 
     public TweetDTO() {
     }
 
-    public TweetDTO(Long id, String content, String published, Account tweetedBy) {
+    public TweetDTO(Long id, String content, String published, Account tweetedBy, List<Account> likedBy) {
         this.id = id;
         this.content = content;
         this.published = published;
         this.tagsUri = apiUri + "tweets/" + id + "?tags=10";
+        this.tweetedBy = tweetedBy.getUsername();
         this.tweetedByUri = apiUri + "accounts/username/" + tweetedBy.getUsername();
         this.likedByUri = apiUri + "tweets/" + id + "?likedby=10";
+        this.likedBySize = likedBy.size() + "";
+        this.hasBeenLiked = false;
         this.mentionsUri = apiUri + "tweets/" + id + "?mentions=10";
+    }
+
+    public boolean isHasBeenLiked() {
+        return hasBeenLiked;
+    }
+
+    public void setHasBeenLiked(boolean hasBeenLiked) {
+        this.hasBeenLiked = hasBeenLiked;
+    }
+
+    public String getTweetedBy() {
+        return tweetedBy;
+    }
+
+    public void setTweetedBy(String tweetedBy) {
+        this.tweetedBy = tweetedBy;
     }
 
     public Long getId() {
@@ -88,4 +111,11 @@ public class TweetDTO implements Serializable {
         this.mentionsUri = mentionsUri;
     }
 
+    public String getLikedBySize() {
+        return likedBySize;
+    }
+
+    public void setLikedBySize(String likedBySize) {
+        this.likedBySize = likedBySize;
+    }
 }
