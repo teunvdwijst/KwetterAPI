@@ -27,6 +27,7 @@ import javax.ws.rs.core.SecurityContext;
 import service.AccountService;
 import service.TweetService;
 import util.DomainToHateoasDto;
+import ws.ApiEndpoint;
 
 /**
  *
@@ -37,16 +38,19 @@ import util.DomainToHateoasDto;
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class TweetResource {
-
+    
     @Inject
     TweetService tweetService;
-
+    
     @Inject
     AccountService accountService;
-
+    
     @Context
     SecurityContext securityContext;
-
+    
+    @Inject
+    ApiEndpoint websocket;
+    
     @GET
     @Path("{id}")
     public Response getTweet(
@@ -69,7 +73,7 @@ public class TweetResource {
         TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.getTweet(id));
         return Response.ok(dto).build();
     }
-
+    
     @GET
     @Path("username/{username}")
     public Response getRecentTweetsByUser(
@@ -79,7 +83,7 @@ public class TweetResource {
         List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getRecentTweetsByUser(limit, offset, username));
         return Response.ok(dtos).build();
     }
-
+    
     @GET
     @JWToken
     @Path("timeline")
@@ -90,7 +94,7 @@ public class TweetResource {
         List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getTimeline(limit, offset, username), username);
         return Response.ok(dtos).build();
     }
-
+    
     @GET
     @Path("recent")
     public Response getRecentTweets(
@@ -99,7 +103,7 @@ public class TweetResource {
         List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getRecentTweets(limit, offset));
         return Response.ok(dtos).build();
     }
-
+    
     @GET
     @Path("tag/{tag}")
     public Response getRecentTweetsByTag(
@@ -109,7 +113,7 @@ public class TweetResource {
         List<TweetDTO> dtos = DomainToHateoasDto.tweetsToDtos(tweetService.getRecentTweetsByTag(limit, offset, tag));
         return Response.ok(dtos).build();
     }
-
+    
     @POST
     @JWToken
     @Path("unlike")
@@ -118,7 +122,7 @@ public class TweetResource {
         TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.unlikeTweet(tweet, securityContext.getUserPrincipal().getName()), username);
         return Response.ok(dto).build();
     }
-
+    
     @POST
     @JWToken
     @Path("like")
@@ -127,20 +131,21 @@ public class TweetResource {
         TweetDTO dto = DomainToHateoasDto.tweetToDto(tweetService.likeTweet(tweet, securityContext.getUserPrincipal().getName()), username);
         return Response.ok(dto).build();
     }
-
+    
     @POST
     @JWToken
     public Response insertTweet(TweetDTO tweet) {
         String username = securityContext.getUserPrincipal().getName();
         Account account = accountService.getAccountByUsername(username);
-
+        
         if (account == null || tweet == null || tweet.getContent() == null || tweet.getContent().isEmpty()) {
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
         }
-
+        
         Tweet temp = account.addTweet(tweet.getContent());
         Tweet persistedTweet = tweetService.insertTweet(temp);
         TweetDTO persistedTweetDto = DomainToHateoasDto.tweetToDto(persistedTweet);
+        websocket.newTweet(persistedTweetDto);
         return Response.ok(persistedTweetDto).build();
     }
 }
