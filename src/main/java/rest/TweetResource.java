@@ -150,7 +150,7 @@ public class TweetResource {
         //websocket code
         for (Session s : ws.ApiEndpoint.CONNECTEDCLIENTS) {
             try {
-                s.getBasicRemote().sendObject(tweet);
+                s.getBasicRemote().sendObject(persistedTweetDto);
             } catch (EncodeException | IOException ex) {
                 Logger.getLogger(ws.ApiEndpoint.class.getName()).log(Level.SEVERE, null, ex);
             }
