@@ -111,7 +111,7 @@ public class AccountDTO implements Serializable {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = DigestUtils.sha512Hex(password);
     }
 
     public void setLocation(String location) {

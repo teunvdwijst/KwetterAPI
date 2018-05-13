@@ -9,9 +9,14 @@ import domain.Account;
 import domain.Tweet;
 import dto.hateoas.AccountDTO;
 import dto.hateoas.TweetDTO;
+import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.websocket.EncodeException;
+import javax.websocket.Session;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -141,6 +146,16 @@ public class TweetResource {
         Tweet temp = account.addTweet(tweet.getContent());
         Tweet persistedTweet = tweetService.insertTweet(temp);
         TweetDTO persistedTweetDto = DomainToHateoasDto.tweetToDto(persistedTweet);
+
+        //websocket code
+        for (Session s : ws.ApiEndpoint.CONNECTEDCLIENTS) {
+            try {
+                s.getBasicRemote().sendObject(persistedTweetDto);
+            } catch (EncodeException | IOException ex) {
+                Logger.getLogger(ws.ApiEndpoint.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return Response.ok(persistedTweetDto).build();
     }
 }
